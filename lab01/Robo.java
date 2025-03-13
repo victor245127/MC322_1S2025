@@ -1,25 +1,31 @@
 package lab01;
 
+//classe Robo
 public class Robo {
-    //perguntar se deixo elas privadas ou publicas
-    public String nome;
-    public int posicaoX;
-    public int posicaoY;
+    //atributos da classe robo
+    private String nome;
+    private int posicaoX;
+    private int posicaoY;
     
-    public Robo(String name, int deltaX, int deltaY){
-        //perguntar se devo usar deltaX e deltaY
-        this.posicaoX = deltaX;
-        this.posicaoY = deltaY;
+    //construtor do robo
+    public Robo(String name, int valorX, int valorY){
+        this.posicaoX = valorX;
+        this.posicaoY = valorY;
         this.nome = name;
     }
 
-    public void mover(int novoX, int novoY){
-        posicaoX = novoX;
-        posicaoY = novoY;
+    //metodo para mover o robo de posicao
+    public void mover(int deltaX, int deltaY){
+        posicaoX = deltaX;
+        posicaoY = deltaY;
     }
-    public int exibirPosicao(){
-        return posicaoX & posicaoY;
+
+    //metodo para exibir o nome do robo e sua posicao
+    public void exibirPosicao(){
+        System.out.printf("O robo %s esta na posicao (%d, %d).", nome, posicaoX, posicaoY);
     }
+
+    //metodo que retorna o nome do robo
     public String exibirNome(){
         return nome;
     }
