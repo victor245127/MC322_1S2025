@@ -18,11 +18,18 @@ public class Robo {
         this.posicaoY += deltaY;
     }
 
-    public boolean identificarObstaculo(){
-
-    } // criar ambiente antes
+    public boolean identificarObstaculo(int obstaculos[][], int x, int y){
+        int i = 0;
+        do {
+            if (obstaculos[i][0] == x && obstaculos[i][1] == y){
+                return true;
+            }
+            i++;
+        } while (i < obstaculos.length);
+        return false;
+    } 
 
     public void exibirPosicao(){
-        System.out.printf("O robo %s esta na posicao (%d, %d).", nome, posicaoX, posicaoY);
+        System.out.printf("O robo %s esta na posicao (%d, %d) na direcao %s.", nome, posicaoX, posicaoY, direcao);
     }
 }
