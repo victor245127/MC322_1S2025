@@ -10,13 +10,13 @@ public class RoboTerrestre extends Robo {
         this.velocidadeAtual = velocidadeAtual;
     }
 
-    public void setVelocidade(int vel){
+    private void setVelocidade(int vel){
         this.velocidadeAtual = vel;
-    }
+    } //usado
 
-    public int getVelocidade(){
+    private int getVelocidade(){
         return this.velocidadeAtual;
-    }
+    } // usado
 
     public void mover (int deltaX, int deltaY, int velNova){
         this.posicaoX += deltaX;
@@ -28,5 +28,5 @@ public class RoboTerrestre extends Robo {
         else {
             System.out.printf("Velocidade nova excede a maxima. Voltando a velocidade original em direcao a posicao (%d, %d).", posicaoX, posicaoY);
         }
-    }
+    } // usado
 }

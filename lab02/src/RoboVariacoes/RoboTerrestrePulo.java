@@ -12,17 +12,18 @@ public class RoboTerrestrePulo extends RoboTerrestre {
         this.novoY = novoY;
     }
 
-    public void Desvio(int obstaculo[][]){
+    public void Desvio(int obstaculo[][], int velNova){
         int i = 0;
         do {
             if (identificarObstaculo(obstaculo)){
                 this.novoX += 1;
                 this.novoY += 1;
+                mover(novoX, novoY, velNova);
                 System.out.printf("Obstaculo na posicao (%d, %d) desviado com sucesso", novoX, novoY);
                 return;
             }
             i++;
         } while (i < obstaculo.length);
         System.out.println("Obstaculo nao encontrado no caminho");
-    }
+    } // usado
 }

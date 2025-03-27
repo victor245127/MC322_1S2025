@@ -17,4 +17,5 @@ public class RoboAereoDistorcao extends RoboAereo {
         ambiente.setAltura(ambiente.getAltura()+this.deltaAltura);
         ambiente.setAltura(ambiente.getLargura()+this.deltaLargura);
     } // distorce o espaco do ambiente e aumenta/diminui suas dimensoes
+    // usado
 }

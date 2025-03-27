@@ -13,7 +13,15 @@ public class RoboAereoGPS extends RoboAereo{
         this.pontoY = pontoY;
     }
 
+    public int getDeltaX(){
+        return (this.pontoX - getX());
+    }
+
+    public int getDeltaY(){
+        return (this.pontoY - getY());
+    }
+
     public void distancia(Robo r){
-        System.out.printf("Para o robo %s chegar na posicao desejada, precisa andar %d em X e %d em Y.", r.getNome(), (pontoX - r.getX()), (pontoY - r.getY()));
+        System.out.printf("Para o robo %s chegar na posicao desejada, precisa andar %d em X e %d em Y.", r.getNome(), getDeltaX(), getDeltaY());
     }// identificar distancia 
 }

@@ -25,9 +25,9 @@ public class Robo {
         return this.posicaoY;
     } // usado
 
-    public void mover(int deltaX, int deltaY){
-        this.posicaoX += deltaX;
-        this.posicaoY += deltaY;
+    public void mover(int posX, int posY){
+        this.posicaoX = posX;
+        this.posicaoY = posY;
     }
 
     public boolean identificarObstaculo(int obstaculos[][]){

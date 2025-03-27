@@ -12,10 +12,11 @@ public class RoboTerrestreRemocao extends RoboTerrestre {
         this.removeY = removeY;
     }
 
-    public void removeObstaculo(int obstaculos[][]){
+    public void removeObstaculo(int obstaculos[][], int velNova){
         int i = 0;
         do {
             if (identificarObstaculo(obstaculos)){
+                mover(removeX, removeY, velNova);
                 obstaculos[i][0] = -1;
                 obstaculos[i][1] = -1;
                 System.out.println("Obstaculo removido com sucesso!");
@@ -24,5 +25,5 @@ public class RoboTerrestreRemocao extends RoboTerrestre {
             i++;
         } while (i < obstaculos.length);
         System.out.println("Obstaculo nao encontrado.");
-    }
+    } // usado
 }

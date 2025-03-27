@@ -8,6 +8,13 @@
             "type": "java",
             "name": "Main",
             "request": "launch",
+            "mainClass": "lab02.src.AmbienteMain.Main",
+            "projectName": "MC322_1S2025_15c7ef3d"
+        },
+        {
+            "type": "java",
+            "name": "Main",
+            "request": "launch",
             "mainClass": "lab01.Main",
             "projectName": "MC322_1S2025_15c7ef3d"
         },

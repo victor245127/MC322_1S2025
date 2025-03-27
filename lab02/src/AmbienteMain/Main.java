@@ -12,7 +12,7 @@ public class Main {
         Robo robosAtivos[] = new Robo[4];
 
         Ambiente ambiente = new Ambiente(altura, largura, robosAtivos, obstaculos);
-        System.out.printf("O ambiente tem dimensao %d m x %d m x %d m", ambiente.getLargura(), ambiente.getLargura(), ambiente.getAltura());
+        System.out.printf("O ambiente tem dimensao %d m x %d m x %d m\n", ambiente.getLargura(), ambiente.getLargura(), ambiente.getAltura());
         ambiente.setObstaculo(21, 40, 0);
         ambiente.setObstaculo(40, 25, 1);
 
@@ -26,23 +26,29 @@ public class Main {
         ambiente.setRobo(roboAD, 3);
 
         roboTP.exibirPosicao();
+        roboTP.Desvio(obstaculos, 45);
+
         if (ambiente.dentroDosLimites(55, 40)){
             roboTP.mover((55 - roboTP.getX()), (40 - roboTP.getY()));
-            System.out.printf("Robo %s movido para a posicao (55, 40).", roboTP.getNome());
+            System.out.printf("Robo %s movido para a posicao (55, 40).\n", roboTP.getNome());
         }
         else {
-            System.out.println("Nao foi possivel mover o robo para a posicao desejada.");
+            System.out.println("Nao foi possivel mover o robo para a posicao desejada.\n");
         }
         roboAG.descer(50);
         roboAD.subir(50);
+
         roboAD.Distorcer(ambiente);
+        roboAD.subir(45);
         // apos distorcer o ambiente, os limites aumentam
         if (ambiente.dentroDosLimites(55, 40)){
-            roboTP.mover((55 - roboTP.getX()), (40 - roboTP.getY()));
-            System.out.println("Robo movido para a posicao (55, 40).");
+            roboTP.mover(55, 40);
+            System.out.printf("Robo movido para a posicao (%d, %d).\n", roboTP.getX(), roboTP.getY());
         }
         else {
-            System.out.println("Nao foi possivel mover o robo para a posicao desejada.");
+            System.out.println("Nao foi possivel mover o robo para a posicao desejada.\n");
         }
+        roboTR.removeObstaculo(obstaculos, 40);
+        roboAG.distancia(roboTP);
     }
 }

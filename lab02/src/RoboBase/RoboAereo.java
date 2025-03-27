@@ -10,27 +10,31 @@ public class RoboAereo extends Robo {
         this.altitudeMax = altitudeMax;
     }
 
+    public int getAltititude(){
+        return this.altitude;
+    }
+
     public void setAltitude(int alt){
         this.altitude = alt;
     }
 
     public void subir(int metros){
         if ((altitude + metros) <= altitudeMax){
-            this.altitude += metros;
-            System.out.printf("Altitude nova de %d.", altitude);
+            setAltitude(this.altitude+metros);
+            System.out.printf("Altitude nova de %d.", getAltititude());
         }
         else {
             System.out.println("Altitude nova seria maior que a maxima. Voltando a original.");
         }
-    }
+    } // usado
     
     public void descer(int metros){
-        if ((altitude + metros) >= 0){
-            this.altitude += metros;
+        if ((altitude - metros) >= 0){
+            setAltitude(this.altitude-metros);
             System.out.printf("Altitude nova de %d.", altitude);
         }
         else {
             System.out.println("Altitude nova seria menor que 0. Voltando a original.");
         }
-    }
+    } // usado
 }
