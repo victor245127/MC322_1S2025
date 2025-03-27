@@ -1,4 +1,4 @@
-package lab02;
+package lab02.src.RoboBase;
 
 public class RoboAereo extends Robo {
     protected int altitude;
@@ -10,6 +10,10 @@ public class RoboAereo extends Robo {
         this.altitudeMax = altitudeMax;
     }
 
+    public void setAltitude(int alt){
+        this.altitude = alt;
+    }
+
     public void subir(int metros){
         if ((altitude + metros) <= altitudeMax){
             this.altitude += metros;
@@ -19,6 +23,7 @@ public class RoboAereo extends Robo {
             System.out.println("Altitude nova seria maior que a maxima. Voltando a original.");
         }
     }
+    
     public void descer(int metros){
         if ((altitude + metros) >= 0){
             this.altitude += metros;

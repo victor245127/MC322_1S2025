@@ -1,4 +1,7 @@
-package lab02;
+package lab02.src.RoboVariacoes;
+
+import lab02.src.RoboBase.Robo;
+import lab02.src.RoboBase.RoboAereo;
 
 public class RoboAereoGPS extends RoboAereo{
     private int pontoX;
@@ -11,6 +14,6 @@ public class RoboAereoGPS extends RoboAereo{
     }
 
     public void distancia(Robo r){
-        System.out.printf("Para o robo %s chegar na posicao desejada, precisa andar %d em X e %d em Y.", r.nome, (pontoX - r.posicaoX), (pontoY - r.posicaoY));
+        System.out.printf("Para o robo %s chegar na posicao desejada, precisa andar %d em X e %d em Y.", r.getNome(), (pontoX - r.getX()), (pontoY - r.getY()));
     }// identificar distancia 
 }

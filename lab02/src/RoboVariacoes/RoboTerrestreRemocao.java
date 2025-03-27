@@ -1,4 +1,6 @@
-package lab02;
+package lab02.src.RoboVariacoes;
+
+import lab02.src.RoboBase.RoboTerrestre;
 
 public class RoboTerrestreRemocao extends RoboTerrestre {
     private int removeX;
@@ -13,14 +15,14 @@ public class RoboTerrestreRemocao extends RoboTerrestre {
     public void removeObstaculo(int obstaculos[][]){
         int i = 0;
         do {
-            if (identificarObstaculo(obstaculos, removeX, removeY)){
+            if (identificarObstaculo(obstaculos)){
                 obstaculos[i][0] = -1;
                 obstaculos[i][1] = -1;
-                System.out.printf("Obstaculo na posicao (%d, %d) removido com sucesso", removeX, removeY);
+                System.out.println("Obstaculo removido com sucesso!");
                 return;
             }
             i++;
         } while (i < obstaculos.length);
-        System.out.printf("Obstaculo nao encontrado na posicao (%d, %d).", removeX, removeY);
+        System.out.println("Obstaculo nao encontrado.");
     }
 }

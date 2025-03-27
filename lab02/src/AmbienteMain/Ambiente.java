@@ -1,4 +1,6 @@
-package lab02;
+package lab02.src.AmbienteMain;
+
+import lab02.src.RoboBase.Robo;
 
 public class Ambiente {
     private int largura;
@@ -14,10 +16,22 @@ public class Ambiente {
         this.obstaculos = obstaculos;
     }
 
+    public void setLargura(int l){
+        this.largura = l;
+    } // usado
+
+    public void setAltura(int a){
+        this.altura = a;
+    } // usado
+
     //metodo para mostrar as dimensoes do ambiente
-    public void getDimensoes(){
-        System.out.printf("O ambiente tem dimensao %d x %d x %d", largura, largura, altura);
-    }
+    public int getLargura(){
+        return largura;
+    } // usado
+
+    public int getAltura(){
+        return altura;
+    } // usado
 
     //metodo que verifica se a nova posicao do robo esta dentro dos limites
     public boolean dentroDosLimites(int largura, int altura){
@@ -27,14 +41,14 @@ public class Ambiente {
         else {  
             return false;
         }
-    }
+    } // usado
 
-    public void adicionarObstaculo(int X, int Y){
-        this.obstaculos[obstaculos.length][0] = X;
-        this.obstaculos[obstaculos.length][1] = Y;
-    }
+    public void setObstaculo(int X, int Y, int pos){
+        this.obstaculos[pos][0] = X;
+        this.obstaculos[pos][1] = Y;
+    } // usado
 
-    public void adicionarRobo(Robo r){
-        this.RobosAtivos[RobosAtivos.length] = r;
-    }
+    public void setRobo(Robo r, int pos){
+        this.RobosAtivos[pos] = r;
+    } // usado
 }

@@ -1,4 +1,6 @@
-package lab02;
+package lab02.src.RoboVariacoes;
+
+import lab02.src.RoboBase.RoboTerrestre;
 
 public class RoboTerrestrePulo extends RoboTerrestre {
     private int novoX;
@@ -13,7 +15,7 @@ public class RoboTerrestrePulo extends RoboTerrestre {
     public void Desvio(int obstaculo[][]){
         int i = 0;
         do {
-            if (identificarObstaculo(obstaculo, novoX, novoY)){
+            if (identificarObstaculo(obstaculo)){
                 this.novoX += 1;
                 this.novoY += 1;
                 System.out.printf("Obstaculo na posicao (%d, %d) desviado com sucesso", novoX, novoY);
