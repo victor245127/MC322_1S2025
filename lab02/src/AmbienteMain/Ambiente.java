@@ -7,6 +7,7 @@ public class Ambiente {
     private int altura;
     private Robo RobosAtivos[];
     private int obstaculos[][];
+    //atributos do ambiente
     
     //construtor do ambiente
     public Ambiente(int a, int l, Robo RobosAtivos[], int obstaculos[][]){
@@ -18,20 +19,20 @@ public class Ambiente {
 
     public void setLargura(int l){
         this.largura = l;
-    } // usado
+    } //muda a largura
 
     public void setAltura(int a){
         this.altura = a;
-    } // usado
+    } // muda a altura
 
-    //metodo para mostrar as dimensoes do ambiente
+    //metodos para mostrar as dimensoes do ambiente
     public int getLargura(){
         return largura;
-    } // usado
+    } 
 
     public int getAltura(){
         return altura;
-    } // usado
+    } 
 
     //metodo que verifica se a nova posicao do robo esta dentro dos limites
     public boolean dentroDosLimites(int largura, int altura){
@@ -41,14 +42,14 @@ public class Ambiente {
         else {  
             return false;
         }
-    } // usado
+    } 
 
     public void setObstaculo(int X, int Y, int pos){
         this.obstaculos[pos][0] = X;
         this.obstaculos[pos][1] = Y;
-    } // usado
+    } // metodo para adicionar obstaculos no ambiente
 
     public void setRobo(Robo r, int pos){
         this.RobosAtivos[pos] = r;
-    } // usado
+    } // metodo para adicionar robos ao ambiente
 }

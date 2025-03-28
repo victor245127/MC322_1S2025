@@ -5,7 +5,9 @@ public class Robo {
     protected String direcao;
     protected int posicaoX;
     protected int posicaoY;
+    //atributos padrao dos robos
 
+    //construtor padrao de robos
     public Robo (String nome, String direcao, int posicaoX, int posicaoY){
         this.nome = nome;
         this.direcao = direcao;
@@ -13,38 +15,43 @@ public class Robo {
         this.posicaoY = posicaoY;
     }
 
+    //metodos para retornar nome, posicao X e Y do robo
     public String getNome(){
         return this.nome;
-    } // usado
-
+    }
+    
     public int getX(){
         return this.posicaoX;
-    } // usado
+    } 
 
     public int getY(){
         return this.posicaoY;
-    } // usado
+    } 
 
+    //move o robo para uma posicao desejada
     public void mover(int posX, int posY){
         this.posicaoX = posX;
         this.posicaoY = posY;
     }
 
+    // metodo para identificar se ha um obstaculo a no maximo 1m de distancia do robo
     public boolean identificarObstaculo(int obstaculos[][]){
-        int j, i = 0;
+        int j, k, i = 0;
         do {
             for (j = -1; j < 2; j++){
-                if (obstaculos[i][0] == (this.posicaoX + j) && obstaculos[i][1] == (this.posicaoY + j)){
-                    return true;
+                for (k = -1; k < 2; k++){
+                    if (obstaculos[i][0] == (this.posicaoX + j) && obstaculos[i][1] == (this.posicaoY + k)){
+                        return true;
+                    }
                 }
             }
             i++;
         } while (i < obstaculos.length);
         return false;
-    } // encontra o obstaculo a no maximo 1 posicao de distancia de X e/ou Y do robo
-    // usado
+    } 
 
+    //metodo para mostrar os atributos do robo
     public void exibirPosicao(){
-        System.out.printf("O robo %s esta na posicao (%d, %d) na direcao %s.", nome, posicaoX, posicaoY, direcao);
-    } // usado
+        System.out.printf("Posicao de %s: (%d, %d) na direcao %s.\n", nome, posicaoX, posicaoY, direcao);
+    } 
 }
