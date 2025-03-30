@@ -29,7 +29,7 @@ public class RoboTerrestre extends Robo {
             System.out.printf("Indo para posicao (%d, %d) a %d m/s\n", posicaoX, posicaoY, getVelocidade());
         }
         else {
-            System.out.printf("Velocidade nao permitida. Indo para (%d, %d)\n", posX, posY);
+            System.out.printf("Velocidade nao permitida. Indo para (%d, %d) a %d m/s\n", posX, posY, getVelocidade());
         }
     } 
 }

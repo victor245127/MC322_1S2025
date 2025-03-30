@@ -18,6 +18,6 @@ public class RoboAereoDistorcao extends RoboAereo {
     public void Distorcer(Ambiente ambiente){
         ambiente.setAltura(ambiente.getAltura()+this.deltaAltura);
         ambiente.setLargura(ambiente.getLargura()+this.deltaLargura);
-        System.out.printf("Ambiente distorcido para %d m x %d m %d m", ambiente.getLargura(), ambiente.getLargura(), ambiente.getAltura());
+        System.out.printf("Ambiente distorcido para %d m x %d m %d m\n", ambiente.getLargura(), ambiente.getLargura(), ambiente.getAltura());
     }
 }

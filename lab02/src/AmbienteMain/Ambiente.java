@@ -35,8 +35,8 @@ public class Ambiente {
     } 
 
     //metodo que verifica se a nova posicao do robo esta dentro dos limites
-    public boolean dentroDosLimites(int largura, int altura){
-        if ((0 <= largura && largura <= this.largura) && (0<= altura && altura <= this.altura)){
+    public boolean dentroDosLimites(int X, int Y){
+        if ((0 <= X && X <= this.largura) && (0 <= Y && Y <= this.largura)){
             return true;
         }
         else {  

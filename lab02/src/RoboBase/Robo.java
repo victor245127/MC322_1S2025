@@ -15,7 +15,7 @@ public class Robo {
         this.posicaoY = posicaoY;
     }
 
-    //metodos para retornar nome, posicao X e Y do robo
+    //metodos para retornar nome, posicao X e Y e direcao do robo
     public String getNome(){
         return this.nome;
     }
@@ -28,6 +28,10 @@ public class Robo {
         return this.posicaoY;
     } 
 
+    public String getDirecao(){
+        return this.direcao;
+    }
+
     //move o robo para uma posicao desejada
     public void mover(int posX, int posY){
         this.posicaoX = posX;
@@ -35,12 +39,12 @@ public class Robo {
     }
 
     // metodo para identificar se ha um obstaculo a no maximo 1m de distancia do robo
-    public boolean identificarObstaculo(int obstaculos[][]){
+    public boolean identificarObstaculo(int obstaculos[][], int x, int y){
         int j, k, i = 0;
         do {
             for (j = -1; j < 2; j++){
                 for (k = -1; k < 2; k++){
-                    if (obstaculos[i][0] == (this.posicaoX + j) && obstaculos[i][1] == (this.posicaoY + k)){
+                    if (obstaculos[i][0] == (x + j) && obstaculos[i][1] == (y + k)){
                         return true;
                     }
                 }
@@ -52,6 +56,6 @@ public class Robo {
 
     //metodo para mostrar os atributos do robo
     public void exibirPosicao(){
-        System.out.printf("Posicao de %s: (%d, %d) na direcao %s.\n", nome, posicaoX, posicaoY, direcao);
+        System.out.printf("Posicao de %s: (%d, %d) na direcao %s.\n", getNome(), getX(), getY(), getDirecao());
     } 
 }

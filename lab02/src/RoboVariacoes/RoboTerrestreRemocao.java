@@ -18,7 +18,7 @@ public class RoboTerrestreRemocao extends RoboTerrestre {
         int i = 0;
         mover(this.removeX, this.removeY, velNova);
         do {
-            if (identificarObstaculo(obstaculos)){
+            if (identificarObstaculo(obstaculos, removeX, removeY)){
                 obstaculos[i][0] = -1;
                 obstaculos[i][1] = -1;
                 System.out.println("Obstaculo removido.\n");
