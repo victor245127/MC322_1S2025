@@ -1,5 +1,6 @@
 package lab02.src.RoboBase;
 
+// subclasse de robo para alterar a velocidade de movimento
 public class RoboTerrestre extends Robo {
     protected int velocidadeMax;
     protected int velocidadeAtual;

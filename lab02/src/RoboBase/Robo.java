@@ -1,5 +1,6 @@
 package lab02.src.RoboBase;
 
+// superclasse robo, a qual as demais herdam
 public class Robo {
     protected String nome;
     protected String direcao;
@@ -36,6 +37,10 @@ public class Robo {
     public void mover(int posX, int posY){
         this.posicaoX = posX;
         this.posicaoY = posY;
+    }
+
+    public void setDirecao(String novaDir){
+        this.direcao = novaDir;
     }
 
     // metodo para identificar se ha um obstaculo a no maximo 1m de distancia do robo

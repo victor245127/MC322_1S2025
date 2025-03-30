@@ -2,6 +2,7 @@ package lab02.src.RoboVariacoes;
 
 import lab02.src.RoboBase.RoboTerrestre;
 
+// subclasse de robo terrestre que remove um possivel obstaculo em uma certa posicao
 public class RoboTerrestreRemocao extends RoboTerrestre {
     private int removeX;
     private int removeY;
@@ -17,15 +18,19 @@ public class RoboTerrestreRemocao extends RoboTerrestre {
     public void removeObstaculo(int obstaculos[][], int velNova){
         int i = 0;
         mover(this.removeX, this.removeY, velNova);
+        // vai para a posicao dado nos atributos
         do {
             if (identificarObstaculo(obstaculos, removeX, removeY)){
                 obstaculos[i][0] = -1;
                 obstaculos[i][1] = -1;
                 System.out.println("Obstaculo removido.\n");
                 return;
+                // muda as posicoes do obstaculo para -1, pois assim nao serao mais acessiveis
             }
             i++;
         } while (i < obstaculos.length);
+        // loop do while para verificar se ha obstaculos a sua volta e, caso haja, o(s) remove
         System.out.println("Obstaculo nao encontrado.\n");
+        // caso loop finalize, significa que nao ha obstaculos em sua volta
     }
 }

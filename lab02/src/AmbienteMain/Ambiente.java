@@ -2,6 +2,7 @@ package lab02.src.AmbienteMain;
 
 import lab02.src.RoboBase.Robo;
 
+// classe do ambiente, que possui suas dimensoes e vetores com os robos e obstaculos presentes 
 public class Ambiente {
     private int largura;
     private int altura;

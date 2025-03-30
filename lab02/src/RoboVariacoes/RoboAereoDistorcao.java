@@ -3,6 +3,7 @@ package lab02.src.RoboVariacoes;
 import lab02.src.AmbienteMain.Ambiente;
 import lab02.src.RoboBase.RoboAereo;
 
+// subclasse de robo aereo que distorce as dimensoes, as aumentando ou diminuindo
 public class RoboAereoDistorcao extends RoboAereo {
     private int deltaAltura;
     private int deltaLargura;
@@ -14,7 +15,7 @@ public class RoboAereoDistorcao extends RoboAereo {
         this.deltaLargura = deltaLargura;
     } // construtor desse robo
 
-    // metodo em que o robo muda as dimensoes do ambiente, distorcendo-o
+    // metodo em que o robo muda as dimensoes do ambiente
     public void Distorcer(Ambiente ambiente){
         ambiente.setAltura(ambiente.getAltura()+this.deltaAltura);
         ambiente.setLargura(ambiente.getLargura()+this.deltaLargura);

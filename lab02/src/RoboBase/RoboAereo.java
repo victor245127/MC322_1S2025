@@ -2,6 +2,7 @@ package lab02.src.RoboBase;
 
 import lab02.src.AmbienteMain.Ambiente;
 
+// subclasse de robos que alteram sua altitude
 public class RoboAereo extends Robo {
     protected int altitude;
     protected int altitudeMax;
