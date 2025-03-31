@@ -1,6 +1,7 @@
 package lab02.src.RoboVariacoes;
 
 import lab02.src.RoboBase.RoboTerrestre;
+import lab02.src.AmbienteMain.Ambiente;
 
 // subclasse de robo terrestre que remove um possivel obstaculo em uma certa posicao
 public class RoboTerrestreRemocao extends RoboTerrestre {
@@ -15,9 +16,9 @@ public class RoboTerrestreRemocao extends RoboTerrestre {
     } // construtor do robo 
 
     // metodo que remove um obstaculo proximo a nova posicao do robo
-    public void removeObstaculo(int obstaculos[][], int velNova){
+    public void removeObstaculo(Ambiente ambiente, int obstaculos[][], int velNova){
         int i = 0;
-        mover(this.removeX, this.removeY, velNova);
+        mover(this.removeX, this.removeY, ambiente, velNova);
         // vai para a posicao dado nos atributos
         do {
             if (identificarObstaculo(obstaculos, removeX, removeY)){

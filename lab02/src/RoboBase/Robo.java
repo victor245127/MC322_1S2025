@@ -1,5 +1,7 @@
 package lab02.src.RoboBase;
 
+import lab02.src.AmbienteMain.Ambiente;
+
 // superclasse robo, a qual as demais herdam
 public class Robo {
     protected String nome;
@@ -33,10 +35,16 @@ public class Robo {
         return this.direcao;
     }
 
-    //move o robo para uma posicao desejada
-    public void mover(int posX, int posY){
-        this.posicaoX = posX;
-        this.posicaoY = posY;
+    //move o robo para uma posicao desejada caso seja possivel
+    public void mover(int posX, int posY, Ambiente ambiente){
+        if (ambiente.dentroDosLimites(posX, posY)){
+            this.posicaoX = posX;
+            this.posicaoY = posY;
+            System.out.printf("Indo para posicao (%d, %d)\n", posicaoX, posicaoY);
+        }
+        else {
+            System.out.printf("Posicao (%d, %d) nao pode ser alcancada\n", posX, posY);
+        }
     }
 
     public void setDirecao(String novaDir){

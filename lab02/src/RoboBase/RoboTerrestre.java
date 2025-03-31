@@ -1,5 +1,7 @@
 package lab02.src.RoboBase;
 
+import lab02.src.AmbienteMain.Ambiente;
+
 // subclasse de robo para alterar a velocidade de movimento
 public class RoboTerrestre extends Robo {
     protected int velocidadeMax;
@@ -22,15 +24,20 @@ public class RoboTerrestre extends Robo {
     } 
 
     //metodo de sobrecarga de mover, que adiciona a mudanca de velocidade, se nao exceder a maxima
-    public void mover (int posX, int posY, int velNova){
+    public void mover (int posX, int posY, Ambiente ambiente, int velNova){
         this.posicaoX = posX;
         this.posicaoY = posY;
-        if (velNova <= velocidadeMax){
-            setVelocidade(velNova);
-            System.out.printf("Indo para posicao (%d, %d) a %d m/s\n", posicaoX, posicaoY, getVelocidade());
+        if (ambiente.dentroDosLimites(posX, posY)){
+            if (velNova <= velocidadeMax){
+                setVelocidade(velNova);
+                System.out.printf("Indo para posicao (%d, %d) a %d m/s\n", posicaoX, posicaoY, getVelocidade());
+            }
+            else {
+                System.out.printf("Velocidade nao permitida. Indo para (%d, %d) a %d m/s\n", posX, posY, getVelocidade());
+            }
         }
         else {
-            System.out.printf("Velocidade nao permitida. Indo para (%d, %d) a %d m/s\n", posX, posY, getVelocidade());
+            System.out.printf("Posicao (%d, %d) nao pode ser alcancada\n", posX, posY);
         }
     } 
 }

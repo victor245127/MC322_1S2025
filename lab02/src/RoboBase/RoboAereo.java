@@ -46,5 +46,9 @@ public class RoboAereo extends Robo {
         else {
             System.out.println("Altitude nao permitida.\n");
         }
-    } 
+    }
+
+    public void exibirPosicaoAereo(){
+        System.out.printf("Posicao de %s: (%d, %d, %d)\n", getNome(), getX(), getY(), getAltititude());
+    }
 }

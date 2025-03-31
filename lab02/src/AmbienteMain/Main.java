@@ -39,8 +39,8 @@ public class Main {
 
         roboTE.exibirPosicao();
         roboTR.exibirPosicao();
-        roboAO.exibirPosicao();
-        roboAD.exibirPosicao();
+        roboAO.exibirPosicaoAereo();
+        roboAD.exibirPosicaoAereo();
         //exibindo as posicoes iniciais dos robos
 
         roboAO.descer(60);
@@ -50,12 +50,8 @@ public class Main {
         roboAD.subir(80, ambiente);
         // robo4 tenta subir mas eh impossibilitado pelo limite do ambiente
 
-        if (ambiente.dentroDosLimites(55, 40)){
-            roboTE.mover(55, 40, 15);
-        }
-        else {
-            System.out.println("Posicao nao permitida, se encontra alem dos limites do ambiente.\n");
-        } // robo1 tenta mover a uma posicao
+        roboTE.mover(55, 40, ambiente, 15);
+        // robo1 tenta mover a uma posicao
 
         roboAD.Distorcer(ambiente);
         // robo4 distorce o ambiente, alterando suas dimensoes
@@ -63,10 +59,10 @@ public class Main {
         roboAD.subir(80, ambiente);
         // robo4 agora pode subir para a altitude desejada
 
-        roboTE.mover(55, 40, 15);
+        roboTE.mover(55, 40, ambiente, 15);
         //robo1 agora pode mover-se a posicao desejada
 
-        roboTR.removeObstaculo(obstaculos, 45);
+        roboTR.removeObstaculo(ambiente, obstaculos, 45);
         // robo2 vai a uma posicao e remove um obstaculo proximo a ela
         
         roboTE.explorar(ambiente, obstaculos);
@@ -79,15 +75,15 @@ public class Main {
         roboAO.observar(ambiente, obstaculos);
         // robo3 observa o ambiente e identifica os obstaculos dentro de seu raio
 
-        roboAO.mover(10, 10);
+        roboAO.mover(10, 10, ambiente);
         roboAO.setRaio(3);
         roboAO.observar(ambiente, obstaculos);
         // robo3 move-se a uma nova posicao, diminui seu raio de visao e observa novamente
 
         roboTE.exibirPosicao();
         roboTR.exibirPosicao();
-        roboAO.exibirPosicao();
-        roboAD.exibirPosicao();
+        roboAO.exibirPosicaoAereo();
+        roboAD.exibirPosicaoAereo();
         //exibindo as posicoes finais dos robos        
     }
 }

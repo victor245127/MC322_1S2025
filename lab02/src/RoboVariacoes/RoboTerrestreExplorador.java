@@ -28,7 +28,7 @@ public class RoboTerrestreExplorador extends RoboTerrestre {
         String dir = getDirecao().toLowerCase();
         // ajusta a string para poder ser comparavel
 
-        System.out.printf("Iniciando exploração para %d", dir);
+        System.out.printf("Iniciando exploração para %s", dir);
 
         while (true) {
             int novoX = x;
@@ -60,12 +60,12 @@ public class RoboTerrestreExplorador extends RoboTerrestre {
                     novoY = 0;
                 } // condicionais para ajustar corretamente a posicao final do robo
                 System.out.printf("Exploração interrompida em (%d, %d)\n", novoX, novoY);
-                mover(novoX, novoY);
+                mover(novoX, novoY, ambiente);
                 break;
             }
 
             if (ambiente.dentroDosLimites(novoX - x, novoY - y)){
-                mover(novoX - x, novoY - y);
+                mover(novoX - x, novoY - y, ambiente);
             } // muda a posicao do robo
             passosDados++;
             x = novoX;
