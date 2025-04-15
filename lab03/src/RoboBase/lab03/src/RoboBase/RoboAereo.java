@@ -1,20 +1,24 @@
 package lab03.src.RoboBase;
 
 import lab03.src.Ambiente.Ambiente;
+import lab03.src.Ambiente.Obstaculos;
 import lab03.src.Sensor.Sensor;
-import lab03.src.Sensor.SensorCalor;
+import lab03.src.Sensor.SensorIdentificacao;
+import lab03.src.Sensor.SensorColisao;
 
 // subclasse de robos que alteram sua altitude
 public class RoboAereo extends Robo {
     protected int altitudeMax;
-    protected SensorCalor sensor_calor;
+    protected SensorIdentificacao sensor_identificacao;
+    protected SensorColisao sensor_colisao;
     //atributos padrao dos robos aereos
 
     // falar que mudei altitude para posicaoZ
-    public RoboAereo (String nome, String direcao, int posicaoX, int posicaoY, int posicaoZ, int altitudeMax, Sensor sensor, SensorCalor sensor_calor){
+    public RoboAereo (String nome, String direcao, int posicaoX, int posicaoY, int posicaoZ, int altitudeMax, Sensor sensor, SensorIdentificacao sensor_ident, SensorColisao sensor_colisao){
         super(nome, direcao, posicaoX, posicaoY, posicaoZ, sensor);
         this.altitudeMax = altitudeMax;
-        this.sensor_calor = sensor_calor;
+        this.sensor_identificacao = sensor_ident;
+        this.sensor_colisao = sensor_colisao;
     } // construtor do robo aereo
 
     public void setAltitudeMax(int altM){
@@ -22,8 +26,8 @@ public class RoboAereo extends Robo {
     }
 
     //metodos para aumentar ou diminuir a altitude do robo, e checam se a nova esta dentro dos limites
-    public void subir(int metros, Ambiente ambiente){
-        if ((getZ()+metros) <= altitudeMax || (getZ()+metros) <= ambiente.getAltura()){
+    public void subir(int metros, Ambiente ambiente, Obstaculos obstaculos[]){
+        if (((getZ()+metros) <= altitudeMax && (getZ()+metros) <= ambiente.getAltura()) && sensor_colisao.detectarColisoes(obstaculos, ambiente, getX(), getY(), (getZ()+metros))){
             this.posicaoZ += metros;
             System.out.printf("Altitude nova de %d m.\n", getZ());
         }
@@ -32,8 +36,8 @@ public class RoboAereo extends Robo {
         }
     } 
     
-    public void descer(int metros){
-        if ((getZ()-metros) >= 0){
+    public void descer(int metros, Ambiente ambiente, Obstaculos obstaculos[]){
+        if ((getZ()-metros) >= 0 && sensor_colisao.detectarColisoes(obstaculos, ambiente, getX(), getY(), (getZ()-metros))){
             this.posicaoZ -= metros;
             System.out.printf("Altitude nova de %d m.\n", getZ());
         }

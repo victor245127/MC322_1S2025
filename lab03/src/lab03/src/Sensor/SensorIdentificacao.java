@@ -3,10 +3,10 @@ package lab03.src.Sensor;
 import lab03.src.Ambiente.Ambiente;
 import lab03.src.Ambiente.Obstaculos;
 
-public class SensorIdentifica extends Sensor {
+public class SensorIdentificacao extends Sensor {
     private String tipoObstaculo;
 
-    public SensorIdentifica(int raio, String tipo){
+    public SensorIdentificacao(int raio, String tipo){
         super(raio);
         this.tipoObstaculo = tipo;
     }
@@ -30,7 +30,7 @@ public class SensorIdentifica extends Sensor {
                     return "PAREDE";
                 }
             case 30:
-                return "PASSARO";
+                return "PREDIO";
             default:
                 return "NULL";
         }

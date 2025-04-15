@@ -1,21 +1,22 @@
 package lab03.src.RoboBase;
 
 import lab03.src.Ambiente.Ambiente;
+import lab03.src.Ambiente.Obstaculos;
 import lab03.src.Sensor.Sensor;
-import lab03.src.Sensor.SensorIdentifica;
+import lab03.src.Sensor.SensorColisao;
 
 // subclasse de robo para alterar a velocidade de movimento
 public class RoboTerrestre extends Robo {
     protected int velocidadeMax;
     protected int velocidadeAtual;
-    protected SensorIdentifica sensor_identificacao;
+    protected SensorColisao sensor_colisao;
     // atributos padrao de robos terrestres
 
-    public RoboTerrestre (String nome, String direcao, int posicaoX, int posicaoY, int posicaoZ, int velocidadeMax, int velocidadeAtual, Sensor sensor, SensorIdentifica sensor_ident){
+    public RoboTerrestre (String nome, String direcao, int posicaoX, int posicaoY, int posicaoZ, int velocidadeMax, int velocidadeAtual, Sensor sensor, SensorColisao sensor_colisao){
         super(nome, direcao, posicaoX, posicaoY, posicaoZ, sensor);
         this.velocidadeMax = velocidadeMax;
         this.velocidadeAtual = velocidadeAtual;
-        this.sensor_identificacao = sensor_ident;
+        this.sensor_colisao = sensor_colisao;
     } // construtor de robos terrestres
 
     // metodos para mudar a velocidade e mostra-la, respectivamente
@@ -28,10 +29,10 @@ public class RoboTerrestre extends Robo {
     } 
 
     //metodo de sobrecarga de mover, que adiciona a mudanca de velocidade, se nao exceder a maxima
-    public void mover (int posX, int posY, Ambiente ambiente, int velNova){
-        this.posicaoX = posX;
-        this.posicaoY = posY;
-        if (ambiente.dentroDosLimites(posX, posY, getZ())){
+    public void mover (int posX, int posY, Ambiente ambiente, int velNova, Obstaculos obstaculos[]){
+        if (ambiente.dentroDosLimites(posX, posY, getZ()) && !sensor_colisao.detectarColisoes(obstaculos, ambiente, posX, posY, getZ())){
+            this.posicaoX = posX;
+            this.posicaoY = posY;
             if (velNova <= velocidadeMax){
                 setVelocidade(velNova);
                 System.out.printf("Indo para posicao (%d, %d, %d) a %d m/s\n", getX(), getY(), getZ(), getVelocidade());

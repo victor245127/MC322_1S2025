@@ -2,6 +2,8 @@ package lab03.src.Ambiente;
 
 import lab03.src.RoboBase.Robo;
 
+//PERGUNTAR SE MONITORAR E DETECTAR COLISAO PODE OU NAO TER PARAMETRO
+
 // classe do ambiente, que possui suas dimensoes e vetores com os robos e obstaculos presentes 
 public class Ambiente {
     private int largura;
@@ -48,11 +50,7 @@ public class Ambiente {
             return false;
         }
     } 
-
-    public void detectarColisoes(){
-
-    }
-
+    
     public void setRobo(Robo r){
         // fazer um loop para verificar que posicao esta vazia no vetor e ver se o robo esta no vetor
         this.RobosAtivos[] = r;
