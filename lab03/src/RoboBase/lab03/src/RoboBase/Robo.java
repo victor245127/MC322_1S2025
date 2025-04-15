@@ -46,13 +46,13 @@ public class Robo {
 
     //move o robo para uma posicao desejada caso seja possivel
     public void mover(int posX, int posY, Ambiente ambiente){
-        if (ambiente.dentroDosLimites(posX, posY)){
+        if (ambiente.dentroDosLimites(posX, posY, this.posicaoZ)){
             this.posicaoX = posX;
             this.posicaoY = posY;
-            System.out.printf("Indo para posicao (%d, %d)\n", posicaoX, posicaoY);
+            System.out.printf("Indo para posicao (%d, %d, %d)\n", posicaoX, posicaoY, posicaoZ);
         }
         else {
-            System.out.printf("Posicao (%d, %d) nao pode ser alcancada\n", posX, posY);
+            System.out.printf("Posicao (%d, %d, %d) nao pode ser alcancada\n", posX, posY, posicaoZ);
         }
     }
 

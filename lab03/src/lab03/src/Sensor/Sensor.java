@@ -4,7 +4,8 @@ import lab03.src.Ambiente.Obstaculos;
 import lab03.src.Ambiente.Ambiente;
 
 public class Sensor {
-    private int raio;
+    protected int raio;
+    //trocar para double
 
     public Sensor (int raio){
         this.raio = raio;
@@ -19,7 +20,7 @@ public class Sensor {
                         if (ambiente.dentroDosLimites(i, j, k)){
                             if (obstaculos[a].getX1() <= i && i <= obstaculos[a].getX2()){
                                 if (obstaculos[a].getY1() <= j && j <= obstaculos[a].getY2()){
-                                    if (obstaculos[a].getTipoAltura() <= k){
+                                    if (obstaculos[a].getObstaculo().getAltura() <= k){
                                         return true;
                                     }
                                 }

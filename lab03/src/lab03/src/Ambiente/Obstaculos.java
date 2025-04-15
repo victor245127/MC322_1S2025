@@ -39,10 +39,6 @@ public class Obstaculos {
         return this.posicaoY2;
     }
 
-    public int getTipoAltura(){
-        return this.tipo.getAltura();
-    }
-
     public TiposObstaculo getObstaculo(){
         return this.tipo;
     }
