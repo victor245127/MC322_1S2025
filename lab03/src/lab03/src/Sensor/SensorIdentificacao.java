@@ -36,7 +36,11 @@ public class SensorIdentificacao extends Sensor {
         }
     }
 
-    public String monitorar_identificar(Ambiente ambiente, Obstaculos obstaculos[], int posX, int posY, int posZ){
+    public String getIdentificacao(){
+        return this.tipoObstaculo;
+    }
+
+    public void monitorar_identificar(Ambiente ambiente, Obstaculos obstaculos[], int posX, int posY, int posZ){
         int a, i, j, k;
         for (a = 0; a < obstaculos.length; a++){
             for (i = posX - raio; i <= posX+raio; i++){
@@ -47,7 +51,8 @@ public class SensorIdentificacao extends Sensor {
                                 if (obstaculos[a].getY1() <= j && j <= obstaculos[a].getY2()){
                                     if (obstaculos[a].getObstaculo().getAltura() <= k){
                                         this.tipoObstaculo = identificacao(obstaculos, a);
-                                        return tipoObstaculo;
+                                        System.out.printf("%s identificado entre (%d, %d, %d) e (%d, %d, %d).\n", getIdentificacao(), obstaculos[a].getX1(), obstaculos[a].getY1(), obstaculos[a].getObstaculo().getAltura(), obstaculos[a].getX2(), obstaculos[a].getY2(), obstaculos[a].getObstaculo().getAltura());;
+                                        return;
                                     }
                                 }
                             }
@@ -57,7 +62,7 @@ public class SensorIdentificacao extends Sensor {
             }
         }
         this.tipoObstaculo = "NULL";
-        return this.tipoObstaculo;
+        System.out.println("Obstaculo nao encontrado dentro do raio.\n");;
     } // metodo para monitorar objetos ao redor de um robo a partir de seu raio
 
 }

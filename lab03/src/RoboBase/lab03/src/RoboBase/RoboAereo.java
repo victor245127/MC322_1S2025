@@ -10,15 +10,13 @@ import lab03.src.Sensor.SensorColisao;
 public class RoboAereo extends Robo {
     protected int altitudeMax;
     protected SensorIdentificacao sensor_identificacao;
-    protected SensorColisao sensor_colisao;
     //atributos padrao dos robos aereos
 
     // falar que mudei altitude para posicaoZ
     public RoboAereo (String nome, String direcao, int posicaoX, int posicaoY, int posicaoZ, int altitudeMax, Sensor sensor, SensorIdentificacao sensor_ident, SensorColisao sensor_colisao){
-        super(nome, direcao, posicaoX, posicaoY, posicaoZ, sensor);
+        super(nome, direcao, posicaoX, posicaoY, posicaoZ, sensor, sensor_colisao);
         this.altitudeMax = altitudeMax;
         this.sensor_identificacao = sensor_ident;
-        this.sensor_colisao = sensor_colisao;
     } // construtor do robo aereo
 
     public void setAltitudeMax(int altM){

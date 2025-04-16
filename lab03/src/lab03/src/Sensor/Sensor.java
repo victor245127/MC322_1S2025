@@ -5,7 +5,7 @@ import lab03.src.Ambiente.Ambiente;
 
 public class Sensor {
     protected int raio;
-    //trocar para double
+    //trocar para double e perguntar
 
     public Sensor (int raio){
         this.raio = raio;

@@ -29,4 +29,8 @@ public enum TiposObstaculo {
     public boolean emiteCalor(){
         return this.calor;
     }
+
+    public String getTipo(){
+        return this.name();
+    }
 }

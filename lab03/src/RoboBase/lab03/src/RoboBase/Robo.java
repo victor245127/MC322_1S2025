@@ -2,6 +2,7 @@ package lab03.src.RoboBase;
 
 import lab03.src.Ambiente.Ambiente;
 import lab03.src.Sensor.Sensor;
+import lab03.src.Sensor.SensorColisao;
 
 // superclasse robo, a qual as demais herdam
 public class Robo {
@@ -11,16 +12,18 @@ public class Robo {
     protected int posicaoY;
     protected int posicaoZ;
     protected Sensor sensor;
+    protected SensorColisao sensor_colisao;
     //atributos padrao dos robos
 
     //construtor padrao de robos
-    public Robo (String nome, String direcao, int posicaoX, int posicaoY, int posicaoZ, Sensor sensor){
+    public Robo (String nome, String direcao, int posicaoX, int posicaoY, int posicaoZ, Sensor sensor, SensorColisao sensor_colisao){
         this.nome = nome;
         this.direcao = direcao;
         this.posicaoX = posicaoX;
         this.posicaoY = posicaoY;
         this.posicaoZ = posicaoZ;
         this.sensor = sensor;
+        this.sensor_colisao = sensor_colisao;
     }
 
     //metodos para retornar nome, posicao X e Y e direcao do robo
@@ -56,8 +59,22 @@ public class Robo {
         }
     }
 
-    public void setDirecao(String novaDir){
-        this.direcao = novaDir;
+    public void setDirecao(Ambiente ambiente){
+        if (this.posicaoX >= ambiente.getLargura()/2){
+            if (this.posicaoY >= ambiente.getLargura()/2)
+                this.direcao = "NORDESTE";
+            else if (this.posicaoY < ambiente.getLargura()/2){
+                this.direcao = "NORDESTE";
+            }
+        }
+        else if (this.posicaoX < ambiente.getLargura()/2){
+            if (this.posicaoY >= ambiente.getLargura()/2){
+                this.direcao = "SUDESTE";
+            }
+            else if (this.posicaoY < ambiente.getLargura()/2){
+                this.direcao = "SUDOESTE";
+            }
+        }
     }
 
     // metodo para identificar se ha um obstaculo a no maximo 1m de distancia do robo

@@ -9,14 +9,12 @@ import lab03.src.Sensor.SensorColisao;
 public class RoboTerrestre extends Robo {
     protected int velocidadeMax;
     protected int velocidadeAtual;
-    protected SensorColisao sensor_colisao;
     // atributos padrao de robos terrestres
 
     public RoboTerrestre (String nome, String direcao, int posicaoX, int posicaoY, int posicaoZ, int velocidadeMax, int velocidadeAtual, Sensor sensor, SensorColisao sensor_colisao){
-        super(nome, direcao, posicaoX, posicaoY, posicaoZ, sensor);
+        super(nome, direcao, posicaoX, posicaoY, posicaoZ, sensor, sensor_colisao);
         this.velocidadeMax = velocidadeMax;
         this.velocidadeAtual = velocidadeAtual;
-        this.sensor_colisao = sensor_colisao;
     } // construtor de robos terrestres
 
     // metodos para mudar a velocidade e mostra-la, respectivamente

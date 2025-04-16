@@ -1,5 +1,7 @@
 package lab03.src.Ambiente;
 
+import java.util.ArrayList;
+
 import lab03.src.RoboBase.Robo;
 
 //PERGUNTAR SE MONITORAR E DETECTAR COLISAO PODE OU NAO TER PARAMETRO
@@ -8,12 +10,12 @@ import lab03.src.RoboBase.Robo;
 public class Ambiente {
     private int largura;
     private int altura;
-    private Robo RobosAtivos[];
-    private Obstaculos obstaculos[];
+    private ArrayList<Robo> RobosAtivos;
+    private ArrayList<Obstaculos> obstaculos;
     //atributos do ambiente
     
     //construtor do ambiente
-    public Ambiente(int a, int l, Robo RobosAtivos[], Obstaculos obstaculos[]){
+    public Ambiente(int a, int l, ArrayList<Robo> RobosAtivos, ArrayList<Obstaculos> obstaculos){
         this.altura = a;
         this.largura = l;
         this.RobosAtivos = RobosAtivos;
@@ -37,7 +39,7 @@ public class Ambiente {
         return altura;
     } 
 
-    public Obstaculos[] getObstaculos(){
+    public ArrayList<Obstaculos> getObstaculos(){
         return this.obstaculos;
     }
 
@@ -49,14 +51,21 @@ public class Ambiente {
         else {  
             return false;
         }
-    } 
+    }
     
     public void setRobo(Robo r){
-        // fazer um loop para verificar que posicao esta vazia no vetor e ver se o robo esta no vetor
-        this.RobosAtivos[] = r;
+        this.RobosAtivos.add(r);
     } // metodo para adicionar robos ao ambiente
 
     public void removeRobo(Robo r){
-        
-    } // remover robo, realocar o resto e verificar se ele ta na lista ou nao
+        this.RobosAtivos.remove(r);
+    } 
+
+    public void setObstaculo(Obstaculos obstaculo){
+        this.obstaculos.add(obstaculo);
+    }
+
+    public void removeObstaculo(Obstaculos obstaculo){
+        this.obstaculos.remove(obstaculo);
+    }
 }
