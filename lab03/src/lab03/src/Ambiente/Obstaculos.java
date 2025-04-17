@@ -15,14 +15,6 @@ public class Obstaculos {
         this.tipo = tipo;
     }
 
-    public int getTamanhoX(){
-        return (this.posicaoX2 - this.posicaoX1);
-    }
-
-    public int getTamanhoY(){
-        return (this.posicaoY2 - this.posicaoY1);
-    }
-
     public int getX1(){
         return this.posicaoX1;
     }
@@ -37,6 +29,26 @@ public class Obstaculos {
 
     public int getY2(){
         return this.posicaoY2;
+    }
+
+    public void setX1(int X1){
+        this.posicaoX1 = X1;
+    }
+
+    public void setX2(int X2){
+        this.posicaoX2 = X2;
+    }
+
+    public void setY1(int Y1){
+        this.posicaoY1 = Y1;
+    }
+
+    public void setY2(int Y2){
+        this.posicaoY2 = Y2;
+    }
+
+    public void setTipoObstaculo(TiposObstaculo tipo){
+        this.tipo = tipo;
     }
 
     public TiposObstaculo getObstaculo(){

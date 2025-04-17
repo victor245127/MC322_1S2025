@@ -1,5 +1,7 @@
 package lab03.src.RoboBase;
 
+import java.util.ArrayList;
+
 import lab03.src.Ambiente.Ambiente;
 import lab03.src.Ambiente.Obstaculos;
 import lab03.src.Sensor.Sensor;
@@ -18,8 +20,12 @@ public class RoboTerrestre extends Robo {
     } // construtor de robos terrestres
 
     // metodos para mudar a velocidade e mostra-la, respectivamente
-    private void setVelocidade(int vel){
+    public void setVelocidade(int vel){
         this.velocidadeAtual = vel;
+    }
+
+    public void setVelocidadeMax(int velMax){
+        this.velocidadeMax = velMax;
     }
 
     private int getVelocidade(){
@@ -27,7 +33,7 @@ public class RoboTerrestre extends Robo {
     } 
 
     //metodo de sobrecarga de mover, que adiciona a mudanca de velocidade, se nao exceder a maxima
-    public void mover (int posX, int posY, Ambiente ambiente, int velNova, Obstaculos obstaculos[]){
+    public void mover (int posX, int posY, Ambiente ambiente, int velNova, ArrayList<Obstaculos> obstaculos){
         if (ambiente.dentroDosLimites(posX, posY, getZ()) && !sensor_colisao.detectarColisoes(obstaculos, ambiente, posX, posY, getZ())){
             this.posicaoX = posX;
             this.posicaoY = posY;

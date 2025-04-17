@@ -47,6 +47,27 @@ public class Robo {
         return this.direcao;
     }
 
+    public void setNome(String nome){
+        this.nome = nome;
+    }
+    
+    public void setX(int posX){
+        this.posicaoX = posX;
+    } 
+
+    public void setY(int posY){
+        this.posicaoY = posY;
+    } 
+
+    public void setZ(int posZ){
+        this.posicaoZ = posZ;
+    }
+
+    public void setSensores(Sensor sensor, SensorColisao sensor_colisao){
+        this.sensor = sensor;
+        this.sensor_colisao = sensor_colisao;
+    }
+
     //move o robo para uma posicao desejada caso seja possivel
     public void mover(int posX, int posY, Ambiente ambiente){
         if (ambiente.dentroDosLimites(posX, posY, this.posicaoZ)){

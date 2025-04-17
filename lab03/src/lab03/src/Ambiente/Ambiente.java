@@ -3,6 +3,11 @@ package lab03.src.Ambiente;
 import java.util.ArrayList;
 
 import lab03.src.RoboBase.Robo;
+import lab03.src.RoboBase.RoboAereo;
+import lab03.src.RoboBase.RoboTerrestre;
+import lab03.src.Sensor.Sensor;
+import lab03.src.Sensor.SensorColisao;
+import lab03.src.Sensor.SensorIdentificacao;
 
 //PERGUNTAR SE MONITORAR E DETECTAR COLISAO PODE OU NAO TER PARAMETRO
 
@@ -53,7 +58,24 @@ public class Ambiente {
         }
     }
     
-    public void setRobo(Robo r){
+    public void setRoboTerrestre(RoboTerrestre r, String nome, int posX, int posY, int posZ, int velMax, int velAtual, Sensor sensor, SensorColisao sensor_colisao){
+        r.setNome(nome);
+        r.setX(posX);
+        r.setY(posY);
+        r.setZ(posZ);
+        r.setSensores(sensor, sensor_colisao);
+        r.setVelocidade(velAtual);
+        r.setVelocidadeMax(velMax);
+        this.RobosAtivos.add(r);
+    } // metodo para adicionar robos ao ambiente
+
+    public void setRoboAereo(RoboAereo r, String nome, int posX, int posY, int posZ, int altitudeMax, Sensor sensor, SensorColisao sensor_colisao, SensorIdentificacao sensor_ident){
+        r.setNome(nome);
+        r.setX(posX);
+        r.setY(posY);
+        r.setZ(posZ);
+        r.setSensores(sensor, sensor_ident, sensor_colisao);
+        r.setAltitudeMax(altitudeMax);
         this.RobosAtivos.add(r);
     } // metodo para adicionar robos ao ambiente
 
@@ -61,7 +83,12 @@ public class Ambiente {
         this.RobosAtivos.remove(r);
     } 
 
-    public void setObstaculo(Obstaculos obstaculo){
+    public void setObstaculo(Obstaculos obstaculo, int x1, int x2, int y1, int y2, TiposObstaculo tipo){
+        obstaculo.setX1(x1);
+        obstaculo.setX2(x2);
+        obstaculo.setY1(y1);
+        obstaculo.setY2(y2);
+        obstaculo.setTipoObstaculo(tipo);
         this.obstaculos.add(obstaculo);
     }
 
