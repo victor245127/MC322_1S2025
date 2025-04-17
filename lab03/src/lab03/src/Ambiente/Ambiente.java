@@ -79,10 +79,6 @@ public class Ambiente {
         this.RobosAtivos.add(r);
     } // metodo para adicionar robos ao ambiente
 
-    public void removeRobo(Robo r){
-        this.RobosAtivos.remove(r);
-    } 
-
     public void setObstaculo(Obstaculos obstaculo, int x1, int x2, int y1, int y2, TiposObstaculo tipo){
         obstaculo.setX1(x1);
         obstaculo.setX2(x2);

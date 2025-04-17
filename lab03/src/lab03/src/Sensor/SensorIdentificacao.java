@@ -1,5 +1,7 @@
 package lab03.src.Sensor;
 
+import java.util.ArrayList;
+
 import lab03.src.Ambiente.Ambiente;
 import lab03.src.Ambiente.Obstaculos;
 
@@ -11,10 +13,10 @@ public class SensorIdentificacao extends Sensor {
         this.tipoObstaculo = tipo;
     }
 
-    public String identificacao(Obstaculos obstaculos[], int index){
-        switch (obstaculos[index].getObstaculo().getAltura()) {
+    public String identificacao(ArrayList<Obstaculos> obstaculos, int index){
+        switch (obstaculos.get(index).getObstaculo().getAltura()) {
             case 0:
-                if (obstaculos[index].getObstaculo().isBloqueador()){
+                if (obstaculos.get(index).getObstaculo().isBloqueador()){
                     return "PEDRA";
                 }
                 else {
@@ -23,7 +25,7 @@ public class SensorIdentificacao extends Sensor {
             case 1:
                 return "ROBO";
             case 5:
-                if (obstaculos[index].getObstaculo().emiteCalor()){
+                if (obstaculos.get(index).getObstaculo().emiteCalor()){
                     return "GIRAFA";
                 }
                 else {
@@ -40,16 +42,16 @@ public class SensorIdentificacao extends Sensor {
         return this.tipoObstaculo;
     }
 
-    public void monitorar_identificar(Ambiente ambiente, Obstaculos obstaculos[], int posX, int posY, int posZ){
+    public void monitorar_identificar(Ambiente ambiente, ArrayList<Obstaculos> obstaculos, int posX, int posY, int posZ){
         int a, i, j, k;
-        for (a = 0; a < obstaculos.length; a++){
+        for (a = 0; a < obstaculos.size(); a++){
             for (i = posX - raio; i <= posX+raio; i++){
                 for (j = posY-raio; j <= posY+raio; j++){
                     for (k = posZ-raio; k <= posZ+raio; k++){
                         if (ambiente.dentroDosLimites(i, j, k)){
-                            if (obstaculos[a].getX1() <= i && i <= obstaculos[a].getX2()){
-                                if (obstaculos[a].getY1() <= j && j <= obstaculos[a].getY2()){
-                                    if (obstaculos[a].getObstaculo().getAltura() <= k){
+                            if (obstaculos.get(a).getX1() <= i && i <= obstaculos.get(a).getX2()){
+                                if (obstaculos.get(a).getY1() <= j && j <= obstaculos.get(a).getY2()){
+                                    if (obstaculos.get(a).getObstaculo().getAltura() <= k){
                                         this.tipoObstaculo = identificacao(obstaculos, a);
                                         System.out.printf("%s identificado entre (%d, %d, %d) e (%d, %d, %d).\n", getIdentificacao(), obstaculos[a].getX1(), obstaculos[a].getY1(), obstaculos[a].getObstaculo().getAltura(), obstaculos[a].getX2(), obstaculos[a].getY2(), obstaculos[a].getObstaculo().getAltura());;
                                         return;

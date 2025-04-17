@@ -52,6 +52,10 @@ public class RoboAereo extends Robo {
         }
     }
 
+    public void identificar(Ambiente ambiente, ArrayList<Obstaculos> obstaculos){
+        sensor_identificacao.monitorar_identificar(ambiente, obstaculos, posicaoX, posicaoY, posicaoZ);
+    }
+
     public void exibirPosicaoAereo(){
         System.out.printf("Posicao de %s: (%d, %d, %d)\n", getNome(), getX(), getY(), getZ());
     }
