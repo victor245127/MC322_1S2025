@@ -1,11 +1,11 @@
-package lab03.src.RoboBase;
+package RoboBase;
 
 import java.util.ArrayList;
 
-import lab03.src.Ambiente.Ambiente;
-import lab03.src.Ambiente.Obstaculos;
-import lab03.src.Sensor.Sensor;
-import lab03.src.Sensor.SensorColisao;
+import Ambiente.Ambiente;
+import Ambiente.Obstaculos;
+import Sensor.Sensor;
+import Sensor.SensorColisao;
 
 // subclasse de robo para alterar a velocidade de movimento
 public class RoboTerrestre extends Robo {
@@ -13,8 +13,8 @@ public class RoboTerrestre extends Robo {
     protected int velocidadeAtual;
     // atributos padrao de robos terrestres
 
-    public RoboTerrestre (String nome, String direcao, int posicaoX, int posicaoY, int posicaoZ, int velocidadeMax, int velocidadeAtual, Sensor sensor, SensorColisao sensor_colisao){
-        super(nome, direcao, posicaoX, posicaoY, posicaoZ, sensor, sensor_colisao);
+    public RoboTerrestre (String nome, int posicaoX, int posicaoY, int posicaoZ, int velocidadeMax, int velocidadeAtual, Sensor sensor, SensorColisao sensor_colisao){
+        super(nome, posicaoX, posicaoY, posicaoZ, sensor, sensor_colisao);
         this.velocidadeMax = velocidadeMax;
         this.velocidadeAtual = velocidadeAtual;
     } // construtor de robos terrestres

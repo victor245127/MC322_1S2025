@@ -1,8 +1,8 @@
-package lab03.src.RoboBase;
+package RobosBase;
 
-import lab03.src.Ambiente.Ambiente;
-import lab03.src.Sensor.Sensor;
-import lab03.src.Sensor.SensorColisao;
+import Ambiente.Ambiente;
+import Sensor.Sensor;
+import Sensor.SensorColisao;
 
 // superclasse robo, a qual as demais herdam
 public class Robo {
@@ -16,9 +16,9 @@ public class Robo {
     //atributos padrao dos robos
 
     //construtor padrao de robos
-    public Robo (String nome, String direcao, int posicaoX, int posicaoY, int posicaoZ, Sensor sensor, SensorColisao sensor_colisao){
+    public Robo (String nome, int posicaoX, int posicaoY, int posicaoZ, Sensor sensor, SensorColisao sensor_colisao){
         this.nome = nome;
-        this.direcao = direcao;
+        this.direcao = "";
         this.posicaoX = posicaoX;
         this.posicaoY = posicaoY;
         this.posicaoZ = posicaoZ;

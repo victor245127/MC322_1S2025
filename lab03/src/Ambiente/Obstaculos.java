@@ -1,4 +1,4 @@
-package lab03.src.Ambiente;
+package Ambiente;
 
 public class Obstaculos {
     private int posicaoX1;

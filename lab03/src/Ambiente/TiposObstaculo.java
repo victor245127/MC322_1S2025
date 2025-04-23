@@ -1,4 +1,4 @@
-package lab03.src.Ambiente;
+package Ambiente;
 
 public enum TiposObstaculo {
     PAREDE(5, true, false),

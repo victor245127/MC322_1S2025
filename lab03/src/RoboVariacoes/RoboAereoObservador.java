@@ -1,18 +1,18 @@
-package lab03.src.RoboVariacoes;
+package RoboVariacoes;
 
-import lab03.src.RoboBase.RoboAereo;
-import lab03.src.Sensor.Sensor;
-import lab03.src.Sensor.SensorColisao;
-import lab03.src.Sensor.SensorIdentificacao;
-import lab03.src.Ambiente.Ambiente;
+import Ambiente.Ambiente;
+import RoboBasea.RoboAereo;
+import Sensor.Sensor;
+import Sensor.SensorColisao;
+import Sensor.SensorIdentificacao;
 
 // subclasse de robo aereo que observa o ambiente e identifica os obstaculos em um dado raio
 public class RoboAereoObservador extends RoboAereo {
     private int raioObservacao;
     // atributo do robo
 
-    public RoboAereoObservador(String nome, String direcao, int posicaoX, int posicaoY, int altitude, int altitudeMaxima, Sensor sensor, SensorColisao sensor_colisao, SensorIdentificacao sensor_ident, int raioObservacao) {
-        super(nome, direcao, posicaoX, posicaoY, altitude, altitudeMaxima, sensor, sensor_ident, sensor_colisao);
+    public RoboAereoObservador(String nome, int posicaoX, int posicaoY, int altitude, int altitudeMaxima, Sensor sensor, SensorColisao sensor_colisao, SensorIdentificacao sensor_ident, int raioObservacao) {
+        super(nome, posicaoX, posicaoY, altitude, altitudeMaxima, sensor, sensor_colisao, sensor_ident);
         this.raioObservacao = raioObservacao;
     } // construtor do robo
 

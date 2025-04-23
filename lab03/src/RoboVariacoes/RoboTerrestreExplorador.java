@@ -1,13 +1,13 @@
 // Robô terrestre que avança em linha reta até encontrar um obstáculo ou chegar ao fim do ambiente.
 // Conta quantos passos conseguiu dar durante a exploração.
 
-package lab03.src.RoboVariacoes;
+package RoboVariacoes;
 
-import lab03.src.Ambiente.Ambiente;
-import lab03.src.RoboBase.RoboTerrestre;
-import lab03.src.Sensor.Sensor;
-import lab03.src.Sensor.SensorColisao;
-import lab03.src.Sensor.SensorIdentificacao;
+import Ambiente.Ambiente;
+import RoboBasea.RoboTerrestre;
+import Sensor.Sensor;
+import Sensor.SensorColisao;
+import Sensor.SensorIdentificacao;
 
 // subclasse de robo terrestre que explora o ambiente em uma direcao ate chegar ao limite ou ser barrado
 // por um obstaculo

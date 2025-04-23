@@ -1,12 +1,12 @@
-package lab03.src.RoboBase;
+package RobosBase;
 
 import java.util.ArrayList;
 
-import lab03.src.Ambiente.Ambiente;
-import lab03.src.Ambiente.Obstaculos;
-import lab03.src.Sensor.Sensor;
-import lab03.src.Sensor.SensorIdentificacao;
-import lab03.src.Sensor.SensorColisao;
+import Ambiente.Ambiente;
+import Ambiente.Obstaculos;
+import Sensor.Sensor;
+import Sensor.SensorColisao;
+import Sensor.SensorIdentificacao;
 
 // subclasse de robos que alteram sua altitude
 public class RoboAereo extends Robo {
@@ -15,8 +15,8 @@ public class RoboAereo extends Robo {
     //atributos padrao dos robos aereos
 
     // falar que mudei altitude para posicaoZ
-    public RoboAereo (String nome, String direcao, int posicaoX, int posicaoY, int posicaoZ, int altitudeMax, Sensor sensor, SensorColisao sensor_colisao, SensorIdentificacao sensor_ident){
-        super(nome, direcao, posicaoX, posicaoY, posicaoZ, sensor, sensor_colisao);
+    public RoboAereo (String nome, int posicaoX, int posicaoY, int posicaoZ, int altitudeMax, Sensor sensor, SensorColisao sensor_colisao, SensorIdentificacao sensor_ident){
+        super(nome, posicaoX, posicaoY, posicaoZ, sensor, sensor_colisao);
         this.altitudeMax = altitudeMax;
         this.sensor_identificacao = sensor_ident;
     } // construtor do robo aereo

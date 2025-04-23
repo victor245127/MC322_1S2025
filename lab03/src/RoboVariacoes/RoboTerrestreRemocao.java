@@ -1,10 +1,15 @@
-package lab03.src.RoboVariacoes;
+package RoboVariacoes;
 
-import lab03.src.RoboBase.RoboTerrestre;
-import lab03.src.Sensor.Sensor;
-import lab03.src.Sensor.SensorColisao;
-import lab03.src.Sensor.SensorIdentificacao;
-import lab03.src.Ambiente.Ambiente;
+import java.util.ArrayList;
+
+import Ambiente.Ambiente;
+import RobosBase.RoboTerrestre;
+import Sensor.Sensor;
+import Sensor.SensorColisao;
+import Sensor.SensorIdentificacao;
+import Ambiente.Obstaculos;
+
+import java.util.ArrayList;
 
 // subclasse de robo terrestre que remove um possivel obstaculo em uma certa posicao
 public class RoboTerrestreRemocao extends RoboTerrestre {
@@ -12,14 +17,14 @@ public class RoboTerrestreRemocao extends RoboTerrestre {
     private int removeY;
     //atributos do robo terrestre de remocao
 
-    public RoboTerrestreRemocao(String nome, String direcao, int posicaoX, int posicaoY, int velocidadeMax, int velocidadeAtual, int removeX, int removeY, Sensor sensor, SensorColisao sensor_colisao){
-        super(nome, direcao, posicaoX, posicaoY, velocidadeMax, velocidadeAtual, removeY, sensor, sensor_colisao);
+    public RoboTerrestreRemocao(String nome, int posicaoX, int posicaoY, int velocidadeMax, int velocidadeAtual, int removeX, int removeY, Sensor sensor, SensorColisao sensor_colisao){
+        super(nome, posicaoX, posicaoY, velocidadeMax, velocidadeAtual, removeY, sensor, sensor_colisao);
         this.removeX = removeX;
         this.removeY = removeY;
     } // construtor do robo 
 
     // metodo que remove um obstaculo proximo a nova posicao do robo
-    public void removeObstaculo(Ambiente ambiente, int obstaculos[][], int velNova){
+    public void removeObstaculo(Ambiente ambiente, ArrayList<Obstaculos> obstaculos, int velNova){
         int i = 0;
         mover(this.removeX, this.removeY, ambiente, velNova);
         // vai para a posicao dado nos atributos
