@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import Ambiente.Ambiente;
 import Ambiente.Obstaculos;
-import Sensor.Sensor;
 import Sensor.SensorColisao;
 import Sensor.SensorIdentificacao;
 
@@ -15,25 +14,15 @@ public class RoboAereo extends Robo {
     //atributos padrao dos robos aereos
 
     // falar que mudei altitude para posicaoZ
-    public RoboAereo (String nome, int posicaoX, int posicaoY, int posicaoZ, int altitudeMax, Sensor sensor, SensorColisao sensor_colisao, SensorIdentificacao sensor_ident){
-        super(nome, posicaoX, posicaoY, posicaoZ, sensor, sensor_colisao);
+    public RoboAereo (String nome, int posicaoX, int posicaoY, int posicaoZ, int altitudeMax, SensorColisao sensor_colisao, SensorIdentificacao sensor_ident){
+        super(nome, posicaoX, posicaoY, posicaoZ, sensor_colisao);
         this.altitudeMax = altitudeMax;
         this.sensor_identificacao = sensor_ident;
     } // construtor do robo aereo
 
-    public void setAltitudeMax(int altM){
-        this.altitudeMax = altM;
-    }
-
-    public void setSensores(Sensor sensor, SensorIdentificacao sensor_ident, SensorColisao sensor_colisao){
-        this.sensor = sensor;
-        this.sensor_identificacao = sensor_ident;
-        this.sensor_colisao = sensor_colisao;
-    }
-
     //metodos para aumentar ou diminuir a altitude do robo, e checam se a nova esta dentro dos limites
     public void subir(int metros, Ambiente ambiente, ArrayList<Obstaculos> obstaculos){
-        if (((getZ()+metros) <= altitudeMax && (getZ()+metros) <= ambiente.getAltura()) && sensor_colisao.detectarColisoes(obstaculos, ambiente, getX(), getY(), (getZ()+metros))){
+        if (((getZ()+metros) <= altitudeMax && (getZ()+metros) <= ambiente.getAltura()) && !sensor_colisao.detectarColisoes(ambiente, getX(), getY(), (getZ()+metros))){
             this.posicaoZ += metros;
             System.out.printf("Altitude nova de %d m.\n", getZ());
         }
@@ -42,8 +31,8 @@ public class RoboAereo extends Robo {
         }
     } 
     
-    public void descer(int metros, Ambiente ambiente, ArrayList<Obstaculos> obstaculos){
-        if ((getZ()-metros) >= 0 && sensor_colisao.detectarColisoes(obstaculos, ambiente, getX(), getY(), (getZ()-metros))){
+    public void descer(int metros, Ambiente ambiente){
+        if ((getZ()-metros) >= 0 && !sensor_colisao.detectarColisoes(ambiente, getX(), getY(), (getZ()-metros))){
             this.posicaoZ -= metros;
             System.out.printf("Altitude nova de %d m.\n", getZ());
         }
@@ -52,8 +41,8 @@ public class RoboAereo extends Robo {
         }
     }
 
-    public void identificar(Ambiente ambiente, ArrayList<Obstaculos> obstaculos){
-        sensor_identificacao.monitorar_identificar(ambiente, obstaculos, posicaoX, posicaoY, posicaoZ);
+    public void identificar(Ambiente ambiente){
+        sensor_identificacao.monitorar(ambiente, posicaoX, posicaoY, posicaoZ);
     }
 
     public void exibirPosicaoAereo(){

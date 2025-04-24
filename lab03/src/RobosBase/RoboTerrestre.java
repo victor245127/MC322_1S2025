@@ -1,10 +1,9 @@
-package RoboBase;
+package RobosBase;
 
 import java.util.ArrayList;
 
 import Ambiente.Ambiente;
 import Ambiente.Obstaculos;
-import Sensor.Sensor;
 import Sensor.SensorColisao;
 
 // subclasse de robo para alterar a velocidade de movimento
@@ -13,8 +12,8 @@ public class RoboTerrestre extends Robo {
     protected int velocidadeAtual;
     // atributos padrao de robos terrestres
 
-    public RoboTerrestre (String nome, int posicaoX, int posicaoY, int posicaoZ, int velocidadeMax, int velocidadeAtual, Sensor sensor, SensorColisao sensor_colisao){
-        super(nome, posicaoX, posicaoY, posicaoZ, sensor, sensor_colisao);
+    public RoboTerrestre (String nome, int posicaoX, int posicaoY, int velocidadeMax, int velocidadeAtual, SensorColisao sensor_colisao){
+        super(nome, posicaoX, posicaoY, 0, sensor_colisao);
         this.velocidadeMax = velocidadeMax;
         this.velocidadeAtual = velocidadeAtual;
     } // construtor de robos terrestres
@@ -24,19 +23,16 @@ public class RoboTerrestre extends Robo {
         this.velocidadeAtual = vel;
     }
 
-    public void setVelocidadeMax(int velMax){
-        this.velocidadeMax = velMax;
-    }
-
     private int getVelocidade(){
         return this.velocidadeAtual;
     } 
 
     //metodo de sobrecarga de mover, que adiciona a mudanca de velocidade, se nao exceder a maxima
     public void mover (int posX, int posY, Ambiente ambiente, int velNova, ArrayList<Obstaculos> obstaculos){
-        if (ambiente.dentroDosLimites(posX, posY, getZ()) && !sensor_colisao.detectarColisoes(obstaculos, ambiente, posX, posY, getZ())){
+        if (ambiente.dentroDosLimites(posX, posY, getZ()) && !sensor_colisao.detectarColisoes(ambiente, posX, posY, 0)){
             this.posicaoX = posX;
             this.posicaoY = posY;
+            setDirecao(ambiente);
             if (velNova <= velocidadeMax){
                 setVelocidade(velNova);
                 System.out.printf("Indo para posicao (%d, %d, %d) a %d m/s\n", getX(), getY(), getZ(), getVelocidade());

@@ -1,7 +1,6 @@
 package RobosBase;
 
 import Ambiente.Ambiente;
-import Sensor.Sensor;
 import Sensor.SensorColisao;
 
 // superclasse robo, a qual as demais herdam
@@ -11,18 +10,16 @@ public class Robo {
     protected int posicaoX;
     protected int posicaoY;
     protected int posicaoZ;
-    protected Sensor sensor;
     protected SensorColisao sensor_colisao;
     //atributos padrao dos robos
 
     //construtor padrao de robos
-    public Robo (String nome, int posicaoX, int posicaoY, int posicaoZ, Sensor sensor, SensorColisao sensor_colisao){
+    public Robo (String nome, int posicaoX, int posicaoY, int posicaoZ, SensorColisao sensor_colisao){
         this.nome = nome;
         this.direcao = "";
         this.posicaoX = posicaoX;
         this.posicaoY = posicaoY;
         this.posicaoZ = posicaoZ;
-        this.sensor = sensor;
         this.sensor_colisao = sensor_colisao;
     }
 
@@ -46,10 +43,6 @@ public class Robo {
     public String getDirecao(){
         return this.direcao;
     }
-
-    public void setNome(String nome){
-        this.nome = nome;
-    }
     
     public void setX(int posX){
         this.posicaoX = posX;
@@ -63,16 +56,12 @@ public class Robo {
         this.posicaoZ = posZ;
     }
 
-    public void setSensores(Sensor sensor, SensorColisao sensor_colisao){
-        this.sensor = sensor;
-        this.sensor_colisao = sensor_colisao;
-    }
-
     //move o robo para uma posicao desejada caso seja possivel
     public void mover(int posX, int posY, Ambiente ambiente){
-        if (ambiente.dentroDosLimites(posX, posY, this.posicaoZ)){
+        if (ambiente.dentroDosLimites(posX, posY, this.posicaoZ) && !sensor_colisao.detectarColisoes(ambiente, posX, posY, getZ())){
             this.posicaoX = posX;
             this.posicaoY = posY;
+            setDirecao(ambiente);
             System.out.printf("Indo para posicao (%d, %d, %d)\n", posicaoX, posicaoY, posicaoZ);
         }
         else {
@@ -81,37 +70,25 @@ public class Robo {
     }
 
     public void setDirecao(Ambiente ambiente){
-        if (this.posicaoX >= ambiente.getLargura()/2){
-            if (this.posicaoY >= ambiente.getLargura()/2)
-                this.direcao = "NORDESTE";
-            else if (this.posicaoY < ambiente.getLargura()/2){
-                this.direcao = "NORDESTE";
-            }
+        if (this.posicaoY >= ambiente.getComprimento()*3/4){
+            this.direcao = "NORTE";
         }
-        else if (this.posicaoX < ambiente.getLargura()/2){
-            if (this.posicaoY >= ambiente.getLargura()/2){
-                this.direcao = "SUDESTE";
+        else if (this.posicaoY <= ambiente.getComprimento()*1/4){
+            this.direcao = "SUL";
+        }
+        else {
+            if (this.posicaoX >= ambiente.getLargura()/2){
+                this.direcao = "LESTE";
             }
-            else if (this.posicaoY < ambiente.getLargura()/2){
-                this.direcao = "SUDOESTE";
+            else {
+                this.direcao = "OESTE";
             }
         }
     }
 
     // metodo para identificar se ha um obstaculo a no maximo 1m de distancia do robo
-    public boolean identificarObstaculo(int obstaculos[][], int x, int y){
-        int j, k, i = 0;
-        do {
-            for (j = -1; j < 2; j++){
-                for (k = -1; k < 2; k++){
-                    if (obstaculos[i][0] == (x + j) && obstaculos[i][1] == (y + k)){
-                        return true;
-                    }
-                }
-            }
-            i++;
-        } while (i < obstaculos.length);
-        return false;
+    public void identificarObstaculo(Ambiente ambiente){
+        sensor_colisao.monitorar(ambiente, posicaoX, posicaoY, posicaoZ);
     } 
 
     //metodo para mostrar os atributos do robo

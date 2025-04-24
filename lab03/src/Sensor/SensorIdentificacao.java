@@ -22,16 +22,14 @@ public class SensorIdentificacao extends Sensor {
                 else {
                     return "BURACO";
                 }
-            case 1:
-                return "ROBO";
-            case 5:
+            case 3:
                 if (obstaculos.get(index).getObstaculo().emiteCalor()){
                     return "GIRAFA";
                 }
                 else {
                     return "PAREDE";
                 }
-            case 30:
+            case 8:
                 return "PREDIO";
             default:
                 return "NULL";
@@ -42,7 +40,8 @@ public class SensorIdentificacao extends Sensor {
         return this.tipoObstaculo;
     }
 
-    public void monitorar_identificar(Ambiente ambiente, ArrayList<Obstaculos> obstaculos, int posX, int posY, int posZ){
+    public void monitorar(Ambiente ambiente, int posX, int posY, int posZ){
+        ArrayList <Obstaculos> obstaculos = ambiente.getObstaculos();
         int a, i, j, k, r_int = (int) Math.round(this.raio);
         for (a = 0; a < obstaculos.size(); a++){
             for (i = posX - r_int; i <= (posX+r_int); i++){
@@ -64,7 +63,7 @@ public class SensorIdentificacao extends Sensor {
             }
         }
         this.tipoObstaculo = "NULL";
-        System.out.println("Obstaculo nao encontrado dentro do raio.\n");;
+        System.out.println("Obstaculo nao encontrado dentro do raio.\n");
     } // metodo para monitorar objetos ao redor de um robo a partir de seu raio
 
 }
