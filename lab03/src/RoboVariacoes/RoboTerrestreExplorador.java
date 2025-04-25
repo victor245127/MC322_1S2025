@@ -1,32 +1,29 @@
-// Robô terrestre que avança em linha reta até encontrar um obstáculo ou chegar ao fim do ambiente.
-// Conta quantos passos conseguiu dar durante a exploração.
-
 package RoboVariacoes;
 
 import Ambiente.Ambiente;
 import RobosBase.RoboTerrestre;
-import Sensor.SensorColisao;
 
-// subclasse de robo terrestre que explora o ambiente em uma direcao ate chegar ao limite ou ser barrado
-// por um obstaculo
 // Robô terrestre que avança em linha reta até encontrar um obstáculo ou chegar ao fim do ambiente.
  // Conta quantos passos conseguiu dar durante a exploração.
  
  public class RoboTerrestreExplorador extends RoboTerrestre {
-    private int passosDados;
+    private int passosDados; // Atributo
 
-    public RoboTerrestreExplorador(String nome, int posicaoX, int posicaoY, int velocidadeMaxima, int velocidadeAtual, Ambiente ambiente, SensorColisao sensor_colisao) {
-        super(nome, posicaoX, posicaoY, velocidadeMaxima, velocidadeAtual, sensor_colisao);
+    public RoboTerrestreExplorador(String nome, String direcao, int posicaoX, int posicaoY, int velocidadeMaxima, Ambiente ambiente) {
+        super(nome, direcao, posicaoX, posicaoY, velocidadeMaxima);
         this.passosDados = 0;
-    }
+    } // Construtor
 
-    public void explorar(Ambiente ambiente) {
-        int x = getX();
-        int y = getY();
+    public void explorar(Ambiente ambiente) { 
+        // Habilidade do explorador que avança até o limite do ambiente ou caso chegue em um obstáculo
+        // e avança de acordo com sua direção
+        int x = getPosX();
+        int y = getPosY();
         String dir = getDirecao().toLowerCase();
 
-        System.out.println("Iniciando exploração para " + dir);
+        System.out.printf("Iniciando exploração para %s\n", dir);
 
+        // Loop para avançar
         while (true) {
             int novoX = x;
             int novoY = y;
@@ -36,12 +33,12 @@ import Sensor.SensorColisao;
             else if (dir.equals("leste")) novoX++;
             else if (dir.equals("oeste")) novoX--;
             else {
-                System.out.println("Direção inválida.");
+                System.out.println("Direção inválida.\n");
                 break;
             }
 
-            if (!ambiente.dentroDosLimites(novoX, novoY, getZ()) || ambiente.temObstaculoEm(novoX, novoY, getZ())) {
-                System.out.println("Exploração interrompida em (" + novoX + ", " + novoY + ")");
+            if (!ambiente.dentroDosLimites(novoX, novoY) || ambiente.temObstaculoEm(novoX, novoY)) {
+                System.out.printf("Exploração interrompida em (%d, %d)\n", novoX, novoY);
                 break;
             }
 
@@ -51,9 +48,10 @@ import Sensor.SensorColisao;
             y = novoY;
         }
 
-        System.out.println("Exploração finalizada. Passos dados: " + passosDados);
+        System.out.printf("Exploração finalizada. Passos dados: %d\n", passosDados);
     }
 
+    // Método que retorna os passos dados pelo robô
     public int getPassosDados() {
         return passosDados;
     }

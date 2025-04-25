@@ -7,151 +7,225 @@ import RobosBase.Robo;
 import RobosBase.RoboAereo;
 import RobosBase.RoboTerrestre;
 import RoboVariacoes.RoboAereoFalcao;
+import RoboVariacoes.RoboAereoObservador;
 import RoboVariacoes.RoboTerrestreDestruidor;
-import Sensor.SensorColisao;
+import RoboVariacoes.RoboTerrestreExplorador;
 import Sensor.SensorIdentificacao;
+import Sensor.SensorProximidade;
 
-import java.util.ArrayList;
-
-// classe principal
+// Classe main, para rodar o código em conjunto
 public class Main {
-    public static void visualizarRobos(ArrayList<Robo> robos){
-        for (int i = 0; i < robos.size(); i++){
-            if (robos.get(i) != null){
-                System.out.printf("Robo %s: (%d, %d, %d), direcao %s\n", robos.get(i).getNome(), robos.get(i).getX(), robos.get(i).getY(), robos.get(i).getZ(), robos.get(i).getDirecao());
-            }
-        }
-    }
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        // Variável usada para leitura de dados
 
-    public static void visualizarObstaculos(ArrayList<Obstaculos> obstaculos){
-        for (Obstaculos obs : obstaculos){
-            if (obs != null){
-                System.out.printf("Obstaculo %s: (%d, %d, %d) a (%d, %d, %d)\n", obs.getObstaculo().getTipo(), obs.getX1(), obs.getY1(), obs.getObstaculo().getAltura(), obs.getX2(), obs.getY2(), obs.getObstaculo().getAltura());
-            }
-        }
-    }
+        // Criação do ambiente
+        Ambiente ambiente = new Ambiente(10, 10, 10);
+        // Ambiente virtual dos robôs
 
+        // Criação de robôs
+        RoboAereoFalcao drone = new RoboAereoFalcao("Drone", "norte", 5, 5, 3, 10,2);
+        drone.adicionarSensor(new SensorProximidade(3));
+        drone.adicionarSensor(new SensorIdentificacao(10, ""));
+        // Criação do robô aereo falcâo, com a adição de seus sensores
 
-    public static void main(String[] args){
-        Scanner ler = new Scanner(System.in);
-        System.out.println("Ola, seja bem-vindo(a) ao ambiente virtual de robos!\n");
+        RoboTerrestreDestruidor tanque = new RoboTerrestreDestruidor("Tanque", "leste", 2, 2, 5, 7);
+        tanque.adicionarSensor(new SensorProximidade(2));
+        // Criação do robo terrestre destruidor, e a adição de seu sensor de proximidade
 
-        Obstaculos predio = new Obstaculos(1, 1, 1, 1, TiposObstaculo.PREDIO);
-        Obstaculos buraco = new Obstaculos(5, 6, 5, 6, TiposObstaculo.BURACO);
-        Obstaculos parede = new Obstaculos(9, 9, 9, 9, TiposObstaculo.PAREDE);
+        // Adiciona robôs ao ambiente
+        ambiente.adicionarRobo(drone);
+        ambiente.adicionarRobo(tanque);
 
-        ArrayList<Robo> robosAtivos = new ArrayList<>();
-        ArrayList<Obstaculos> obstaculos = new ArrayList<>();
+        // Criação de obstáculos
+        ambiente.adicionarObstaculo(new Obstaculos(3, 2, 3, 2, TiposObstaculo.PAREDE));
+        ambiente.adicionarObstaculo(new Obstaculos(5, 6, 5, 6, TiposObstaculo.PREDIO));
 
-        SensorColisao sensor_prox = new SensorColisao(9.7);
-        SensorIdentificacao sensor_identificacao = new SensorIdentificacao(9.7, "NULL");
+        // Variável boleana usada para continuar ou não a interação
+        boolean executando = true;
+        int opcao;
 
-        Ambiente ambiente = new Ambiente(10, 10, 10, robosAtivos, obstaculos);
-        System.out.printf("Ambiente definido, dimensoes: %dm x %dm x %dm\n", ambiente.getLargura(), ambiente.getComprimento(), ambiente.getAltura());
-        
-        ambiente.setObstaculo(predio);
-        ambiente.setObstaculo(buraco);
-        ambiente.setObstaculo(parede);
-        //ambiente.setObstaculo(girafa);
-        //ambiente.setObstaculo(pedra);
+        // Menu interativo com ações diferentes a serem escolhidas, para escolher basta digitar
+        // o número da ação
+        while (executando) {
+            System.out.println("\n--- MENU INTERATIVO ---");
+            System.out.println("1. Visualizar status dos robôs e do ambiente");
+            System.out.println("2. Mover robô");
+            System.out.println("3. Ativar sensores");
+            System.out.println("4. Verificar colisões");
+            System.out.println("5. Ativar habilidades");
+            System.out.println("0. Sair");
+            System.out.print("Escolha uma opção: ");
 
-        RoboAereoFalcao drone = new RoboAereoFalcao("Drone", 5, 5, 3, 10, 2, sensor_prox, sensor_identificacao);
-        RoboTerrestreDestruidor tanque = new RoboTerrestreDestruidor("Tanque", 2, 2, 5, 1, 7, sensor_prox);
-        ambiente.setRobo(drone);
-        ambiente.setRobo(tanque);
+            opcao = scanner.nextInt();
+            // Escolhe a ação a ser feita
+            scanner.nextLine();
 
-        String nome;
-        int escolha, i, posX, posY, velAtual;
-        boolean continuar = true;
-
-        while (continuar){
-            System.out.println("----------MENU INTERATIVO----------\n");
-            System.out.println("Qual o proximo passo: \n[1] Visualizar status dos robôs \n[2] Visualizar obstaculos no ambiente\n[3] Mover robo\n[4] Monitorar ambiente ao redor\n[5] Ativar habilidades\n[6] Finalizar o programa\n");
-            escolha = ler.nextInt();
-            switch (escolha) {
+            switch (opcao) {
                 case 1:
-                    visualizarRobos(robosAtivos);
+                    // Mostra as dimensões do ambiente e o status dos robôs e dos obstáculos
+                    System.out.printf("\nDimensoes do ambiente:\nLargura: %d\nAltura: %d\nProfundidade: %d", ambiente.getLargura(), ambiente.getAltura(), ambiente.getProfundidade());
+
+                    System.out.println("\nObstaculos no ambiente:");
+                    // Loop para mostrar os obstáculos
+                    for (Obstaculos obs : ambiente.getObstaculos()) {
+                        System.out.printf("Tipo: %s\n", obs.getTipo());
+                        System.out.printf("Posição: (%d, %d, %d), até (%d, %d, %d)\n", obs.getPosicaoX1(), obs.getPosicaoY1(), 0, obs.getPosicaoX2(), obs.getPosicaoY2(), obs.getTipo().getAltura());
+                        System.out.printf("Resistência: %d\n",obs.getResistencia());
+                    }
+
+                    System.out.println("\nRobôs no ambiente:");
+                    int index = 1;
+                    for (Robo r : ambiente.getRobosAtivos()) {
+                        // Loop para mostrar os robôs, com condicionais relacionadas aos seus tipos
+                        if (r instanceof RoboAereo){
+                            System.out.printf("%d. %s\n", index, r.getNome());
+                            System.out.printf("Tipo do robo: %s\n", r.getClass().getSimpleName());
+                            ((RoboAereo)r).exibirPosicaoAereo();
+                        }
+                        else{
+                            System.out.printf("%d. %s\n", index, r.getNome());
+                            System.out.printf("Tipo do robo: %s\n", r.getClass().getSimpleName());
+                            r.exibirPosicao(); 
+                        }
+                        index++;
+                    }
                     break;
+
                 case 2:
-                    visualizarObstaculos(obstaculos);
+                    // Mover um robô, escolhe qual mover
+                    System.out.println("\nEscolha o robô:");
+                    for (int i = 0; i < ambiente.getRobosAtivos().size(); i++) {
+                        Robo r = ambiente.getRobosAtivos().get(i);
+                        System.out.printf("%d. %s\n", (i+1), r.getNome());
+                    }
+
+                    int escolha = scanner.nextInt();
+                    scanner.nextLine();
+
+                    // Caso o número do robô seja menor que 1 ou maior que a quantidade no ambiente,
+                    // vira uma opção inválida
+                    if (escolha < 1 || escolha > ambiente.getRobosAtivos().size()) {
+                        System.out.println("Opção inválida.");
+                        break;
+                    }
+
+                    Robo escolhido = ambiente.getRobosAtivos().get(escolha - 1);
+
+                    // Define a distância a ser andada nas coordenadas X e Y
+                    System.out.print("Delta X: ");
+                    int dx = scanner.nextInt();
+                    System.out.print("Delta Y: ");
+                    int dy = scanner.nextInt();
+
+                    // Condicionais para verificar qual tipo de robô é o escolhido
+                    if (escolhido instanceof RoboTerrestre) {
+                        // Caso seja do tipo terrestre, escolher sua nova velocidade também
+                        System.out.print("Velocidade: ");
+                        int vel = scanner.nextInt();
+                        ((RoboTerrestre) escolhido).mover(dx, dy, ambiente, vel);
+                    } else { // instanceof RoboAereo
+                        // Caso seja do tipo aéreo, escolher a distância em Z também
+                        System.out.print("Delta Z: ");
+                        int dz = scanner.nextInt();
+                        escolhido.mover(dx, dy, ambiente);
+                        if (dz < 0){
+                            ((RoboAereo)escolhido).descer(dz*(-1));
+                        }
+                        else{
+                            ((RoboAereo)escolhido).subir(dz, ambiente);
+                        }
+                    }
                     break;
+
                 case 3:
-                    System.out.println("Escolha o robo pelo nome: \n");
-                    nome = ler.next();
-                    nome = nome.toLowerCase();
-                    for (i = 0; i < robosAtivos.size(); i++){
-                        if (robosAtivos.get(i).getNome().equals(nome)){
-                            if (robosAtivos.get(i) instanceof RoboTerrestre){
-                                System.out.println("Digite as novas posicoes X e Y e sua nova velocidade: ");
-                                posX = ler.nextInt();
-                                posY = ler.nextInt();
-                                velAtual = ler.nextInt();
-                                ((RoboTerrestre) robosAtivos.get(i)).mover(posX, posY, ambiente, velAtual, obstaculos);
-                            } 
-                            else if (robosAtivos.get(i) instanceof RoboAereo){
-                                System.out.println("Digite as novas posicoes X e Y");
-                                posX = ler.nextInt();
-                                posY = ler.nextInt();
-                                robosAtivos.get(i).mover(posX, posY, ambiente);
-                            }
-                            break;
-                        }
-                    }
-                    if (i == robosAtivos.size()){
-                        System.out.println("Robo nao encontrado, retornando ao menu...\n");
+                    // Usa os sensores dos robôs
+                    System.out.println("Ativando sensores de todos os robôs:\n");
+                    for (Robo r : ambiente.getRobosAtivos()) {
+                        System.out.printf("Sensores de %s:", r.getNome());
+                        r.ativarSensores(ambiente);
                     }
                     break;
+
                 case 4:
-                    System.out.println("Escolha o robo pelo nome: \n");
-                    nome = ler.next();
-                    nome = nome.toLowerCase();
-                    for (i = 0; i < robosAtivos.size(); i++){
-                        if (robosAtivos.get(i).getNome().equals(nome)){
-                            if (robosAtivos.get(i) instanceof RoboTerrestreDestruidor){
-                                ((RoboTerrestreDestruidor) robosAtivos.get(i)).identificarObstaculo(ambiente);
-                            } 
-                            else if (robosAtivos.get(i) instanceof RoboAereo){
-                                ((RoboAereoFalcao) robosAtivos.get(i)).identificar(ambiente);
-                            }
-                            break;
-                        }
-                    }
-                    if (i == robosAtivos.size()){
-                        System.out.println("Robo nao encontrado, retornando ao menu...\n");
-                    }
+                    // Verifica se há colisões dos robôs com os obstáculos no ambiente
+                    System.out.println("\nVerificando colisões...");
+                    ambiente.detectarColisoes();
                     break;
+
                 case 5:
-                    System.out.println("Escolha o robo pelo nome: \n");
-                    nome = ler.next();
-                    nome = nome.toLowerCase();
-                    for (i = 0; i < robosAtivos.size(); i++){
-                        if (robosAtivos.get(i).getNome().equals(nome)){
-                            if (robosAtivos.get(i) instanceof RoboTerrestreDestruidor){
-                                System.out.printf("Habilidade: destruir obstaculo\nO %s procura um obstaculo ao seu redor e tenta destruir com uma força x, e caso a resistencia do obstaculo seja igual ou menor que sua forca, o destroi\n", robosAtivos.get(i).getNome());
-                                ((RoboTerrestreDestruidor) robosAtivos.get(i)).destruirObstaculo(ambiente);
-                            } 
-                            else if (robosAtivos.get(i) instanceof RoboAereo){
-                                System.out.printf("Habilidade: Visao\n O %s varre o ambiente na direcao atual ate um certo alcance, detectando obstaculos a frente\n", robosAtivos.get(i).getNome());
-                                ((RoboAereoFalcao) robosAtivos.get(i)).visao(ambiente);
-                            }
-                            break;
+                    // Escolhe o robô para usar sua habilidade específica
+                    System.out.println("\nEscolha o robô para ativar seu metodo especifico:");
+                    for (int i = 0; i < ambiente.getRobosAtivos().size(); i++) {
+                        Robo r = ambiente.getRobosAtivos().get(i);
+                        System.out.printf("%d. %s", (i+1), r.getNome());
+                    }
+
+                    int e = scanner.nextInt();
+                    scanner.nextLine();
+
+                    // Mesma condicional presente no caso 2
+                    if (e < 1 || e > ambiente.getRobosAtivos().size()) {
+                        System.out.println("Opção inválida.");
+                        break;
+                    }
+
+                    Robo es = ambiente.getRobosAtivos().get(e - 1);
+
+                    // Uso da habilidade do robô terrestre destruidor (Descrição no seu arquivo)
+                    if (es instanceof RoboTerrestreDestruidor){
+                        System.out.println("Metodos especificos:\n 1 - DestruirObstaculo (destroi um obstaculo que está ao redor do robo) ");
+                        System.out.print("Escolha o numero do metodo: ");
+                        int num = scanner.nextInt();
+                        if (num == 1){
+                            ((RoboTerrestreDestruidor)es).destruirObstaculo(ambiente);
                         }
                     }
 
-                    if (i == robosAtivos.size()){
-                        System.out.println("Robo nao encontrado, retornando ao menu...\n");
+                    // Uso da habilidade do robô terrestre exploração (Descrição no seu arquivo)
+                    else if (es instanceof RoboTerrestreExplorador){
+                    System.out.println("Metodos especificos:\n 1 - Explorar (robo avança em linha reta até encontrar um obstáculo ou chegar ao fim do ambiente) ");
+                        System.out.print("Escolha o numero do metodo: ");
+                        int num = scanner.nextInt();
+                        if (num == 1){
+                            ((RoboTerrestreExplorador)es).explorar(ambiente);
+                        }
+                    }
+
+                    // Uso da habilidade do robô aéreo falcão (Descrição no seu arquivo)
+                    else if (es instanceof RoboAereoFalcao){
+                        System.out.println("Metodos especificos:\n 1 - Visao (Varre o ambiente na direção atual até um certo alcance visual, detectando obstáculos à frente) ");
+                        System.out.print("Escolha o numero do metodo: ");
+                        int num = scanner.nextInt();
+                        if (num == 1){
+                            ((RoboAereoFalcao)es).visao(ambiente);
+                        }
+                    }
+
+                    // Uso da habilidade do robô aéreo observador (Descrição no seu arquivo)
+                    else if (es instanceof RoboAereoObservador){
+                        System.out.println("Metodos especificos:\n 1 - Observar (Varre uma area de raio determinado, em busca de obstaculos) ");
+                        System.out.print("Escolha o numero do metodo: ");
+                        int num = scanner.nextInt();
+                        if (num == 1){
+                            ((RoboAereoObservador)es).observar(ambiente);
+                        }
                     }
                     
                     break;
-                case 6:
-                    continuar = false;
-                    System.out.println("Finalizando o programa...\nEND");
+                
+                case 0:
+                    // Finaliza o programa com a variável booleana sendo falsa
+                    executando = false;
+                    System.out.println("Encerrando o simulador...");
                     break;
+
                 default:
-                    break;
+                    // Caso seja uma opção inválida
+                    System.out.println("Opção inválida.");
             }
         }
-        ler.close();
+
+        scanner.close();
     }
 }
-

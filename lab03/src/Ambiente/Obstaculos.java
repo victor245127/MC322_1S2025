@@ -1,13 +1,15 @@
 package Ambiente;
 
+// Classe de obstáculos
 public class Obstaculos {
     private int posicaoX1;
     private int posicaoY1;
     private int posicaoX2;
     private int posicaoY2;
     private TiposObstaculo tipo;
-
-    public Obstaculos(int x1, int y1, int x2, int y2, TiposObstaculo tipo){
+    // Atributos dos obstáculos
+    
+    public Obstaculos(int x1, int y1, int x2, int y2, TiposObstaculo tipo){ // Construtor de obstáculo
         this.posicaoX1 = x1;
         this.posicaoY1 = y1;
         this.posicaoX2 = x2;
@@ -15,43 +17,27 @@ public class Obstaculos {
         this.tipo = tipo;
     }
 
-    public int getX1(){
+    // Métodos get que retornam os atributos do obstáculo
+    public TiposObstaculo getTipo(){
+        return this.tipo;
+    }
+    public int getResistencia(){
+        return tipo.getResistenciaTipo();
+    }
+    
+    public int getPosicaoX1() {
         return this.posicaoX1;
     }
 
-    public int getX2(){
+    public int getPosicaoX2() {
         return this.posicaoX2;
     }
 
-    public int getY1(){
+    public int getPosicaoY1() {
         return this.posicaoY1;
     }
 
-    public int getY2(){
+    public int getPosicaoY2() {
         return this.posicaoY2;
-    }
-
-    public void setX1(int X1){
-        this.posicaoX1 = X1;
-    }
-
-    public void setX2(int X2){
-        this.posicaoX2 = X2;
-    }
-
-    public void setY1(int Y1){
-        this.posicaoY1 = Y1;
-    }
-
-    public void setY2(int Y2){
-        this.posicaoY2 = Y2;
-    }
-
-    public void setTipoObstaculo(TiposObstaculo tipo){
-        this.tipo = tipo;
-    }
-
-    public TiposObstaculo getObstaculo(){
-        return this.tipo;
     }
 }

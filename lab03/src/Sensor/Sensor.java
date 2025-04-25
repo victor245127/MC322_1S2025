@@ -2,17 +2,14 @@ package Sensor;
 
 import Ambiente.Ambiente;
 
+// Classe abstrata do sensor, onde seu método "monitorar" é definido nas subclasses do sensor 
 public abstract class Sensor {
     protected double raio;
-    //trocar para double e perguntar
+    // Atributo
 
-    public Sensor (double raio){
+    public Sensor(double raio){
         this.raio = raio;
-    }
+    } // Construtor
 
-    public abstract void monitorar(Ambiente ambiente, int posX, int posY, int posZ);
-
-    public double getRaio(){
-        return this.raio;
-    }
+    public abstract void monitorar(Ambiente ambiente, int x, int y, int z); // x, y, z do robo
 }

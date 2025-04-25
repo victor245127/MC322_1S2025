@@ -1,51 +1,43 @@
 package RobosBase;
 
-import java.util.ArrayList;
-
 import Ambiente.Ambiente;
-import Ambiente.Obstaculos;
-import Sensor.SensorColisao;
-import Sensor.SensorIdentificacao;
 
 // subclasse de robos que alteram sua altitude
-public class RoboAereo extends Robo {
-    protected int altitudeMax;
-    protected SensorIdentificacao sensor_identificacao;
-    //atributos padrao dos robos aereos
+public class RoboAereo extends Robo{
+    private int altitude;
+    private int altitudeMaxima;
+    // Atributos do robô aereo
 
-    // falar que mudei altitude para posicaoZ
-    public RoboAereo (String nome, int posicaoX, int posicaoY, int posicaoZ, int altitudeMax, SensorColisao sensor_colisao, SensorIdentificacao sensor_ident){
-        super(nome, posicaoX, posicaoY, posicaoZ, sensor_colisao);
-        this.altitudeMax = altitudeMax;
-        this.sensor_identificacao = sensor_ident;
-    } // construtor do robo aereo
+    public RoboAereo(String nome, String direcao, int posicaoX, int posicaoY, int altitude, int altitudeMaxima){
+        super(nome,direcao,posicaoX,posicaoY);
+        this.altitude = altitude;
+        this.altitudeMaxima = altitudeMaxima;
+    } // Construtor do robô
 
-    //metodos para aumentar ou diminuir a altitude do robo, e checam se a nova esta dentro dos limites
-    public void subir(int metros, Ambiente ambiente, ArrayList<Obstaculos> obstaculos){
-        if (((getZ()+metros) <= altitudeMax && (getZ()+metros) <= ambiente.getAltura()) && !sensor_colisao.detectarColisoes(ambiente, getX(), getY(), (getZ()+metros))){
-            this.posicaoZ += metros;
-            System.out.printf("Altitude nova de %d m.\n", getZ());
+    public void subir(int metros, Ambiente ambiente){ // Método para elevar a altitude do robô
+        // Verifica se a nova altitude é menor ou igual à altitude máxima do robô e do ambiente
+        if (this.altitude + metros <= this.altitudeMaxima && (this.altitude + metros) <= ambiente.getAltura()){
+            this.altitude += metros;
         }
-        else {
-            System.out.println("Altitude nao permitida.\n");
-        }
-    } 
-    
-    public void descer(int metros, Ambiente ambiente){
-        if ((getZ()-metros) >= 0 && !sensor_colisao.detectarColisoes(ambiente, getX(), getY(), (getZ()-metros))){
-            this.posicaoZ -= metros;
-            System.out.printf("Altitude nova de %d m.\n", getZ());
-        }
-        else {
-            System.out.printf("Altitude de %d m nao permitida.\n", (getZ()-metros));
+        else{
+            System.out.println("Altura acima da permitida!\n");
         }
     }
 
-    public void identificar(Ambiente ambiente){
-        sensor_identificacao.monitorar(ambiente, posicaoX, posicaoY, posicaoZ);
+    public void descer(int metros){ // Método para diminuir a altitude do robô
+        if (this.altitude - metros >= 0){
+            this.altitude -= metros;
+        }
+        else{
+            System.out.println("Altura abaixo da permitida!\n");
+        }
     }
 
-    public void exibirPosicaoAereo(){
-        System.out.printf("Posicao de %s: (%d, %d, %d)\n", getNome(), getX(), getY(), getZ());
+    public void exibirPosicaoAereo(){ // Exibe a posição do robô aereo
+        System.out.printf("Posição: X = %d, Y = %d, Z = %d\n", getPosX(), getPosY(), getAltitude());
     }
+
+    public int getAltitude() { // Método get que retorna altitude
+        return this.altitude;
+    }    
 }

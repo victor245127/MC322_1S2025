@@ -1,98 +1,113 @@
 package RobosBase;
 
+import java.util.ArrayList;
+
 import Ambiente.Ambiente;
-import Sensor.SensorColisao;
+import Sensor.Sensor;
 
 // superclasse robo, a qual as demais herdam
 public class Robo {
-    protected String nome;
-    protected String direcao;
-    protected int posicaoX;
-    protected int posicaoY;
-    protected int posicaoZ;
-    protected SensorColisao sensor_colisao;
-    //atributos padrao dos robos
+    private String nome;
+    private String direcao;
+    private int posicaoX;
+    private int posicaoY;
+    private ArrayList<Sensor> sensores;
+    // Atributos gerais dos robôs
 
-    //construtor padrao de robos
-    public Robo (String nome, int posicaoX, int posicaoY, int posicaoZ, SensorColisao sensor_colisao){
+    public Robo(String nome, String direcao, int posicaoX, int posicaoY){ // Construtor geral dos robôs
         this.nome = nome;
-        this.direcao = "";
         this.posicaoX = posicaoX;
         this.posicaoY = posicaoY;
-        this.posicaoZ = posicaoZ;
-        this.sensor_colisao = sensor_colisao;
+        this.direcao = direcao;
+        this.sensores = new ArrayList<>();
+    }
+    
+    public void mover(int deltaX, int deltaY, Ambiente ambiente) { // Método que move o robô
+        int novaX = this.posicaoX + deltaX;
+        int novaY = this.posicaoY + deltaY;
+        
+        // Verifica se a nova posição está dentro dos limites e, se estiver, move o robô
+        if (ambiente.dentroDosLimites(novaX, novaY)) {
+            
+            this.posicaoX = novaX;
+            this.posicaoY = novaY;
+        } else {
+            System.out.println("Movimento inválido: fora dos limites do ambiente.\n");
+        }
+    }
+    
+    public void exibirPosicao(){ // Exibe a posição do robô
+        System.out.printf("Posição: X = %d, Y = %d\n", this.posicaoX, this.posicaoY);
     }
 
-    //metodos para retornar nome, posicao X e Y e direcao do robo
-    public String getNome(){
+    public void identificarObstaculo(Ambiente ambiente) { // Identifica se há obstáculo próximo ao robô
+        int x = this.getPosX();
+        int y = this.getPosY();
+    
+        boolean encontrou = false;
+    
+        // Cima
+        if (ambiente.temObstaculoEm(x, y + 1)) {
+            System.out.println("Obstáculo acima.");
+            encontrou = true;
+        }
+    
+        // Baixo
+        if (ambiente.temObstaculoEm(x, y - 1)) {
+            System.out.println("Obstáculo abaixo.");
+            encontrou = true;
+        }
+    
+        // Direita
+        if (ambiente.temObstaculoEm(x + 1, y)) {
+            System.out.println("Obstáculo à direita.");
+            encontrou = true;
+        }
+    
+        // Esquerda
+        if (ambiente.temObstaculoEm(x - 1, y)) {
+            System.out.println("Obstáculo à esquerda.");
+            encontrou = true;
+        }
+    
+        if (!encontrou) {
+            System.out.println("Nenhum obstáculo ao redor.");
+        }
+    }
+    
+    // Métodos get que retornam os atributos do robô
+    public int getPosX(){
+        return this.posicaoX;
+    }
+
+    public int getPosY(){
+        return this.posicaoY;
+    }
+
+    public String getDirecao() {
+        return this.direcao;
+    }
+
+    public String getNome() {
         return this.nome;
     }
     
-    public int getX(){
-        return this.posicaoX;
-    } 
-
-    public int getY(){
-        return this.posicaoY;
-    } 
-
-    public int getZ(){
-        return this.posicaoZ;
-    }
-
-    public String getDirecao(){
-        return this.direcao;
+    public void adicionarSensor(Sensor s) { // Adiciona sensor ao robô
+        sensores.add(s);
     }
     
-    public void setX(int posX){
-        this.posicaoX = posX;
-    } 
-
-    public void setY(int posY){
-        this.posicaoY = posY;
-    } 
-
-    public void setZ(int posZ){
-        this.posicaoZ = posZ;
-    }
-
-    //move o robo para uma posicao desejada caso seja possivel
-    public void mover(int posX, int posY, Ambiente ambiente){
-        if (ambiente.dentroDosLimites(posX, posY, this.posicaoZ) && !sensor_colisao.detectarColisoes(ambiente, posX, posY, getZ())){
-            this.posicaoX = posX;
-            this.posicaoY = posY;
-            setDirecao(ambiente);
-            System.out.printf("Indo para posicao (%d, %d, %d)\n", posicaoX, posicaoY, posicaoZ);
+    public void ativarSensores(Ambiente ambiente) { // Utiliza as funções dos sensores
+        int x = getPosX();
+        int y = getPosY();
+        int z = 0;
+    
+        if (this instanceof RoboAereo) { // Pega a posição Z do robô aéreo
+            z = ((RoboAereo) this).getAltitude();
         }
-        else {
-            System.out.printf("Posicao (%d, %d, %d) nao pode ser alcancada\n", posX, posY, posicaoZ);
+    
+        for (Sensor s : sensores) {
+            s.monitorar(ambiente, x, y, z);
         }
     }
-
-    public void setDirecao(Ambiente ambiente){
-        if (this.posicaoY >= ambiente.getComprimento()*3/4){
-            this.direcao = "NORTE";
-        }
-        else if (this.posicaoY <= ambiente.getComprimento()*1/4){
-            this.direcao = "SUL";
-        }
-        else {
-            if (this.posicaoX >= ambiente.getLargura()/2){
-                this.direcao = "LESTE";
-            }
-            else {
-                this.direcao = "OESTE";
-            }
-        }
-    }
-
-    // metodo para identificar se ha um obstaculo a no maximo 1m de distancia do robo
-    public void identificarObstaculo(Ambiente ambiente){
-        sensor_colisao.monitorar(ambiente, posicaoX, posicaoY, posicaoZ);
-    } 
-
-    //metodo para mostrar os atributos do robo
-    public void exibirPosicao(){
-        System.out.printf("Posicao de %s: (%d, %d) na direcao %s.\n", getNome(), getX(), getY(), getDirecao());
-    } 
+    
 }
