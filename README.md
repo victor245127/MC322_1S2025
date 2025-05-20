@@ -19,3 +19,15 @@ O código é automatizado, ou seja, não há possíveis entradas no terminal, en
 Laboratório 3:
 Possui um ambiente virtual de dimensão X,Y,Z com os mesmos robôs, porém agora atualizados com sensores equipados. Ademais, os obstáculos do ambiente são atualizados com um enum e classe própria, diferenciando-se entre si e melhorando as interações com robôs. Como executar:
 O ambiente possui dimensões, robôs, sensores e obstáculos pré-definidos. Porém, possui um menu interativo em que pode-se escolher uma ação a ser feita, como andar, usar sensores, etc. Para usar o menu, deve-se usar a entrada no terminal para determinar a ação escolhida. 
+
+Laboratório 4:
+USAR TRY CATCH NA MAIN COM AS EXCESSOES
+DESCREVER OS ROBOS
+TRES NOVAS INTERFACES PARA ROBOS
+EXCEPTIONS PARA AS NOVAS INTERFACES, SE NAO TROCAR POR FORADOSLIMITES OU NOTROBO
+AMBIENTE: VERIFICACOLISOES, EXECUTARSENSORES, VISUALIZARAMBIENTE
+DUVIDAS:
+OBSTACULOS: GETX,Y,Z ????
+PARAMETRO DE ENVIAR MENSAGEM NAO TEM A CENTRAL PARA ARMAZENAR???
+PARA QUE SERVE RECEBERMENSAGEM
+PARAMETRO DO RAIO EM ACIONARSENSORES???
