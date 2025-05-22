@@ -46,15 +46,15 @@ public class Obstaculos implements Entidade{
         return this.posicaoY2;
     }
 
-    public int getX() {
+    public int getX() { // ?????
         throw new UnsupportedOperationException("Unimplemented method 'getX'");
     }
 
-    public int getY() {
+    public int getY() { // ????
         throw new UnsupportedOperationException("Unimplemented method 'getY'");
     }
 
-    public int getZ() {
+    public int getZ() { // ????
         throw new UnsupportedOperationException("Unimplemented method 'getZ'");
     }
 

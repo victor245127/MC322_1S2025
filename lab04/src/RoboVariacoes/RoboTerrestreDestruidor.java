@@ -1,16 +1,24 @@
 package RoboVariacoes;
 
+import java.util.ArrayList;
+
 // Robo que consegue destruir um obstáculo ao redor dele 
 
 import Ambiente.Ambiente;
 import RobosBase.RoboTerrestre;
+import Sensor.Sensor;
+import Sensor.SensorIdentificacao;
+import Sensor.SensorProximidade;
+import Sensor.Sensoreavel;
 
-public class RoboTerrestreDestruidor extends RoboTerrestre {
-    private int forcaDestruicao; // Atributo do robô
+public class RoboTerrestreDestruidor extends RoboTerrestre implements Sensoreavel{
+    private int forcaDestruicao; // Atributos do robô
+    private ArrayList<Sensor> sensores;
 
-    public RoboTerrestreDestruidor(String nome, String direcao, int posicaoX, int posicaoY, int velocidadeMaxima, int forcaDestruicao) {
-        super(nome, direcao, posicaoX, posicaoY, velocidadeMaxima);
+    public RoboTerrestreDestruidor(String id, int x, int y, int z, int velocidadeMaxima, int forcaDestruicao) {
+        super(id, x, y, z, velocidadeMaxima);
         this.forcaDestruicao = forcaDestruicao;
+        this.sensores = new ArrayList<>();
     } // Construtor 
 
     public void destruirObstaculo(Ambiente ambiente) {
@@ -18,8 +26,8 @@ public class RoboTerrestreDestruidor extends RoboTerrestre {
         // tenta destruí-lo, que funcionará de acordo com sua força de destruição
         // e a resistência do obstáculo, ou seja, caso a resistência seja menor/igual que a força,
         // o obstáculo é destruído, e vice versa
-        int x = this.getPosX();
-        int y = this.getPosY();
+        int x = this.getX();
+        int y = this.getY();
         
         // Direita
         if (ambiente.temObstaculoEm(x + 1, y)) {
@@ -68,4 +76,16 @@ public class RoboTerrestreDestruidor extends RoboTerrestre {
             System.out.println("Nenhum obstáculo ao redor para destruir.\n");
         }
     }   
+
+    public void add_sensores(double raio){
+        SensorIdentificacao sensor_ident = new SensorIdentificacao(raio);
+        SensorProximidade sensor_prox = new SensorProximidade(raio);
+        sensores.add(sensor_ident);
+        sensores.add(sensor_prox);
+    }
+
+    public void acionarSensores(){
+        sensores.get(0).monitorar(null, x, y, z);
+        sensores.get(1).monitorar(null, x, y, z);
+    }
 }

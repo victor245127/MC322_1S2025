@@ -9,9 +9,9 @@ import Ambiente.Obstaculos;
 public class SensorIdentificacao extends Sensor {
     private String tipoObstaculo; // Atributo
 
-    public SensorIdentificacao(double raio, String tipo){
+    public SensorIdentificacao(double raio){
         super(raio);
-        this.tipoObstaculo = tipo;
+        this.tipoObstaculo = "NULL";
     } // Construtor
 
     public String identificacao(ArrayList<Obstaculos> obstaculos, int index){

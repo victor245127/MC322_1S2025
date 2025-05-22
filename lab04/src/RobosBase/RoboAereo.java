@@ -1,6 +1,7 @@
 package RobosBase;
 
 import Ambiente.Ambiente;
+import Comunicacao.CentralComunicacao;
 import Comunicacao.Comunicavel;
 import Exceptions.RoboDesligadoException;
 
@@ -34,15 +35,13 @@ public abstract class RoboAereo extends Robo implements Comunicavel {
     }
 
     // Método que envia mensagem para um destinatário
-    public void enviarMensagem(Comunicavel destinatario, String mensagem) throws RoboDesligadoException{
+    public void enviarMensagem(Comunicavel destinatario, String mensagem, CentralComunicacao central) throws RoboDesligadoException{
         if (((Robo)destinatario).estado == EstadoRobo.desligado || getEstado() == EstadoRobo.desligado){
             throw new RoboDesligadoException();
         }
-        // CENTRAL ARMAZENA MENSAGEM
+        central.registrarMensagem(getId(), mensagem);
     }
 
-    // Robô recebe a mensagem
-    // Não sei oq colocar dentro
     public void receberMensagem(String mensagem) throws RoboDesligadoException{
         if (getEstado() == EstadoRobo.desligado){
             throw new RoboDesligadoException();

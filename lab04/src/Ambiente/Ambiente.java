@@ -6,7 +6,13 @@ import java.util.ArrayList;
 import Entidade.Entidade;
 import Entidade.TipoEntidade;
 import Exceptions.ColisaoException;
+import Exceptions.EntidadeImovelException;
+import Exceptions.ErroSensorException;
+import Exceptions.RoboDesligadoException;
+import RobosBase.EstadoRobo;
 import RobosBase.Robo;
+import RobosBase.RoboTerrestre;
+import Sensor.Sensoreavel;
 
 // classe do ambiente, que possui suas dimensoes e vetores com os robos e obstaculos presentes 
 public class Ambiente {
@@ -59,14 +65,21 @@ public class Ambiente {
         return true;
     }
 
-    public void moverEntidade(Entidade e, int novoX, int novoY, int novoZ){ // Move um robô de posição, caso o seja, 
+    public void moverEntidade(Entidade e, int novoX, int novoY, int novoZ) throws EntidadeImovelException{ // Move um robô de posição, caso o seja, 
         if (e.getTipo() == TipoEntidade.ROBO){ // visto que é a única entidade móvel no mapa
             ((Robo)e).moverPara(novoX, novoY, novoZ);
         }
+        throw new EntidadeImovelException();
     }
 
-    public void executarSensores(){ // robo desligado e sensor exceptions
-        // Chamar monitorar dos robos?
+    public void executarSensores(Robo r) throws RoboDesligadoException, ErroSensorException {// Aciona os sensores de um robô específico
+        if (r instanceof Sensoreavel){
+            if (r.getEstado() == EstadoRobo.desligado){
+                throw new RoboDesligadoException();
+            }
+            ((RoboTerrestre) r).acionarSensores();
+        }
+        throw new ErroSensorException(r.getId());
     }
 
     // ColisaoException

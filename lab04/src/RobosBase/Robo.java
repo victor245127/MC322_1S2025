@@ -1,7 +1,10 @@
 package RobosBase;
 
+import Ambiente.Ambiente;
 import Entidade.Entidade;
 import Entidade.TipoEntidade;
+import Exceptions.ColisaoException;
+import Exceptions.RoboDesligadoException;
 
 // Superclasse robô, a qual os demais robôs herdam
 public abstract class Robo implements Entidade {
@@ -40,7 +43,7 @@ public abstract class Robo implements Entidade {
         this.estado = EstadoRobo.desligado;
     }
 
-    public abstract void executarTarefa(); // Método abstrato 
+    public abstract void executarTarefa(Ambiente ambiente) throws ColisaoException, RoboDesligadoException; // Método abstrato 
     
     // Métodos get que retornam os atributos do robô
     public int getX(){
