@@ -21,7 +21,7 @@ public class RoboTerrestreDestruidor extends RoboTerrestre implements Sensoreave
         this.sensores = new ArrayList<>();
     } // Construtor 
 
-    public void destruirObstaculo(Ambiente ambiente) {
+    public void executarTarefa(Ambiente ambiente) {
         // Habilidade do robô que procura um obstáculo ao seu redor e, caso ache,
         // tenta destruí-lo, que funcionará de acordo com sua força de destruição
         // e a resistência do obstáculo, ou seja, caso a resistência seja menor/igual que a força,
@@ -87,5 +87,9 @@ public class RoboTerrestreDestruidor extends RoboTerrestre implements Sensoreave
     public void acionarSensores(){
         sensores.get(0).monitorar(null, x, y, z);
         sensores.get(1).monitorar(null, x, y, z);
+    }
+
+    public String getDescricao(){
+        return "Robô do tipo terrestre que possui sensores e pode destruir um obstáculo próximo a ele.\n";
     }
 }

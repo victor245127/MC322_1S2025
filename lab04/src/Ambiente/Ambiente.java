@@ -9,9 +9,9 @@ import Exceptions.ColisaoException;
 import Exceptions.EntidadeImovelException;
 import Exceptions.ErroSensorException;
 import Exceptions.RoboDesligadoException;
+import RoboVariacoes.RoboTerrestreDestruidor;
 import RobosBase.EstadoRobo;
 import RobosBase.Robo;
-import RobosBase.RoboTerrestre;
 import Sensor.Sensoreavel;
 
 // classe do ambiente, que possui suas dimensoes e vetores com os robos e obstaculos presentes 
@@ -77,7 +77,7 @@ public class Ambiente {
             if (r.getEstado() == EstadoRobo.desligado){
                 throw new RoboDesligadoException();
             }
-            ((RoboTerrestre) r).acionarSensores();
+            ((RoboTerrestreDestruidor) r).acionarSensores();
         }
         throw new ErroSensorException(r.getId());
     }
@@ -97,6 +97,57 @@ public class Ambiente {
             }
         }
     }
+
+    public int getResistenciaEm(int x, int y, int z) { // Procura um obstáculo em X, Y, Z e, caso tenha, retorna a resistência do obstáculo
+        ArrayList<Entidade> obstaculos = getObstaculos();
+        for (int i = 0; i < obstaculos.size(); i++) { // Loop para verificar obstáculo por obstáculo, usado em vários métodos seguintes
+            int x1 = ((Obstaculos) obstaculos.get(i)).getPosicaoX1();
+            int x2 = ((Obstaculos) obstaculos.get(i)).getPosicaoX2();
+            int y1 = ((Obstaculos) obstaculos.get(i)).getPosicaoY1();
+            int y2 = ((Obstaculos) obstaculos.get(i)).getPosicaoY2();
+            int h = ((Obstaculos) obstaculos.get(i)).getTipoObstaculo().getAltura();
+    
+            if (x >= x1 && x <= x2 && y >= y1 && y <= y2 && h <= z) {
+                int resistencia = ((Obstaculos) obstaculos.get(i)).getResistencia();
+                return resistencia;
+            }
+        }
+        return 0;
+    }
+
+     public void removerObstaculoEm(int x, int y) { // Procura um obstáculo em X, Y e, caso tenha, o remove do ambiente
+        ArrayList<Entidade> obstaculos = getObstaculos();
+        for (int i = 0; i < obstaculos.size(); i++) { 
+            int x1 = ((Obstaculos) obstaculos.get(i)).getPosicaoX1();
+            int x2 = ((Obstaculos) obstaculos.get(i)).getPosicaoX2();
+            int y1 = ((Obstaculos) obstaculos.get(i)).getPosicaoY1();
+            int y2 = ((Obstaculos) obstaculos.get(i)).getPosicaoY2();
+            int h = ((Obstaculos) obstaculos.get(i)).getTipoObstaculo().getAltura();
+    
+            if (x >= x1 && x <= x2 && y >= y1 && y <= y2 && h <= z) {
+                Entidade.remove(((Obstaculos) obstaculos.get(i)));
+                System.out.printf("Obstáculo removido na posição (%d, %d)\n", x, y);
+                return;
+            }
+        }
+    }
+
+    public boolean temObstaculoEm(int x, int y, int z) { // Procura um obstáculo em X, Y, Z
+        ArrayList<Entidade> obstaculos = getObstaculos();
+        for (int i = 0; i < obstaculos.size(); i++) {
+            int x1 = ((Obstaculos) obstaculos.get(i)).getPosicaoX1();
+            int y1 = ((Obstaculos) obstaculos.get(i)).getPosicaoY1();
+            int x2 = ((Obstaculos) obstaculos.get(i)).getPosicaoX2();
+            int y2 = ((Obstaculos) obstaculos.get(i)).getPosicaoY2();
+            int h = ((Obstaculos) obstaculos.get(i)).getTipoObstaculo().getAltura();
+    
+            // verifica se (x,y) está dentro do retângulo do obstáculo
+            if (x >= x1 && x <= x2 && y >= y1 && y <= y2 && h <= z) {
+                return true;
+            }
+        }
+        return false;
+    }
     
     // Métodos get para retornar atributos do ambiente
     public int getLargura() {
@@ -113,5 +164,27 @@ public class Ambiente {
 
     public ArrayList<Entidade> getEntidades(){
         return entidades;
+    }
+
+    // Retorna uma lista com todos os robôs presentes no ambiente
+    public ArrayList<Entidade> getRobos(){
+        ArrayList<Entidade> robos = new ArrayList<>();
+        for (int i = 0; i < entidades.size(); i++){
+            if (entidades.get(i).getTipo() == TipoEntidade.ROBO){
+                robos.add(entidades.get(i));
+            }
+        }
+        return robos;
+    }
+
+    // Retorna uma lista com todos os obstáculos presentes no ambiente
+    public ArrayList<Entidade> getObstaculos(){
+        ArrayList<Entidade> obstaculos = new ArrayList<>();
+        for (int i = 0; i < entidades.size(); i++){
+            if (entidades.get(i).getTipo() == TipoEntidade.OBSTACULO){
+                obstaculos.add(entidades.get(i));
+            }
+        }
+        return obstaculos;
     }
 }

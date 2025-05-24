@@ -95,6 +95,6 @@ import RobosBase.RoboTerrestre;
     }
 
     public String getDescricao(){
-        return "Robô do tipo terrestre que explora o mapa em uma certa direção, até esbarrar em algo ou chegar no limite do mapa.\n";
+        return "Robô do tipo terrestre que explora o mapa em uma certa direção, até esbarrar em algo ou chegar no limite do mapa. Também possui uma autonomia, que aciona uma ação aleatória.\n";
     }
 }

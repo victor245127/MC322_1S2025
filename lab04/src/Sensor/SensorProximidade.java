@@ -18,9 +18,11 @@ public class SensorProximidade extends Sensor {
 
         for (int i = x - alcance; i <= x + alcance; i++) {
             for (int j = y - alcance; j <= y + alcance; j++) {
-                if (ambiente.dentroDosLimites(i, j) && ambiente.temObstaculoEm(i, j)) {
-                    System.out.printf("Obstáculo detectado em (%d, %d)\n", i, j);
-                    encontrou = true;
+                for (int k = z - alcance; k <= z+alcance; k++){
+                    if (ambiente.dentroDosLimites(i, j, k) && ambiente.temObstaculoEm(i, j, k)) {
+                        System.out.printf("Obstáculo detectado em (%d, %d, %d)\n", i, j, k);
+                        encontrou = true;
+                    }
                 }
             }
         }
