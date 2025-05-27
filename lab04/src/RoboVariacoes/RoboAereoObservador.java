@@ -1,13 +1,16 @@
 package RoboVariacoes;
 
+import java.util.Random;
+
 import Ambiente.Ambiente;
 import Exceptions.ColisaoException;
 import Exceptions.RoboDesligadoException;
+import InterfacesRobos.Autonomo;
 import RobosBase.EstadoRobo;
 import RobosBase.RoboAereo;
 
 // subclasse de robo aereo que observa o ambiente e identifica os obstaculos em um dado raio
-public class RoboAereoObservador extends RoboAereo {
+public class RoboAereoObservador extends RoboAereo implements Autonomo{
     private int raioObservacao;
     // Atributo do robô
 
@@ -17,8 +20,8 @@ public class RoboAereoObservador extends RoboAereo {
     } // Construtor
 
     public void executarTarefa(Ambiente ambiente) throws ColisaoException, RoboDesligadoException { // Habilidade do observador que procura obstáculos dentro do seu raio de visão
-        int x = getX();
-        int y = getY();
+        int x = getX()[0];
+        int y = getY()[0];
         boolean encontrou = false;
 
         if (getEstado() == EstadoRobo.desligado){
@@ -40,6 +43,32 @@ public class RoboAereoObservador extends RoboAereo {
             System.out.println("Nenhum obstáculo encontrado na área.\n");
         }
     }
+
+    // Método autonomia herdado da interface autônomo
+    public void Autonomia(Ambiente ambiente) throws RoboDesligadoException, ColisaoException{
+        Random random = new Random();
+        int acao = random.nextInt(4);
+        int novoX = random.nextInt(ambiente.getLargura());
+        int novoY = random.nextInt(ambiente.getProfundidade());
+        int novoZ = random.nextInt(ambiente.getAltura());
+        // Randomiza a ação a ser tomada, podendo mover para uma nova posição aleatória, ligar ou desligar, ou executar sua tarefa
+        switch (acao) {
+            case 0:
+                moverPara(novoX, novoY, novoZ);
+                break;
+            case 1:
+                desligar();
+                break;
+            case 2:
+                ligar();
+                break;
+            case 3:
+                executarTarefa(ambiente);
+            default:
+                break;
+        }
+    }
+
 
     // Descreve o robô
     public String getDescricao() {

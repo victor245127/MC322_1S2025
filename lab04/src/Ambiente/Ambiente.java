@@ -24,12 +24,12 @@ public class Ambiente {
     private TipoEntidade[][][] mapa;
     // Atributos do ambiente
 
-    public Ambiente(int largura, int altura, int profundidade, TipoEntidade[][][] mapa){ // Construtor do ambiente
+    public Ambiente(int largura, int altura, int profundidade){ // Construtor do ambiente
         this.largura = largura;
         this.altura = altura;
         this.profundidade = profundidade;
         this.entidades = new ArrayList<>();
-        this.mapa = mapa;
+        this.mapa = new TipoEntidade[getLargura()][getProfundidade()][getAltura()];
     }
     
     public void inicializarMapa(){ // Inicializa o mapa com todas as posições vazias
@@ -44,10 +44,34 @@ public class Ambiente {
     }
 
     public void adicionarEntidade(Entidade e) { // Adiciona uma entidade
+        if (e.getTipo() == TipoEntidade.OBSTACULO){
+            for (int i = e.getX()[0]; i <= (e.getX()[1] + 1); i++){
+                for (int j = e.getY()[0]; j <= (e.getY()[1] + 1); j++){
+                    for (int k = 0; k <= (e.getZ()[0] + 1); k++){
+                        mapa[i][j][k] = e.getTipo();
+                    }
+                } 
+            }
+        }
+        else {
+            mapa[e.getX()[0]][e.getY()[0]][e.getZ()[0]] = e.getTipo();
+        }
         entidades.add(e);
     }
 
     public void removerEntidade(Entidade e) { // Remove uma entidade
+        if (e.getTipo() == TipoEntidade.OBSTACULO){
+            for (int i = e.getX()[0]; i <= (e.getX()[1] + 1); i++){
+                for (int j = e.getY()[0]; j <= (e.getY()[1] + 1); j++){
+                    for (int k = 0; k <= (e.getZ()[0] + 1); k++){
+                        mapa[i][j][k] = TipoEntidade.VAZIO;
+                    }
+                } 
+            }
+        }
+        else {
+            mapa[e.getX()[0]][e.getY()[0]][e.getZ()[0]] = TipoEntidade.VAZIO;
+        }
         entidades.remove(e);
     }
 
@@ -72,12 +96,12 @@ public class Ambiente {
         throw new EntidadeImovelException();
     }
 
-    public void executarSensores(Robo r) throws RoboDesligadoException, ErroSensorException {// Aciona os sensores de um robô específico
+    public void executarSensores(Robo r, Ambiente ambiente) throws RoboDesligadoException, ErroSensorException, ColisaoException {// Aciona os sensores de um robô específico
         if (r instanceof Sensoreavel){
             if (r.getEstado() == EstadoRobo.desligado){
                 throw new RoboDesligadoException();
             }
-            ((RoboTerrestreDestruidor) r).acionarSensores();
+            ((RoboTerrestreDestruidor) r).acionarSensores(ambiente);
         }
         throw new ErroSensorException(r.getId());
     }
@@ -93,7 +117,20 @@ public class Ambiente {
                 if (i == -1 || i == largura || j == -1 || j == profundidade){
                     System.out.println("#"); // Desenhando as bordas do plano
                 }
-                // FAZER IFS DAS ENTIDADES PARA PRINTAR SEU CHAR NA POSICAO CERTA
+                for (int k = 0; k <= getAltura(); k++){ // Desenhando as entidades do ambiente
+                    switch (mapa[i][j][k]) {
+                    case TipoEntidade.ROBO:
+                        System.out.println("R");
+                        break;
+                    case TipoEntidade.OBSTACULO:
+                        System.out.println("O");
+                        break;
+                    case TipoEntidade.VAZIO:
+                        System.out.println(" ");
+                    default:
+                        break;
+                    }
+                }
             }
         }
     }
@@ -101,11 +138,11 @@ public class Ambiente {
     public int getResistenciaEm(int x, int y, int z) { // Procura um obstáculo em X, Y, Z e, caso tenha, retorna a resistência do obstáculo
         ArrayList<Entidade> obstaculos = getObstaculos();
         for (int i = 0; i < obstaculos.size(); i++) { // Loop para verificar obstáculo por obstáculo, usado em vários métodos seguintes
-            int x1 = ((Obstaculos) obstaculos.get(i)).getPosicaoX1();
-            int x2 = ((Obstaculos) obstaculos.get(i)).getPosicaoX2();
-            int y1 = ((Obstaculos) obstaculos.get(i)).getPosicaoY1();
-            int y2 = ((Obstaculos) obstaculos.get(i)).getPosicaoY2();
-            int h = ((Obstaculos) obstaculos.get(i)).getTipoObstaculo().getAltura();
+            int x1 = ((Obstaculos) obstaculos.get(i)).getX()[0];
+            int x2 = ((Obstaculos) obstaculos.get(i)).getX()[1];
+            int y1 = ((Obstaculos) obstaculos.get(i)).getY()[0];
+            int y2 = ((Obstaculos) obstaculos.get(i)).getY()[1];
+            int h = ((Obstaculos) obstaculos.get(i)).getZ()[0];
     
             if (x >= x1 && x <= x2 && y >= y1 && y <= y2 && h <= z) {
                 int resistencia = ((Obstaculos) obstaculos.get(i)).getResistencia();
@@ -115,17 +152,17 @@ public class Ambiente {
         return 0;
     }
 
-     public void removerObstaculoEm(int x, int y) { // Procura um obstáculo em X, Y e, caso tenha, o remove do ambiente
+     public void removerObstaculoEm(int x, int y, int z) { // Procura um obstáculo em X, Y e, caso tenha, o remove do ambiente
         ArrayList<Entidade> obstaculos = getObstaculos();
         for (int i = 0; i < obstaculos.size(); i++) { 
-            int x1 = ((Obstaculos) obstaculos.get(i)).getPosicaoX1();
-            int x2 = ((Obstaculos) obstaculos.get(i)).getPosicaoX2();
-            int y1 = ((Obstaculos) obstaculos.get(i)).getPosicaoY1();
-            int y2 = ((Obstaculos) obstaculos.get(i)).getPosicaoY2();
+            int x1 = ((Obstaculos) obstaculos.get(i)).getX()[0];
+            int x2 = ((Obstaculos) obstaculos.get(i)).getX()[1];
+            int y1 = ((Obstaculos) obstaculos.get(i)).getY()[0];
+            int y2 = ((Obstaculos) obstaculos.get(i)).getY()[1];
             int h = ((Obstaculos) obstaculos.get(i)).getTipoObstaculo().getAltura();
     
             if (x >= x1 && x <= x2 && y >= y1 && y <= y2 && h <= z) {
-                Entidade.remove(((Obstaculos) obstaculos.get(i)));
+                removerEntidade(obstaculos.get(i));
                 System.out.printf("Obstáculo removido na posição (%d, %d)\n", x, y);
                 return;
             }
@@ -135,10 +172,10 @@ public class Ambiente {
     public boolean temObstaculoEm(int x, int y, int z) { // Procura um obstáculo em X, Y, Z
         ArrayList<Entidade> obstaculos = getObstaculos();
         for (int i = 0; i < obstaculos.size(); i++) {
-            int x1 = ((Obstaculos) obstaculos.get(i)).getPosicaoX1();
-            int y1 = ((Obstaculos) obstaculos.get(i)).getPosicaoY1();
-            int x2 = ((Obstaculos) obstaculos.get(i)).getPosicaoX2();
-            int y2 = ((Obstaculos) obstaculos.get(i)).getPosicaoY2();
+            int x1 = ((Obstaculos) obstaculos.get(i)).getX()[0];
+            int y1 = ((Obstaculos) obstaculos.get(i)).getY()[0];
+            int x2 = ((Obstaculos) obstaculos.get(i)).getX()[1];
+            int y2 = ((Obstaculos) obstaculos.get(i)).getY()[1];
             int h = ((Obstaculos) obstaculos.get(i)).getTipoObstaculo().getAltura();
     
             // verifica se (x,y) está dentro do retângulo do obstáculo

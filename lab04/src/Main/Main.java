@@ -3,6 +3,7 @@ import java.util.Scanner;
 import Ambiente.Ambiente;
 import Ambiente.Obstaculos;
 import Ambiente.TiposObstaculo;
+import Entidade.TipoEntidade;
 import RobosBase.Robo;
 import RobosBase.RoboAereo;
 import RobosBase.RoboTerrestre;

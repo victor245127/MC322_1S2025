@@ -46,16 +46,16 @@ public abstract class Robo implements Entidade {
     public abstract void executarTarefa(Ambiente ambiente) throws ColisaoException, RoboDesligadoException; // Método abstrato 
     
     // Métodos get que retornam os atributos do robô
-    public int getX(){
-        return this.x;
+    public int [] getX(){
+        return new int[] {this.x};
     }
 
-    public int getY(){
-        return this.y;
+    public int [] getY(){
+        return new int[] {this.y};
     }
 
-    public int getZ(){
-        return this.z;
+    public int [] getZ(){
+        return new int[] {this.z};
     }
 
     public TipoEntidade getTipo(){

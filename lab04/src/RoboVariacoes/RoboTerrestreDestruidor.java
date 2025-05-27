@@ -5,6 +5,7 @@ import java.util.ArrayList;
 // Robo que consegue destruir um obstáculo ao redor dele 
 
 import Ambiente.Ambiente;
+import Exceptions.ColisaoException;
 import RobosBase.RoboTerrestre;
 import Sensor.Sensor;
 import Sensor.SensorIdentificacao;
@@ -26,48 +27,49 @@ public class RoboTerrestreDestruidor extends RoboTerrestre implements Sensoreave
         // tenta destruí-lo, que funcionará de acordo com sua força de destruição
         // e a resistência do obstáculo, ou seja, caso a resistência seja menor/igual que a força,
         // o obstáculo é destruído, e vice versa
-        int x = this.getX();
-        int y = this.getY();
+        int x = this.getX()[0];
+        int y = this.getY()[0];
+        int z = this.getZ()[0];
         
         // Direita
-        if (ambiente.temObstaculoEm(x + 1, y)) {
-            int resistencia = ambiente.getResistenciaEm(x + 1, y);
+        if (ambiente.temObstaculoEm(x + 1, y, z)) {
+            int resistencia = ambiente.getResistenciaEm(x + 1, y, z);
             if (this.forcaDestruicao >= resistencia){
                 System.out.printf("Obstáculo à direita. Destruindo com forca %d\n", forcaDestruicao);
-                ambiente.removerObstaculoEm(x + 1, y);
+                ambiente.removerObstaculoEm(x + 1, y, z);
             }
             else {
                 System.out.println("O robo nao tem forca suficiente para a destruicao desse obstaculo.\n");
             }
 
         // Esquerda
-        } else if (ambiente.temObstaculoEm(x - 1, y)) {
-            int resistencia = ambiente.getResistenciaEm(x - 1, y);
+        } else if (ambiente.temObstaculoEm(x - 1, y, z)) {
+            int resistencia = ambiente.getResistenciaEm(x - 1, y, z);
             if (this.forcaDestruicao >= resistencia){
                 System.out.printf("Obstáculo à esquerda. Destruindo com forca %d\n", forcaDestruicao);
-                ambiente.removerObstaculoEm(x - 1, y);
+                ambiente.removerObstaculoEm(x - 1, y, z);
             }
             else {
                 System.out.println("O robo nao tem forca suficiente para a destruicao desse obstaculo.\n");
             }
 
         // Frente
-        } else if (ambiente.temObstaculoEm(x, y + 1)) {
-            int resistencia = ambiente.getResistenciaEm(x, y + 1);
+        } else if (ambiente.temObstaculoEm(x, y + 1, z)) {
+            int resistencia = ambiente.getResistenciaEm(x, y + 1, z);
             if (this.forcaDestruicao >= resistencia){
                 System.out.printf("Obstáculo em frente. Destruindo com forca %d\n", forcaDestruicao);
-                ambiente.removerObstaculoEm(x, y + 1);
+                ambiente.removerObstaculoEm(x, y + 1, z);
             }
             else {
                 System.out.println("O robo nao tem forca suficiente para a destruicao desse obstaculo.\n");
             }
 
         // Trás
-        } else if (ambiente.temObstaculoEm(x, y - 1)) {
-            int resistencia = ambiente.getResistenciaEm(x, y - 1);
+        } else if (ambiente.temObstaculoEm(x, y - 1, z)) {
+            int resistencia = ambiente.getResistenciaEm(x, y - 1, z);
             if (this.forcaDestruicao >= resistencia){
                 System.out.printf("Obstáculo atrás. Destruindo com forca %d", forcaDestruicao);
-                ambiente.removerObstaculoEm(x, y - 1);
+                ambiente.removerObstaculoEm(x, y - 1, z);
             }
             else {
                 System.out.println("O robo nao tem forca suficiente para a destruicao desse obstaculo.\n");
@@ -84,9 +86,9 @@ public class RoboTerrestreDestruidor extends RoboTerrestre implements Sensoreave
         sensores.add(sensor_prox);
     }
 
-    public void acionarSensores(){
-        sensores.get(0).monitorar(null, x, y, z);
-        sensores.get(1).monitorar(null, x, y, z);
+    public void acionarSensores(Ambiente ambiente) throws ColisaoException{
+        sensores.get(0).monitorar(ambiente, x, y, z);
+        sensores.get(1).monitorar(ambiente, x, y, z);
     }
 
     public String getDescricao(){

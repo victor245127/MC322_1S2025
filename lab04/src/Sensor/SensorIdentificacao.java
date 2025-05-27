@@ -56,11 +56,11 @@ public class SensorIdentificacao extends Sensor {
                 for (j = posY-r_int; j <= (posY+r_int); j++){
                     for (k = posZ-r_int; k <= (posZ+r_int); k++){
                         if (ambiente.dentroDosLimites(i, j, k)){
-                            if (((Obstaculos) obstaculos.get(a)).getPosicaoX1() <= i && i <= ((Obstaculos) obstaculos.get(a)).getPosicaoX2()){
-                                if (((Obstaculos) obstaculos.get(a)).getPosicaoY1() <= j && j <= ((Obstaculos) obstaculos.get(a)).getPosicaoY2()){
+                            if (((Obstaculos) obstaculos.get(a)).getX()[0] <= i && i <= ((Obstaculos) obstaculos.get(a)).getX()[1]){
+                                if (((Obstaculos) obstaculos.get(a)).getY()[0] <= j && j <= ((Obstaculos) obstaculos.get(a)).getY()[1]){
                                     if (((Obstaculos) obstaculos.get(a)).getTipoObstaculo().getAltura() <= k){
                                         this.tipoObstaculo = identificacao(((Obstaculos) obstaculos.get(i)));
-                                        System.out.printf("%s de resistência %d identificado entre (%d, %d, %d) e (%d, %d, %d).\n", getIdentificacao(), ((Obstaculos) obstaculos.get(a)).getResistencia(), ((Obstaculos) obstaculos.get(a)).getPosicaoX1(), ((Obstaculos) obstaculos.get(a)).getPosicaoY1(), ((Obstaculos) obstaculos.get(a)).getTipoObstaculo().getAltura(), ((Obstaculos) obstaculos.get(a)).getPosicaoX2(), ((Obstaculos) obstaculos.get(a)).getPosicaoY2(), ((Obstaculos) obstaculos.get(a)).getTipoObstaculo().getAltura());;
+                                        System.out.printf("%s de resistência %d identificado entre (%d, %d, %d) e (%d, %d, %d).\n", getIdentificacao(), ((Obstaculos) obstaculos.get(a)).getResistencia(), ((Obstaculos) obstaculos.get(a)).getX()[0], ((Obstaculos) obstaculos.get(a)).getY()[0], ((Obstaculos) obstaculos.get(a)).getTipoObstaculo().getAltura(), ((Obstaculos) obstaculos.get(a)).getX()[1], ((Obstaculos) obstaculos.get(a)).getY()[1], ((Obstaculos) obstaculos.get(a)).getTipoObstaculo().getAltura());;
                                         return;
                                     }
                                 }

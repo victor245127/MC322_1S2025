@@ -17,7 +17,7 @@ public abstract class RoboAereo extends Robo implements Comunicavel {
 
     public void subir(int metros, Ambiente ambiente){ // Método para elevar a altitude do robô
         // Verifica se a nova altitude é menor ou igual à altitude máxima do robô e do ambiente
-        if (getZ() + metros <= this.altitudeMaxima && (getZ() + metros) <= ambiente.getAltura()){
+        if (getZ()[0] + metros <= this.altitudeMaxima && (getZ()[0] + metros) <= ambiente.getAltura()){
             moverPara(x, y, z+metros);
         }
         else{
@@ -26,7 +26,7 @@ public abstract class RoboAereo extends Robo implements Comunicavel {
     }
 
     public void descer(int metros){ // Método para diminuir a altitude do robô
-        if (getZ() - metros >= 0){
+        if (getZ()[0] - metros >= 0){
             moverPara(x, y, z-metros);
         }
         else{

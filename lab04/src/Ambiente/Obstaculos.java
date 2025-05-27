@@ -30,32 +30,16 @@ public class Obstaculos implements Entidade{
         return tipo_obs.getResistenciaTipo();
     }
     
-    public int getPosicaoX1() {
-        return this.posicaoX1;
+    public int[] getX() {
+        return new int[] {this.posicaoX1, this.posicaoX2};
     }
 
-    public int getPosicaoX2() {
-        return this.posicaoX2;
+    public int[] getY() {
+        return new int[] {this.posicaoY1, this.posicaoY2};
     }
 
-    public int getPosicaoY1() {
-        return this.posicaoY1;
-    }
-
-    public int getPosicaoY2() {
-        return this.posicaoY2;
-    }
-
-    public int getX() { // ?????
-        throw new UnsupportedOperationException("Unimplemented method 'getX'");
-    }
-
-    public int getY() { // ????
-        throw new UnsupportedOperationException("Unimplemented method 'getY'");
-    }
-
-    public int getZ() { // ????
-        throw new UnsupportedOperationException("Unimplemented method 'getZ'");
+    public int[] getZ() {
+        return new int[] {this.getTipoObstaculo().getAltura()};
     }
 
     public TipoEntidade getTipo() {

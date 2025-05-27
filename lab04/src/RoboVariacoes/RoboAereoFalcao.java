@@ -4,26 +4,25 @@ package RoboVariacoes;
 
 import Ambiente.Ambiente;
 import Exceptions.RoboDesligadoException;
+import InterfacesRobos.Direcionavel_vertical;
 import RobosBase.EstadoRobo;
 import RobosBase.RoboAereo;
 
-public class RoboAereoFalcao extends RoboAereo {
+public class RoboAereoFalcao extends RoboAereo implements Direcionavel_vertical {
     private int alcanceVisual;
-    private String direcao;
     // atributo do falcão
 
-    public RoboAereoFalcao(String id, int x, int y, int z, int altitudeMaxima, int alcanceVisual, String direcao) {
+    public RoboAereoFalcao(String id, int x, int y, int z, int altitudeMaxima, int alcanceVisual) {
         super(id, x, y, z, altitudeMaxima);
         this.alcanceVisual = alcanceVisual;
-        this.direcao = direcao;
     } // Construtor do falcão
 
     public void executarTarefa(Ambiente ambiente) throws RoboDesligadoException {
         // Habilidade do falcão que verifica se há obstáculos dentro do seu alcance visual
         // verifica o ambiente de acordo com sua direção
-        int x = getX();
-        int y = getY();
-        String dir = direcao.toLowerCase();
+        int x = getX()[0];
+        int y = getY()[0];
+        String dir = direcionar_v(ambiente).toLowerCase();
         boolean encontrou = false;
 
         if (getEstado() == EstadoRobo.desligado){
@@ -45,20 +44,6 @@ public class RoboAereoFalcao extends RoboAereo {
                     encontrou = true;
                 }
             }
-        } else if (dir.equals("leste")) {
-            for (int i = 1; i <= alcanceVisual && x + i <= ambiente.getLargura(); i++) {
-                if (ambiente.estaOcupado(x + i, y, z)) {
-                    System.out.printf("Obstáculo detectado em (%d, %d, %d)\n", (x+1), y, z);
-                    encontrou = true;
-                }
-            }
-        } else if (dir.equals("oeste")) {
-            for (int i = 1; i <= alcanceVisual && x - i >= 0; i++) {
-                if (ambiente.estaOcupado(x - i, y, z)) {
-                    System.out.printf("Obstáculo detectado em (%d, %d, %d)\n", (x-1), y, z);
-                    encontrou = true;
-                }
-            }
         } else {
             System.out.println("Direção inválida.\n");
             return;
@@ -66,6 +51,15 @@ public class RoboAereoFalcao extends RoboAereo {
 
         if (!encontrou) {
             System.out.println("Nenhum obstáculo encontrado na linha de visão.\n");
+        }
+    }
+
+    public String direcionar_v(Ambiente ambiente){
+        if (y >= ambiente.getProfundidade()/2){
+            return "norte";
+        }
+        else {
+            return "sul";
         }
     }
 

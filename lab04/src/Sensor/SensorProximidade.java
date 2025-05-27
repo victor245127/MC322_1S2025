@@ -1,6 +1,7 @@
 package Sensor;
 
 import Ambiente.Ambiente;
+import Exceptions.ColisaoException;
 
 // Sensor que identifica um obstáculo dentro do raio
 public class SensorProximidade extends Sensor {
@@ -9,7 +10,7 @@ public class SensorProximidade extends Sensor {
         super(raio);
     } // Construtor
 
-    public void monitorar(Ambiente ambiente, int x, int y, int z) {
+    public void monitorar(Ambiente ambiente, int x, int y, int z) throws ColisaoException {
         // Monitora o ambiente ao redor de uma posição específica dentro do raio
         boolean encontrou = false;
         int alcance = (int) Math.ceil(raio);
