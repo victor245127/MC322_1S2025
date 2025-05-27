@@ -23,6 +23,7 @@ import RobosBase.RoboTerrestre;
         // e avança de acordo com sua direção
         int x = getX()[0];
         int y = getY()[0];
+        int z = getZ()[0];
         String dir = direcionar_h(ambiente).toLowerCase();
 
         if (getEstado() == EstadoRobo.desligado){
@@ -48,7 +49,7 @@ import RobosBase.RoboTerrestre;
                 break;
             }
 
-            moverPara(novoX - x, novoY - y, z);
+            moverPara(novoX, novoY, z);
             passosDados++;
             x = novoX;
             y = novoY;

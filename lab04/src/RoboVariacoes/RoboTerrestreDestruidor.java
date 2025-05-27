@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 import Ambiente.Ambiente;
 import Exceptions.ColisaoException;
+import Exceptions.RoboDesligadoException;
+import RobosBase.EstadoRobo;
 import RobosBase.RoboTerrestre;
 import Sensor.Sensor;
 import Sensor.SensorIdentificacao;
@@ -86,9 +88,12 @@ public class RoboTerrestreDestruidor extends RoboTerrestre implements Sensoreave
         sensores.add(sensor_prox);
     }
 
-    public void acionarSensores(Ambiente ambiente) throws ColisaoException{
-        sensores.get(0).monitorar(ambiente, x, y, z);
-        sensores.get(1).monitorar(ambiente, x, y, z);
+    public void acionarSensores(Ambiente ambiente) throws ColisaoException, RoboDesligadoException{
+        if (getEstado() == EstadoRobo.desligado){
+            throw new RoboDesligadoException();
+        }
+        sensores.get(0).monitorar(ambiente, getX()[0], getY()[0], getZ()[0]);
+        sensores.get(1).monitorar(ambiente, getX()[0], getY()[0], getZ()[0]);
     }
 
     public String getDescricao(){

@@ -39,6 +39,7 @@ public abstract class RoboAereo extends Robo implements Comunicavel {
         if (((Robo)destinatario).estado == EstadoRobo.desligado || getEstado() == EstadoRobo.desligado){
             throw new RoboDesligadoException();
         }
+        destinatario.receberMensagem(mensagem);
         central.registrarMensagem(getId(), mensagem);
     }
 
@@ -46,5 +47,6 @@ public abstract class RoboAereo extends Robo implements Comunicavel {
         if (getEstado() == EstadoRobo.desligado){
             throw new RoboDesligadoException();
         }
+        // IF PARA VERIFICAR SE O DESTINATARIO ESTA DENTRO DO RAIO DE COMUNICACAO
     }
 }

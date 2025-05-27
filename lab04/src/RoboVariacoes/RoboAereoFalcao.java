@@ -22,6 +22,7 @@ public class RoboAereoFalcao extends RoboAereo implements Direcionavel_vertical 
         // verifica o ambiente de acordo com sua direção
         int x = getX()[0];
         int y = getY()[0];
+        int z = getZ()[0];
         String dir = direcionar_v(ambiente).toLowerCase();
         boolean encontrou = false;
 

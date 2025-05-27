@@ -59,7 +59,7 @@ public class SensorIdentificacao extends Sensor {
                             if (((Obstaculos) obstaculos.get(a)).getX()[0] <= i && i <= ((Obstaculos) obstaculos.get(a)).getX()[1]){
                                 if (((Obstaculos) obstaculos.get(a)).getY()[0] <= j && j <= ((Obstaculos) obstaculos.get(a)).getY()[1]){
                                     if (((Obstaculos) obstaculos.get(a)).getTipoObstaculo().getAltura() <= k){
-                                        this.tipoObstaculo = identificacao(((Obstaculos) obstaculos.get(i)));
+                                        this.tipoObstaculo = identificacao(((Obstaculos) obstaculos.get(a)));
                                         System.out.printf("%s de resistência %d identificado entre (%d, %d, %d) e (%d, %d, %d).\n", getIdentificacao(), ((Obstaculos) obstaculos.get(a)).getResistencia(), ((Obstaculos) obstaculos.get(a)).getX()[0], ((Obstaculos) obstaculos.get(a)).getY()[0], ((Obstaculos) obstaculos.get(a)).getTipoObstaculo().getAltura(), ((Obstaculos) obstaculos.get(a)).getX()[1], ((Obstaculos) obstaculos.get(a)).getY()[1], ((Obstaculos) obstaculos.get(a)).getTipoObstaculo().getAltura());;
                                         return;
                                     }

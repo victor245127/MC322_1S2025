@@ -22,6 +22,7 @@ public class RoboAereoObservador extends RoboAereo implements Autonomo{
     public void executarTarefa(Ambiente ambiente) throws ColisaoException, RoboDesligadoException { // Habilidade do observador que procura obstáculos dentro do seu raio de visão
         int x = getX()[0];
         int y = getY()[0];
+        int z = getZ()[0];
         boolean encontrou = false;
 
         if (getEstado() == EstadoRobo.desligado){
