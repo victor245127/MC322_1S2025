@@ -39,14 +39,13 @@ public abstract class RoboAereo extends Robo implements Comunicavel {
         if (((Robo)destinatario).estado == EstadoRobo.desligado || getEstado() == EstadoRobo.desligado){
             throw new RoboDesligadoException();
         }
-        destinatario.receberMensagem(mensagem);
-        central.registrarMensagem(getId(), mensagem);
+        receberMensagem(destinatario, mensagem, central);
+        
     }
 
-    public void receberMensagem(String mensagem) throws RoboDesligadoException{
-        if (getEstado() == EstadoRobo.desligado){
-            throw new RoboDesligadoException();
+    public void receberMensagem(Comunicavel destinatario, String mensagem, CentralComunicacao central){
+        if (((Robo)destinatario).getX()[0] >= (x - central.getRaio()) && ((Robo)destinatario).getX()[0] <= (x + central.getRaio()) && ((Robo)destinatario).getY()[0] >= (y - central.getRaio()) && ((Robo)destinatario).getY()[0] <= (y + central.getRaio())){
+            central.registrarMensagem(getId(), mensagem);
         }
-        // IF PARA VERIFICAR SE O DESTINATARIO ESTA DENTRO DO RAIO DE COMUNICACAO
     }
 }

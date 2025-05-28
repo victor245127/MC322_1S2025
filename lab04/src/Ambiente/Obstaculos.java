@@ -40,7 +40,7 @@ public class Obstaculos implements Entidade{
 
     public int[] getZ() {
         return new int[] {0, this.getTipoObstaculo().getAltura()};
-    } // AJUSTAR METODOS QUE USAM GETZ
+    }
 
     public TipoEntidade getTipo() {
         return this.tipo;
