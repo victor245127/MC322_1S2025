@@ -4,9 +4,10 @@ import Ambiente.Ambiente;
 import Entidade.Entidade;
 import Entidade.TipoEntidade;
 import Exceptions.ColisaoException;
+import Exceptions.ForaDosLimitesException;
 import Exceptions.RoboDesligadoException;
 
-// Superclasse robô, a qual os demais robôs herdam
+// Superclasse abstrata robô, a qual os demais robôs herdam, implementa a interface entidade
 public abstract class Robo implements Entidade {
     protected String id;
     protected EstadoRobo estado;
@@ -25,10 +26,14 @@ public abstract class Robo implements Entidade {
         this.z = z;
     }
     
-    public void moverPara(int x, int y, int z) { // Move o robô para uma certa posição
+    public void moverPara(int x, int y, int z) throws RoboDesligadoException { // Move o robô para uma certa posição
         this.x = x;
         this.y = y;
         this.z = z;
+        // Verifica se o robô está desligado
+        if (getEstado() == EstadoRobo.desligado){
+            throw new RoboDesligadoException();
+        }
     }
     
     public void exibirPosicao(){ // Exibe a posição do robô
@@ -43,7 +48,8 @@ public abstract class Robo implements Entidade {
         this.estado = EstadoRobo.desligado;
     }
 
-    public abstract void executarTarefa(Ambiente ambiente) throws ColisaoException, RoboDesligadoException; // Método abstrato 
+    // Método abstrato que é implementado por suas subclasses
+    public abstract void executarTarefa(Ambiente ambiente) throws ColisaoException, RoboDesligadoException, ForaDosLimitesException; // Método abstrato 
     
     // Métodos get que retornam os atributos do robô
     public int [] getX(){
@@ -70,9 +76,5 @@ public abstract class Robo implements Entidade {
         return this.estado;
     }
 
-    public abstract String getDescricao(); // Descreve o robô
-
-    public char getRepresentacao(){ // Retorna a representação do robô por um caractere (R)
-        return 'R';
-    }
+    public abstract String getDescricao(); // Descreve o robô, método abstrato implementado em suas subclasses
 }

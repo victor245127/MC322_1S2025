@@ -7,5 +7,5 @@ public interface Entidade {
     public int [] getZ();
     public TipoEntidade getTipo();
     public String getDescricao();
-    public char getRepresentacao();
+    // getRepresentação está em TipoEntidade
 }

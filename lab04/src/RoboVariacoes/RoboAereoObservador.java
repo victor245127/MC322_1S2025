@@ -4,6 +4,7 @@ import java.util.Random;
 
 import Ambiente.Ambiente;
 import Exceptions.ColisaoException;
+import Exceptions.ForaDosLimitesException;
 import Exceptions.RoboDesligadoException;
 import InterfacesRobos.Autonomo;
 import RobosBase.EstadoRobo;
@@ -19,34 +20,40 @@ public class RoboAereoObservador extends RoboAereo implements Autonomo{
         this.raioObservacao = raioObservacao;
     } // Construtor
 
-    public void executarTarefa(Ambiente ambiente) throws ColisaoException, RoboDesligadoException { // Habilidade do observador que procura obstáculos dentro do seu raio de visão
-        int x = getX()[0];
-        int y = getY()[0];
-        int z = getZ()[0];
-        boolean encontrou = false;
+    public void executarTarefa(Ambiente ambiente) throws ColisaoException, RoboDesligadoException, ForaDosLimitesException { // Habilidade do observador que procura obstáculos dentro do seu raio de visão
+        try {
+            int x = getX()[0];
+            int y = getY()[0];
+            int z = getZ()[0];
+            boolean encontrou = false;
 
-        if (getEstado() == EstadoRobo.desligado){
-            throw new RoboDesligadoException();
-        }
+            // verifica se o robô está desligado
+            if (getEstado() == EstadoRobo.desligado){
+                throw new RoboDesligadoException();
+            } 
 
-        for (int i = x - this.raioObservacao; i <= x + this.raioObservacao; i++) {
-            for (int j = y - raioObservacao; j <= y + raioObservacao; j++) {
-                for (int k = z - raioObservacao; k <= z + raioObservacao; k++){
-                    if (ambiente.dentroDosLimites(i, j, k) && ambiente.estaOcupado(i, j, k)) {
-                        System.out.printf("Obstáculo detectado em (%d, %d)\n", i, j);
-                        encontrou = true;
+            // Busca um obstáculo dentro de seu raio de observação
+            for (int i = x - this.raioObservacao; i <= x + this.raioObservacao; i++) {
+                for (int j = y - raioObservacao; j <= y + raioObservacao; j++) {
+                    for (int k = z - raioObservacao; k <= z + raioObservacao; k++){
+                        if (i >= 0 && i < ambiente.getLargura() && j >= 0 && j < ambiente.getProfundidade() && k >= 0 && k < ambiente.getAltura() && ambiente.temObstaculoEm(i, j, k)) {
+                            System.out.printf("Obstáculo detectado em (%d, %d, %d)\n", i, j, k);
+                            encontrou = true;
+                        }
                     }
                 }
             }
-        }
 
-        if (!encontrou) {
-            System.out.println("Nenhum obstáculo encontrado na área.\n");
+            if (!encontrou) {
+                System.out.println("Nenhum obstáculo encontrado na área.\n");
+            }
+        } catch (RoboDesligadoException e){
+            System.out.println("ERRO: " + e.getMessage());
         }
     }
 
     // Método autonomia herdado da interface autônomo
-    public void Autonomia(Ambiente ambiente) throws RoboDesligadoException, ColisaoException{
+    public void Autonomia(Ambiente ambiente) throws RoboDesligadoException, ColisaoException, ForaDosLimitesException{
         Random random = new Random();
         int acao = random.nextInt(4);
         int novoX = random.nextInt(ambiente.getLargura());
@@ -56,12 +63,15 @@ public class RoboAereoObservador extends RoboAereo implements Autonomo{
         switch (acao) {
             case 0:
                 moverPara(novoX, novoY, novoZ);
+                exibirPosicao();
                 break;
             case 1:
                 desligar();
+                System.out.println("Desligando...");
                 break;
             case 2:
                 ligar();
+                System.out.println("Ligando...");
                 break;
             case 3:
                 executarTarefa(ambiente);
@@ -73,6 +83,6 @@ public class RoboAereoObservador extends RoboAereo implements Autonomo{
 
     // Descreve o robô
     public String getDescricao() {
-        return "Robô do tipo aéreo em que sua tarefa é observar o ambiente à sua volta dentro de um certo raio de observação.\n";
+        return "Robô do tipo aéreo em que sua tarefa é observar o ambiente à sua volta dentro de um certo raio de observação.";
     }
 }

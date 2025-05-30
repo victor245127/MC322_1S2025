@@ -1,6 +1,5 @@
 package RobosBase;
 
-import Ambiente.Ambiente;
 import Comunicacao.CentralComunicacao;
 import Comunicacao.Comunicavel;
 import Exceptions.RoboDesligadoException;
@@ -15,37 +14,44 @@ public abstract class RoboAereo extends Robo implements Comunicavel {
         this.altitudeMaxima = altitudeMaxima;
     } // Construtor do robô
 
-    public void subir(int metros, Ambiente ambiente){ // Método para elevar a altitude do robô
-        // Verifica se a nova altitude é menor ou igual à altitude máxima do robô e do ambiente
-        if (getZ()[0] + metros <= this.altitudeMaxima && (getZ()[0] + metros) <= ambiente.getAltura()){
-            moverPara(x, y, z+metros);
+    // Método override de robô
+    public void moverPara(int x, int y, int z) throws RoboDesligadoException {
+        if (z > altitudeMaxima){
+            System.out.println("Altitude não permitida!");
+            this.x = x;
+            this.y = y;
+            // Não altera o z nesse caso
+        }        
+        else {
+            this.x = x;
+            this.y = y;
+            this.z = z;
         }
-        else{
-            System.out.println("Altura acima da permitida!\n");
-        }
-    }
-
-    public void descer(int metros){ // Método para diminuir a altitude do robô
-        if (getZ()[0] - metros >= 0){
-            moverPara(x, y, z-metros);
-        }
-        else{
-            System.out.println("Altura abaixo da permitida!\n");
+        if (getEstado() == EstadoRobo.desligado){
+            throw new RoboDesligadoException();
         }
     }
 
     // Método que envia mensagem para um destinatário
     public void enviarMensagem(Comunicavel destinatario, String mensagem, CentralComunicacao central) throws RoboDesligadoException{
-        if (((Robo)destinatario).estado == EstadoRobo.desligado || getEstado() == EstadoRobo.desligado){
-            throw new RoboDesligadoException();
+        try {
+            if (((Robo)destinatario).estado == EstadoRobo.desligado || getEstado() == EstadoRobo.desligado){
+                throw new RoboDesligadoException();
+            } // Erro caso um dos robôs esteja desligado
+            receberMensagem(destinatario, mensagem, central);
+        } catch (RoboDesligadoException e){
+            System.out.println("ERRO: " + e.getMessage());
         }
-        receberMensagem(destinatario, mensagem, central);
         
     }
 
+    // Método que determina se o destinatário recebe ou não a mensagem
     public void receberMensagem(Comunicavel destinatario, String mensagem, CentralComunicacao central){
         if (((Robo)destinatario).getX()[0] >= (x - central.getRaio()) && ((Robo)destinatario).getX()[0] <= (x + central.getRaio()) && ((Robo)destinatario).getY()[0] >= (y - central.getRaio()) && ((Robo)destinatario).getY()[0] <= (y + central.getRaio())){
-            central.registrarMensagem(getId(), mensagem);
+            central.registrarMensagem(((Robo) destinatario).getId(), getId(), mensagem);
+        } // Caso o destinatário esteja dentro do raio de comunicação, recebe a mensagem e a registra
+        else {
+            System.out.println("Robô a uma distância maior que o alcance do raio, não foi possível receber a mensagem.");
         }
     }
 }

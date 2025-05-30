@@ -2,6 +2,7 @@ package RoboVariacoes;
 
 import Ambiente.Ambiente;
 import Exceptions.ColisaoException;
+import Exceptions.ForaDosLimitesException;
 import Exceptions.RoboDesligadoException;
 import InterfacesRobos.Direcionavel_horizontal;
 import RobosBase.EstadoRobo;
@@ -18,46 +19,53 @@ import RobosBase.RoboTerrestre;
         this.passosDados = 0;
     } // Construtor
 
-    public void executarTarefa(Ambiente ambiente) throws RoboDesligadoException, ColisaoException{ 
+    public void executarTarefa(Ambiente ambiente) throws RoboDesligadoException, ColisaoException, ForaDosLimitesException{ 
         // Habilidade do explorador que avança até o limite do ambiente ou caso chegue em um obstáculo
         // e avança de acordo com sua direção
-        int x = getX()[0];
-        int y = getY()[0];
-        int z = getZ()[0];
-        String dir = direcionar_h(ambiente).toLowerCase();
+        try {
+            int x = getX()[0];
+            int y = getY()[0];
+            int z = getZ()[0];
+            String dir = direcionar_h(ambiente).toLowerCase();
+            // Utiliza o método de sua interface
 
-        if (getEstado() == EstadoRobo.desligado){
-            throw new RoboDesligadoException();
-        }
-
-        System.out.printf("Iniciando exploração para %s\n", dir);
-
-        // Loop para avançar
-        while (true) {
-            int novoX = x;
-            int novoY = y;
-
-            if (dir.equals("leste")) novoX++;
-            else if (dir.equals("oeste")) novoX--;
-            else {
-                System.out.println("Direção inválida.\n");
-                break;
+            // Verifica se o robô está ligado
+            if (getEstado() == EstadoRobo.desligado){
+                throw new RoboDesligadoException();
             }
 
-            if (!ambiente.dentroDosLimites(novoX, novoY, z) || ambiente.estaOcupado(novoX, novoY, z)) {
-                System.out.printf("Exploração interrompida em (%d, %d)\n", novoX, novoY);
-                break;
+            System.out.printf("Iniciando exploração para %s\n", dir);
+
+            // Loop para avançar
+            while (true) {
+                int novoX = x;
+                int novoY = y;
+
+                if (dir.equals("leste")) novoX++;
+                else if (dir.equals("oeste")) novoX--;
+                else {
+                    System.out.println("Direção inválida.\n");
+                    break;
+                }
+
+                if (!ambiente.dentroDosLimites(novoX, novoY, z) || ambiente.estaOcupado(novoX, novoY, z)) {
+                    System.out.printf("Exploração interrompida em (%d, %d)\n", novoX, novoY);
+                    break;
+                }
+
+                moverPara(novoX, novoY, z);
+                passosDados++;
+                x = novoX;
+                y = novoY;
             }
 
-            moverPara(novoX, novoY, z);
-            passosDados++;
-            x = novoX;
-            y = novoY;
+            System.out.printf("Exploração finalizada. Passos dados: %d\n", passosDados);
+        } catch (RoboDesligadoException e){
+            System.out.println("ERRO: " + e.getMessage());
         }
-
-        System.out.printf("Exploração finalizada. Passos dados: %d\n", passosDados);
     }
 
+    // Implementação do método de sua interface
     public String direcionar_h(Ambiente ambiente){
         if (x >= ambiente.getLargura()/2){
             return "leste";
@@ -73,6 +81,6 @@ import RobosBase.RoboTerrestre;
     }
 
     public String getDescricao(){
-        return "Robô do tipo terrestre que explora o mapa em uma certa direção, até esbarrar em algo ou chegar no limite do mapa. Também possui uma autonomia, que aciona uma ação aleatória.\n";
+        return "Robô do tipo terrestre que explora o mapa em uma certa direção, até esbarrar em algo ou chegar no limite do mapa. Também possui uma autonomia, que aciona uma ação aleatória.";
     }
 }

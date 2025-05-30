@@ -34,7 +34,7 @@ public class SensorIdentificacao extends Sensor {
                 else {
                     return "PAREDE";
                 }
-            case 8:
+            case 10:
                 return "PREDIO";
             default:
                 return "NULL";
@@ -55,10 +55,10 @@ public class SensorIdentificacao extends Sensor {
             for (i = posX - r_int; i <= (posX+r_int); i++){
                 for (j = posY-r_int; j <= (posY+r_int); j++){
                     for (k = posZ-r_int; k <= (posZ+r_int); k++){
-                        if (ambiente.dentroDosLimites(i, j, k)){
+                        if (i >= 0 && i < ambiente.getLargura() && j >= 0 && j < ambiente.getProfundidade() && k >= 0 && k < ambiente.getAltura()){
                             if (((Obstaculos) obstaculos.get(a)).getX()[0] <= i && i <= ((Obstaculos) obstaculos.get(a)).getX()[1]){
                                 if (((Obstaculos) obstaculos.get(a)).getY()[0] <= j && j <= ((Obstaculos) obstaculos.get(a)).getY()[1]){
-                                    if (((Obstaculos) obstaculos.get(a)).getTipoObstaculo().getAltura() <= k){
+                                    if (((Obstaculos) obstaculos.get(a)).getTipoObstaculo().getAltura() >= k){
                                         this.tipoObstaculo = identificacao(((Obstaculos) obstaculos.get(a)));
                                         System.out.printf("%s de resistência %d identificado entre (%d, %d, %d) e (%d, %d, %d).\n", getIdentificacao(), ((Obstaculos) obstaculos.get(a)).getResistencia(), ((Obstaculos) obstaculos.get(a)).getX()[0], ((Obstaculos) obstaculos.get(a)).getY()[0], ((Obstaculos) obstaculos.get(a)).getTipoObstaculo().getAltura(), ((Obstaculos) obstaculos.get(a)).getX()[1], ((Obstaculos) obstaculos.get(a)).getY()[1], ((Obstaculos) obstaculos.get(a)).getTipoObstaculo().getAltura());;
                                         return;
@@ -72,7 +72,7 @@ public class SensorIdentificacao extends Sensor {
         }
         // Caso não ache, define o tipo como "NULL"
         this.tipoObstaculo = "NULL";
-        System.out.println("Obstaculo nao encontrado dentro do raio.\n");
+        System.out.println("Obstaculo nao encontrado dentro do raio.");
     } // metodo para monitorar objetos ao redor de um robo a partir de seu raio
 
 }

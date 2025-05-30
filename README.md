@@ -21,11 +21,5 @@ Possui um ambiente virtual de dimensão X,Y,Z com os mesmos robôs, porém agora
 O ambiente possui dimensões, robôs, sensores e obstáculos pré-definidos. Porém, possui um menu interativo em que pode-se escolher uma ação a ser feita, como andar, usar sensores, etc. Para usar o menu, deve-se usar a entrada no terminal para determinar a ação escolhida. 
 
 Laboratório 4:
-USAR TRY CATCH NA MAIN COM AS EXCESSOES
-CRIAR 3 EXCEPTIONS NOVAS: (FEITO)SENSOR, (FEITO)ENTIDADE IMOVEL, FORADOSLIMITES?
 FAZER DIAGRAMA UML
 ATUALIZAR README
-AMBIENTE MEXER: VERIFICACOLISOES
-MEXER GERAL: PRINTS
-VERIFICAR SE ESTA ALTERANDO A POSICAO DOS ROBOS
-TROCAR ALGUNS THROW POR TRY CATCH

@@ -30,6 +30,7 @@ public class Obstaculos implements Entidade{
         return tipo_obs.getResistenciaTipo();
     }
     
+    // gets de posição retornam um array contendo a posição x1 no índice 0 e x2 no índice 1
     public int[] getX() {
         return new int[] {this.posicaoX1, this.posicaoX2};
     }
@@ -46,11 +47,8 @@ public class Obstaculos implements Entidade{
         return this.tipo;
     }
 
+    // Descrição geral de obstáculos
     public String getDescricao() {
-        return "Objeto imóvel presente no mapa que bloqueia a passagem de robôs em determinadas posições. Possui um tamanho definido.\n";
-    }
-
-    public char getRepresentacao() {
-        return 'O';
+        return "Objeto imóvel presente no mapa que bloqueia a passagem de robôs em determinadas posições. Possui um tamanho definido.";
     }
 }
