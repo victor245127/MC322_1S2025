@@ -167,10 +167,10 @@ public class Ambiente {
 
     public void visualizarAmbiente(){ // Mostra o ambiente em um plano XY
         System.out.println("Visão superior do plano XY:");
-        for (int k = altura - 1; k >= 0; k--){
+        for (int j = profundidade - 1; j >= 0; j--){
             for (int i = 0; i < largura; i++){
                 TipoEntidade tipoVisivel = TipoEntidade.VAZIO;
-                for (int j = profundidade-1; j >= 0; j--){
+                for (int k = profundidade-1; k >= 0; k--){
                     if (mapa[i][j][k] != TipoEntidade.VAZIO){
                         tipoVisivel = mapa[i][j][k];
                         break;

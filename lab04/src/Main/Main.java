@@ -11,6 +11,7 @@ import Exceptions.ColisaoException;
 import Exceptions.EntidadeImovelException;
 import Exceptions.ErroComunicacaoException;
 import Exceptions.ErroDestinatarioException;
+import Exceptions.EscolhaInvalidaException;
 import Exceptions.ForaDosLimitesException;
 import Exceptions.RoboDesligadoException;
 import InterfacesRobos.Autonomo;
@@ -23,7 +24,7 @@ import RoboVariacoes.RoboTerrestreExplorador;
 
 // Classe main, para rodar o código em conjunto
 public class Main {
-    public static void main(String[] args) throws EntidadeImovelException, RoboDesligadoException, ColisaoException, ForaDosLimitesException, ErroComunicacaoException, ErroDestinatarioException {
+    public static void main(String[] args) throws EscolhaInvalidaException, EntidadeImovelException, RoboDesligadoException, ColisaoException, ForaDosLimitesException, ErroComunicacaoException, ErroDestinatarioException {
         Scanner scanner = new Scanner(System.in);
         // Variável usada para leitura de dados
 
@@ -114,68 +115,76 @@ public class Main {
                 case 3: 
                     // Caso o robô esteja ligado, ele é desligado, e vice versa
                     // Única ação de robôs com a interface Autônomo que pode ser controlada
-                    ambiente.exibirRobos();
-                    System.out.println("Escolha o robô a ser ligado/desligado: ");
-                    int esc = scanner.nextInt();
+                    try {
+                        ambiente.exibirRobos();
+                        System.out.println("Escolha o robô a ser ligado/desligado: ");
+                        int esc = scanner.nextInt();
 
-                    // Caso a escolha seja inválida
-                    if (esc < 1 || esc > ambiente.getRobos().size()){
-                        System.out.println("Opcao indisponível...");
-                        break;
-                    }
+                        // Caso a escolha seja inválida
+                        if (esc < 1 || esc > ambiente.getRobos().size()){
+                            throw new EscolhaInvalidaException();
+                        }
 
-                    // Condicionais para ligar/desligar o robô
-                    if (((Robo) ambiente.getRobos().get(esc-1)).getEstado() == EstadoRobo.desligado){
-                        ((Robo)ambiente.getEntidades().get(esc-1)).ligar();
+                        // Condicionais para ligar/desligar o robô
+                        if (((Robo) ambiente.getRobos().get(esc-1)).getEstado() == EstadoRobo.desligado){
+                            ((Robo)ambiente.getEntidades().get(esc-1)).ligar();
+                        }
+                        else {
+                            ((Robo)ambiente.getEntidades().get(esc-1)).desligar();
+                        }
+                        System.out.printf("Robo %s %s\n", ((Robo )ambiente.getRobos().get(esc-1)).getId(), ((Robo) ambiente.getRobos().get(esc-1)).getEstado());
+                    } catch (EscolhaInvalidaException ei){
+                        System.out.println("ERRO: " + ei.getMessage());
                     }
-                    else {
-                        ((Robo)ambiente.getEntidades().get(esc-1)).desligar();
-                    }
-                    System.out.printf("Robo %s %s\n", ((Robo )ambiente.getRobos().get(esc-1)).getId(), ((Robo) ambiente.getRobos().get(esc-1)).getEstado());
+                    
                     break;
 
                 case 4: 
                     // Move uma entidade e escolhe qual mover
-                    System.out.println("\nEscolha a entidade:");
-                    for (int a = 0; a < ambiente.getEntidades().size(); a++) {
-                        Entidade e = ambiente.getEntidades().get(a);
-                        if (e.getTipo() == TipoEntidade.ROBO){
-                            System.out.printf("%d. %s\n", (a+1), ((Robo) e).getId());
+                    try {
+                        System.out.println("\nEscolha a entidade:");
+                        for (int a = 0; a < ambiente.getEntidades().size(); a++) {
+                            Entidade e = ambiente.getEntidades().get(a);
+                            if (e.getTipo() == TipoEntidade.ROBO){
+                                System.out.printf("%d. %s\n", (a+1), ((Robo) e).getId());
+                            }
+                            else {
+                                System.out.printf("%d. %c\n", (a+1), e.getTipo().getRepresentacao(e.getTipo()));
+                            }
                         }
-                        else {
-                            System.out.printf("%d. %c\n", (a+1), e.getTipo().getRepresentacao(e.getTipo()));
+
+                        int escolha = scanner.nextInt();
+                        scanner.nextLine();
+
+                        // Caso o número do robô seja menor que 1 ou maior que a quantidade no ambiente,
+                        // vira uma opção inválida
+                        if (escolha < 1 || escolha > ambiente.getEntidades().size()) {
+                            throw new EscolhaInvalidaException();
                         }
+
+                        // Se a entidade implementa a interface Autônomo, não é possível controlar sua ação
+                        Entidade escolhido = ambiente.getEntidades().get(escolha - 1);
+                        if (escolhido instanceof Autonomo){
+                            System.out.println("Ativando autonomia...");
+                            ((Autonomo) escolhido).Autonomia(ambiente);
+                            break;
+                        }
+
+                        // Define possível nova velocidade e o ponto no qual a entidade se destinará
+                        System.out.print("Novo X: ");
+                        int x = scanner.nextInt();
+                        System.out.print("Novo Y: ");
+                        int y = scanner.nextInt();
+                        System.out.print("Novo Z: ");
+                        int z = scanner.nextInt();
+                        // Nova velocidade também é usada para caso a entidade seja um robô terrestre
+                        System.out.print("Nova velocidade: ");
+                        int vel = scanner.nextInt();
+
+                        ambiente.moverEntidade(escolhido, x, y, z, vel);
+                    } catch (EscolhaInvalidaException ei){
+                        System.out.println("ERRO: " + ei.getMessage());
                     }
-
-                    int escolha = scanner.nextInt();
-                    scanner.nextLine();
-
-                    // Caso o número do robô seja menor que 1 ou maior que a quantidade no ambiente,
-                    // vira uma opção inválida
-                    if (escolha < 1 || escolha > ambiente.getEntidades().size()) {
-                        System.out.println("Opção inválida.");
-                        break;
-                    }
-
-                    // Se a entidade implementa a interface Autônomo, não é possível controlar sua ação
-                    Entidade escolhido = ambiente.getEntidades().get(escolha - 1);
-                    if (escolhido instanceof Autonomo){
-                        ((Autonomo) escolhido).Autonomia(ambiente);
-                        break;
-                    }
-
-                    // Define possível nova velocidade e o ponto no qual a entidade se destinará
-                    System.out.print("Novo X: ");
-                    int x = scanner.nextInt();
-                    System.out.print("Novo Y: ");
-                    int y = scanner.nextInt();
-                    System.out.print("Novo Z: ");
-                    int z = scanner.nextInt();
-                    // Nova velocidade também é usada para caso a entidade seja um robô terrestre
-                    System.out.print("Nova velocidade: ");
-                    int vel = scanner.nextInt();
-
-                    ambiente.moverEntidade(escolhido, x, y, z, vel);
                     break;
 
                 case 5:
@@ -192,35 +201,37 @@ public class Main {
 
                 case 7: 
                     // Escolhe o robô para usar sua habilidade específica
-                    System.out.println("Escolha o robô para ativar seu metodo especifico:");
-                    ambiente.exibirRobos();
+                    try {
+                        System.out.println("Escolha o robô para ativar seu metodo especifico:");
+                        ambiente.exibirRobos();
 
-                    int e = scanner.nextInt();
-                    scanner.nextLine();
+                        int e = scanner.nextInt();
+                        scanner.nextLine();
 
-                    // Mesma condicional presente no caso 2
-                    if (e < 1 || e > ambiente.getRobos().size()) {
-                        System.out.println("Opção inválida.");
-                        break;
-                    }
+                        // Mesma condicional presente no caso 2
+                        if (e < 1 || e > ambiente.getRobos().size()) {
+                            throw new EscolhaInvalidaException();
+                        }
 
-                    e -=1;
-                    // Condicionais para qual robô escolheu
-                    if (ambiente.getRobos().get(e) instanceof RoboAereoFalcao){
-                        ((RoboAereoFalcao)ambiente.getRobos().get(e)).executarTarefa(ambiente);
+                        e -=1;
+                        // Condicionais para qual robô escolheu
+                        if (ambiente.getRobos().get(e) instanceof RoboAereoFalcao){
+                            ((RoboAereoFalcao)ambiente.getRobos().get(e)).executarTarefa(ambiente);
+                        }
+                        else if (ambiente.getRobos().get(e) instanceof RoboAereoObservador){
+                            ((Autonomo) ambiente.getRobos().get(e)).Autonomia(ambiente);
+                            // Para o robô autônomo, ele escolhe a ação a ser feita, podendo se autoligar/desligar,
+                            // mover para uma posição aleatória, ou executar sua tarefa
+                        }
+                        else if (ambiente.getRobos().get(e) instanceof RoboTerrestreDestruidor){
+                            ((RoboTerrestreDestruidor)ambiente.getRobos().get(e)).executarTarefa(ambiente);
+                        }
+                        else if (ambiente.getRobos().get(e) instanceof RoboTerrestreExplorador){
+                            ((RoboTerrestreExplorador)ambiente.getRobos().get(e)).executarTarefa(ambiente);
+                        }
+                    } catch (EscolhaInvalidaException ei){
+                        System.out.println("ERRO: " + ei.getMessage());
                     }
-                    else if (ambiente.getRobos().get(e) instanceof RoboAereoObservador){
-                        ((Autonomo) ambiente.getRobos().get(e)).Autonomia(ambiente);
-                        // Para o robô autônomo, ele escolhe a ação a ser feita, podendo se autoligar/desligar,
-                        // mover para uma posição aleatória, ou executar sua tarefa
-                    }
-                    else if (ambiente.getRobos().get(e) instanceof RoboTerrestreDestruidor){
-                        ((RoboTerrestreDestruidor)ambiente.getRobos().get(e)).executarTarefa(ambiente);
-                    }
-                    else if (ambiente.getRobos().get(e) instanceof RoboTerrestreExplorador){
-                        ((RoboTerrestreExplorador)ambiente.getRobos().get(e)).executarTarefa(ambiente);
-                    }
-                    
                     break;
 
                 case 8: 
@@ -234,6 +245,9 @@ public class Main {
                         // Excessão de destinatário acionada caso o índice seja igual ao do remetente
                         if (r1 == r2){
                             throw new ErroDestinatarioException();
+                        }
+                        if (r1 < 1 || r2 < 1 || r1 > ambiente.getRobos().size() || r2 > ambiente.getRobos().size()){
+                            throw new EscolhaInvalidaException();
                         }
                         System.out.println("Digite a mensagem a ser enviada: ");
                         scanner.nextLine();
@@ -250,6 +264,8 @@ public class Main {
                         System.out.println("ERRO: " + c.getMessage());
                     } catch (ErroDestinatarioException d){
                         System.out.println("ERRO: " + d.getMessage());
+                    } catch (EscolhaInvalidaException ei){
+                        System.out.println("ERRO: " + ei.getMessage());
                     }
                     break;
 
@@ -266,6 +282,7 @@ public class Main {
                 default:
                     // Caso seja uma opção inválida
                     System.out.println("Opção inválida.");
+                    break;
             }
         }
         scanner.close();

@@ -21,5 +21,5 @@ Possui um ambiente virtual de dimensão X,Y,Z com os mesmos robôs, porém agora
 O ambiente possui dimensões, robôs, sensores e obstáculos pré-definidos. Porém, possui um menu interativo em que pode-se escolher uma ação a ser feita, como andar, usar sensores, etc. Para usar o menu, deve-se usar a entrada no terminal para determinar a ação escolhida. 
 
 Laboratório 4:
-FAZER DIAGRAMA UML
-ATUALIZAR README
+Possui um ambiente virtual de dimensão X (largura), Y (profundidade), Z (altura), com os mesmos robôs de anteriormente, porém atualizados com interfaces próprias, descritas em seus arquivos. Além disso, agora há tratamento de erros específicos no código, de acordo com opções escolhidas no menu interativo na main.
+Para compilar o código, quando estiver dentro da pasta "src", deve-se digitar no terminal "javac Main/Main.java", e o código roda, e basta apenas seguir as instruções do menu interativo para usar o código da maneira que queira, dentro de seus requisitos.
