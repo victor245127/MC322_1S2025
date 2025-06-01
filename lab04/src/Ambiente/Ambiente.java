@@ -73,10 +73,12 @@ public class Ambiente {
         entidades.remove(e);
     }
 
-    public boolean dentroDosLimites(int x, int y, int z) { // Verifica se uma posição está dentro dos limites
+    public boolean dentroDosLimites(int x, int y, int z) throws ColisaoException { // Verifica se uma posição está dentro dos limites
         // Tentativa de erro para caso esteja fora dos limites
         try {
-            estaOcupado(x, y, z);
+            if (estaOcupado(x, y, z)){
+                throw new ColisaoException(x, y, z);
+            }
         } catch (ForaDosLimitesException e){
             System.out.println("ERRO: " + e.getMessage());
         }
@@ -94,7 +96,7 @@ public class Ambiente {
         return true;
     }
 
-    public void moverEntidade(Entidade e, int novoX, int novoY, int novoZ, int velNova){ // Move um robô de posição, caso o seja, 
+    public void moverEntidade(Entidade e, int novoX, int novoY, int novoZ, int velNova) throws ColisaoException{ // Move um robô de posição, caso o seja, 
         try {
             // caso não seja um robô, a entidade é imóvel
             if (e.getTipo() != TipoEntidade.ROBO){
@@ -104,6 +106,7 @@ public class Ambiente {
                 // Caso esteja dentro do limite, muda a posição antiga no mapa para vazia e define a nova
                 this.mapa[((Robo)e).getX()[0]][((Robo)e).getY()[0]][((Robo)e).getZ()[0]] = TipoEntidade.VAZIO;
                 if (e instanceof RoboTerrestre){
+                    // Posição Z é mudada para 0 pois robô terrestre não pode mudar sua altura
                     ((RoboTerrestre)e).moverPara(novoX, novoY, 0, velNova);
                     this.mapa[novoX][novoY][0] = TipoEntidade.ROBO;
                 }
@@ -118,7 +121,10 @@ public class Ambiente {
             System.out.println("ERRO: " + r.getMessage());
         } catch (EntidadeImovelException h){
             System.out.println("ERRO: " + h.getMessage());
-        } // Pega erros de entidade imóvel ou robô desligado
+        } catch (ColisaoException c){
+            System.out.println("ERRO: " + c.getMessage());
+        } 
+        // Pega erros de entidade imóvel, robô desligado ou possível colisão
     }
 
     public void executarSensores(Ambiente ambiente) throws RoboDesligadoException, ColisaoException {
@@ -163,7 +169,6 @@ public class Ambiente {
             }
         }
     }
-
 
     public void visualizarAmbiente(){ // Mostra o ambiente em um plano XY
         System.out.println("Visao superior do plano XY:");
