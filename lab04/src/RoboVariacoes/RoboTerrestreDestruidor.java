@@ -43,11 +43,11 @@ public class RoboTerrestreDestruidor extends RoboTerrestre implements Sensoreave
             if (ambiente.temObstaculoEm(x, y, z)){
                 int resistencia = ambiente.getResistenciaEm(x, y, z);
                 if (this.forcaDestruicao >= resistencia){
-                    System.out.printf("Obstáculo em posição. Destruindo com força %d\n", forcaDestruicao);
+                    System.out.printf("Obstaculo em posicao. Destruindo com forca %d\n", forcaDestruicao);
                     ambiente.removerObstaculoEm(x + 1, y, z);
                 }
                 else {
-                    System.out.println("O robô não tem força o suficiente para a destruição desse obstáculo.");
+                    System.out.println("O robo nao tem forca o suficiente para a destruicao desse obstaculo.");
                 }
             }
 
@@ -55,47 +55,47 @@ public class RoboTerrestreDestruidor extends RoboTerrestre implements Sensoreave
             if (ambiente.temObstaculoEm(x + 1, y, z)) {
                 int resistencia = ambiente.getResistenciaEm(x + 1, y, z);
                 if (this.forcaDestruicao >= resistencia){
-                    System.out.printf("Obstáculo à direita. Destruindo com força %d\n", forcaDestruicao);
+                    System.out.printf("Obstaculo a direita. Destruindo com forca %d\n", forcaDestruicao);
                     ambiente.removerObstaculoEm(x + 1, y, z);
                 }
                 else {
-                    System.out.println("O robô não tem força o suficiente para a destruição desse obstáculo.");
+                    System.out.println("O robo nao tem forca o suficiente para a destruicao desse obstaculo.");
                 }
 
             // Esquerda
             } else if (ambiente.temObstaculoEm(x - 1, y, z)) {
                 int resistencia = ambiente.getResistenciaEm(x - 1, y, z);
                 if (this.forcaDestruicao >= resistencia){
-                    System.out.printf("Obstáculo à esquerda. Destruindo com força %d\n", forcaDestruicao);
+                    System.out.printf("Obstaculo a esquerda. Destruindo com forca %d\n", forcaDestruicao);
                     ambiente.removerObstaculoEm(x - 1, y, z);
                 }
                 else {
-                    System.out.println("O robô não tem força o suficiente para a destruição desse obstáculo.");
+                    System.out.println("O robo nao tem forca o suficiente para a destruicao desse obstaculo.");
                 }
 
             // Frente
             } else if (ambiente.temObstaculoEm(x, y + 1, z)) {
                 int resistencia = ambiente.getResistenciaEm(x, y + 1, z);
                 if (this.forcaDestruicao >= resistencia){
-                    System.out.printf("Obstáculo em frente. Destruindo com força %d\n", forcaDestruicao);
+                    System.out.printf("Obstaculo em frente. Destruindo com forca %d\n", forcaDestruicao);
                     ambiente.removerObstaculoEm(x, y + 1, z);
                 }
                 else {
-                    System.out.println("O robô não tem força o suficiente para a destruição desse obstáculo.");
+                    System.out.println("O robo nao tem forca o suficiente para a destruicao desse obstaculo.");
                 }
 
             // Trás
             } else if (ambiente.temObstaculoEm(x, y - 1, z)) {
                 int resistencia = ambiente.getResistenciaEm(x, y - 1, z);
                 if (this.forcaDestruicao >= resistencia){
-                    System.out.printf("Obstáculo atrás. Destruindo com força %d\n", forcaDestruicao);
+                    System.out.printf("Obstaculo atras. Destruindo com forca %d\n", forcaDestruicao);
                     ambiente.removerObstaculoEm(x, y - 1, z);
                 }
                 else {
-                    System.out.println("O robô não tem força o suficiente para a destruição desse obstáculo.");
+                    System.out.println("O robo nao tem forca o suficiente para a destruicao desse obstaculo.");
                 }
             } else {
-                System.out.println("Nenhum obstáculo ao redor para destruir.");
+                System.out.println("Nenhum obstaculo ao redor para destruir.");
             }
         } catch (RoboDesligadoException e){
             System.out.println("ERRO: " + e.getMessage());
@@ -124,6 +124,6 @@ public class RoboTerrestreDestruidor extends RoboTerrestre implements Sensoreave
     }
 
     public String getDescricao(){
-        return "Robô do tipo terrestre que possui sensores e pode destruir um obstáculo próximo a ele.";
+        return "Robo do tipo terrestre que possui sensores e pode destruir um obstaculo proximo a ele.";
     }
 }

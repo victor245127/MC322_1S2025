@@ -25,6 +25,9 @@ public class CentralComunicacao {
         for (int i = 0; i < mensagens.size(); i+=3){
             System.out.printf("De: %s\nPara: %s\n%s\n", mensagens.get(i), mensagens.get(i+1), mensagens.get(i+2));
         }
+        if (mensagens.size() == 0){
+            System.out.println("Nao ha mensagens registradas.");
+        }
     }
 
     // Retorna o raio de comunicação

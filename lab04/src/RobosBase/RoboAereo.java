@@ -17,7 +17,7 @@ public abstract class RoboAereo extends Robo implements Comunicavel {
     // Método override de robô
     public void moverPara(int x, int y, int z) throws RoboDesligadoException {
         if (z > altitudeMaxima){
-            System.out.println("Altitude não permitida!");
+            System.out.println("Altitude nao permitida!");
             this.x = x;
             this.y = y;
             // Não altera o z nesse caso
@@ -51,7 +51,7 @@ public abstract class RoboAereo extends Robo implements Comunicavel {
             central.registrarMensagem(((Robo) destinatario).getId(), getId(), mensagem);
         } // Caso o destinatário esteja dentro do raio de comunicação, recebe a mensagem e a registra
         else {
-            System.out.println("Robô a uma distância maior que o alcance do raio, não foi possível receber a mensagem.");
+            System.out.println("Robo a uma distancia maior que o alcance do raio, nao foi possivel receber a mensagem.");
         }
     }
 }

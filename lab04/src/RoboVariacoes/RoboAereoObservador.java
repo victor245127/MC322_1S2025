@@ -37,7 +37,7 @@ public class RoboAereoObservador extends RoboAereo implements Autonomo{
                 for (int j = y - raioObservacao; j <= y + raioObservacao; j++) {
                     for (int k = z - raioObservacao; k <= z + raioObservacao; k++){
                         if (i >= 0 && i < ambiente.getLargura() && j >= 0 && j < ambiente.getProfundidade() && k >= 0 && k < ambiente.getAltura() && ambiente.temObstaculoEm(i, j, k)) {
-                            System.out.printf("Obstáculo detectado em (%d, %d, %d)\n", i, j, k);
+                            System.out.printf("Obstaculo detectado em (%d, %d, %d)\n", i, j, k);
                             encontrou = true;
                         }
                     }
@@ -45,7 +45,7 @@ public class RoboAereoObservador extends RoboAereo implements Autonomo{
             }
 
             if (!encontrou) {
-                System.out.println("Nenhum obstáculo encontrado na área.\n");
+                System.out.println("Nenhum obstaculo encontrado na area.\n");
             }
         } catch (RoboDesligadoException e){
             System.out.println("ERRO: " + e.getMessage());
@@ -83,6 +83,6 @@ public class RoboAereoObservador extends RoboAereo implements Autonomo{
 
     // Descreve o robô
     public String getDescricao() {
-        return "Robô do tipo aéreo em que sua tarefa é observar o ambiente à sua volta dentro de um certo raio de observação.";
+        return "Robo do tipo aereo em que sua tarefa eh observar o ambiente a sua volta dentro de um certo raio de observacao.";
     }
 }

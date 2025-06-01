@@ -65,17 +65,17 @@ public class Main {
         // o número da ação
         while (executando) {
             System.out.println("\n--- MENU INTERATIVO ---");
-            System.out.println("1. Visualizar status dos robôs e obstáculos");
+            System.out.println("1. Visualizar status dos robos e obstaculos");
             System.out.println("2. Visualizar ambiente no plano XY");
-            System.out.println("3. Ligar/desligar robô");
+            System.out.println("3. Ligar/desligar robo");
             System.out.println("4. Mover entidade");
             System.out.println("5. Acionar sensores");
-            System.out.println("6. Verificar colisões");
+            System.out.println("6. Verificar colisoes");
             System.out.println("7. Ativar habilidades");
             System.out.println("8. Enviar mensagem");
             System.out.println("9. Exibir mensagens");
             System.out.println("0. Sair");
-            System.out.print("Escolha uma opção: ");
+            System.out.print("Escolha uma opcao: ");
 
             opcao = scanner.nextInt();
             // Escolhe a ação a ser feita
@@ -90,13 +90,13 @@ public class Main {
                     // Loop para mostrar os obstáculos
                     for (Entidade obs : (ambiente.getObstaculos())) {
                         System.out.printf("Tipo: %s\n", ((Obstaculos) obs).getTipoObstaculo());
-                        System.out.printf("Posição: (%d, %d, %d), até (%d, %d, %d)\n", ((Obstaculos) obs).getX()[0], ((Obstaculos) obs).getY()[0], 0, ((Obstaculos) obs).getX()[1], ((Obstaculos) obs).getY()[1], ((Obstaculos) obs).getTipoObstaculo().getAltura());
-                        System.out.printf("Resistência: %d\n",((Obstaculos) obs).getResistencia());
+                        System.out.printf("Posicao: (%d, %d, %d), ate (%d, %d, %d)\n", ((Obstaculos) obs).getX()[0], ((Obstaculos) obs).getY()[0], 0, ((Obstaculos) obs).getX()[1], ((Obstaculos) obs).getY()[1], ((Obstaculos) obs).getTipoObstaculo().getAltura());
+                        System.out.printf("Resistencia: %d\n",((Obstaculos) obs).getResistencia());
                     }
                     // Descreve os obstáculos em um geral
                     System.out.println(((Obstaculos)ambiente.getObstaculos().get(0)).getDescricao());
 
-                    System.out.println("\nRobôs no ambiente:");
+                    System.out.println("\nRobos no ambiente:");
                     int index = 1;
                     for (Entidade r : ambiente.getRobos()) {
                         // Loop para mostrar os robôs
@@ -117,7 +117,7 @@ public class Main {
                     // Única ação de robôs com a interface Autônomo que pode ser controlada
                     try {
                         ambiente.exibirRobos();
-                        System.out.println("Escolha o robô a ser ligado/desligado: ");
+                        System.out.println("Escolha o robo a ser ligado/desligado: ");
                         int esc = scanner.nextInt();
 
                         // Caso a escolha seja inválida
@@ -189,20 +189,20 @@ public class Main {
 
                 case 5:
                     // Usa os sensores dos robôs que implementam sensoreavel
-                    System.out.println("Ativando sensores de todos os robôs...");
+                    System.out.println("Ativando sensores de todos os robos...");
                     ambiente.executarSensores(ambiente);
                     break;
 
                 case 6:
                     // Verifica se há colisões dos robôs com os obstáculos no ambiente
-                    System.out.println("Verificando colisões...");
+                    System.out.println("Verificando colisoes...");
                     ambiente.verificaColisoes();
                     break;
 
                 case 7: 
                     // Escolhe o robô para usar sua habilidade específica
                     try {
-                        System.out.println("Escolha o robô para ativar seu metodo especifico:");
+                        System.out.println("Escolha o robo para ativar seu metodo especifico:");
                         ambiente.exibirRobos();
 
                         int e = scanner.nextInt();
@@ -281,7 +281,7 @@ public class Main {
 
                 default:
                     // Caso seja uma opção inválida
-                    System.out.println("Opção inválida.");
+                    System.out.println("Opcao invalida...");
                     break;
             }
         }

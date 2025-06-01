@@ -159,14 +159,14 @@ public class Ambiente {
         }  finally {
             if (!erro){
                 // caso a variável erro esteja falsa no fim de tudo, não há colisão no ambiente
-                System.out.println("Sem colisões no momento.");
+                System.out.println("Sem colisoes no momento.");
             }
         }
     }
 
 
     public void visualizarAmbiente(){ // Mostra o ambiente em um plano XY
-        System.out.println("Visão superior do plano XY:");
+        System.out.println("Visao superior do plano XY:");
         for (int j = profundidade - 1; j >= 0; j--){
             for (int i = 0; i < largura; i++){
                 TipoEntidade tipoVisivel = TipoEntidade.VAZIO;
@@ -218,7 +218,7 @@ public class Ambiente {
     
             if (x >= x1 && x <= x2 && y >= y1 && y <= y2 && h >= z) {
                 removerEntidade(obstaculos.get(i));
-                System.out.printf("Obstáculo removido na posição (%d, %d, %d)\n", x, y, z);
+                System.out.printf("Obstaculo removido na posicao (%d, %d, %d)\n", x, y, z);
                 return;
             }
         }

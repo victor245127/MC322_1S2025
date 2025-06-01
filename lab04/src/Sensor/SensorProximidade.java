@@ -15,13 +15,13 @@ public class SensorProximidade extends Sensor {
         boolean encontrou = false;
         int alcance = (int) Math.ceil(raio);
 
-        System.out.printf("Sensor de proximidade: escaneando área em torno de (%d, %d, %d)\n", x, y, z);
+        System.out.printf("Sensor de proximidade: escaneando area em torno de (%d, %d, %d)\n", x, y, z);
 
         for (int i = x - alcance; i <= x + alcance; i++) {
             for (int j = y - alcance; j <= y + alcance; j++) {
                 for (int k = z - alcance; k <= z+alcance; k++){
                     if (i >= 0 && i < ambiente.getLargura() && j >= 0 && j < ambiente.getProfundidade() && k >= 0 && k < ambiente.getAltura() && ambiente.temObstaculoEm(i, j, k)) {
-                        System.out.printf("Obstáculo detectado em (%d, %d, %d)\n", i, j, k);
+                        System.out.printf("Obstaculo detectado em (%d, %d, %d)\n", i, j, k);
                         j++;
                         encontrou = true;
                     }
@@ -30,7 +30,7 @@ public class SensorProximidade extends Sensor {
         }
 
         if (!encontrou) {
-            System.out.println("Nenhum obstáculo nas proximidades.");
+            System.out.println("Nenhum obstaculo nas proximidades.");
         }
     }
 }

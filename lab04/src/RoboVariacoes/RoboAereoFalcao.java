@@ -38,24 +38,24 @@ public class RoboAereoFalcao extends RoboAereo implements Direcionavel_vertical 
             if (dir.equals("norte")) {
                 for (int i = 1; i <= alcanceVisual && y + i <= ambiente.getAltura(); i++) {
                     if (ambiente.estaOcupado(x, y+i, z)) {
-                        System.out.printf("Obstáculo detectado em (%d, %d, %d)\n", x, (y + i), z);
+                        System.out.printf("Obstaculo detectado em (%d, %d, %d)\n", x, (y + i), z);
                         encontrou = true;
                     }
                 }
             } else if (dir.equals("sul")) {
                 for (int i = 1; i <= alcanceVisual && y - i >= 0; i++) {
                     if (ambiente.estaOcupado(x, y - i, z)) {
-                        System.out.printf("Obstáculo detectado em (%d, %d, %d)\n", x, (y - i), z);
+                        System.out.printf("Obstaculo detectado em (%d, %d, %d)\n", x, (y - i), z);
                         encontrou = true;
                     }
                 }
             } else {
-                System.out.println("Direção inválida.");
+                System.out.println("Direcao invalida.");
                 return;
             }
 
             if (!encontrou) {
-                System.out.println("Nenhum obstáculo encontrado na linha de visão.");
+                System.out.println("Nenhum obstaculo encontrado na linha de visao.");
             }
         } catch (RoboDesligadoException e){
             System.out.println("ERRO: " + e.getMessage());
@@ -74,6 +74,6 @@ public class RoboAereoFalcao extends RoboAereo implements Direcionavel_vertical 
 
     // Descreve o robô
     public String getDescricao(){
-        return "Robô do tipo aéreo que detecta obstáculos ao olhar em uma direção com um certo alcance visual.";
+        return "Robo do tipo aereo que detecta obstaculos ao olhar em uma direcao com um certo alcance visual.";
     }
 }

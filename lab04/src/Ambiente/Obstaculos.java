@@ -49,6 +49,6 @@ public class Obstaculos implements Entidade{
 
     // Descrição geral de obstáculos
     public String getDescricao() {
-        return "Objeto imóvel presente no mapa que bloqueia a passagem de robôs em determinadas posições. Possui um tamanho definido.";
+        return "Objeto imovel presente no mapa que bloqueia a passagem de robos em determinadas posicoes. Possui um tamanho definido.";
     }
 }

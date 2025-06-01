@@ -37,7 +37,7 @@ public abstract class Robo implements Entidade {
     }
     
     public void exibirPosicao(){ // Exibe a posição do robô
-        System.out.printf("Posição: (%d, %d, %d)\n", this.x, this.y, this.z);
+        System.out.printf("Posicao: (%d, %d, %d)\n", this.x, this.y, this.z);
     }
 
     public void ligar(){ // Liga o robô
