@@ -123,6 +123,9 @@ public class RoboTerrestreDestruidor extends AgenteInteligente implements Sensor
         if (tem_missao()){
             missao.executar(this, ambiente);
         }
+        else {
+            System.out.println("Sem missoes atribuidas.");
+        }
     }
 
     public String getDescricao(){

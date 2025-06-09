@@ -1,5 +1,7 @@
 package Missao;
 
+import java.util.Random;
+
 import Ambiente.Ambiente;
 import Exceptions.ColisaoException;
 import Exceptions.ForaDosLimitesException;
@@ -24,6 +26,28 @@ public class MissaoExplorar implements Missao {
         else if (r instanceof RoboAereoFalcao){
             dir = ((RoboAereoFalcao) r).direcionar_v(ambiente);
         }
+        else {
+            // Caso o robô da missão não tenha uma interface de direcionamento implementada, sua direção
+            // é escolhida de forma aleatória
+            Random random = new Random();
+            int dir_esc = random.nextInt(4);
+            switch (dir_esc) {
+                case 0:
+                    dir = "norte";
+                    break;
+                case 1:
+                    dir = "sul";
+                    break;
+                case 2:
+                    dir = "oeste";
+                    break;
+                case 3:
+                    dir = "leste";
+                    break;
+                default:
+                    break;
+            }
+        }
         int passosDados = 0;
         // Utiliza o método de sua interface
 
@@ -38,7 +62,9 @@ public class MissaoExplorar implements Missao {
                 int novoX = x;
                 int novoY = y;
 
-                if (dir.equals("leste")) novoX++;
+                if (dir.equals("norte")) novoY++;
+                else if (dir.equals("sul")) novoY--;
+                else if (dir.equals("leste")) novoX++;
                 else if (dir.equals("oeste")) novoX--;
                 else {
                     System.out.println("Direção inválida.\n");

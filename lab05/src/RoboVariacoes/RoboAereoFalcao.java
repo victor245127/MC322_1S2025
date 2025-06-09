@@ -80,6 +80,9 @@ public class RoboAereoFalcao extends RoboAereo implements Direcionavel_vertical 
                 missao.executar(this, ambiente);
             }
         }
+        else {
+            System.out.println("Sem missoes atribuidas.");
+        }
     }
 
     // Descreve o robô

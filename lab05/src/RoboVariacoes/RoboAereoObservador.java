@@ -87,6 +87,9 @@ public class RoboAereoObservador extends RoboAereo implements Autonomo{
                 missao.executar(this, ambiente);
             }
         }
+        else {
+            System.out.println("Sem missoes atribuidas.");
+        }
     }
 
     // Descreve o robô

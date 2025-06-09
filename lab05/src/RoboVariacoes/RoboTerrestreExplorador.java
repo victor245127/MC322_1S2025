@@ -91,5 +91,8 @@ import RobosBase.EstadoRobo;
                 missao.executar(this, ambiente);
             }
         }
+        else {
+            System.out.println("Sem missoes atribuidas.");
+        }
     }
 }
