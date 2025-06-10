@@ -12,7 +12,7 @@ import RobosBase.Robo;
 import RobosBase.RoboTerrestre;
 import Sensor.Sensoreavel;
 
-// classe do ambiente, que possui suas dimensões, mapa e entidades presentes
+// Classe do ambiente, que possui suas dimensões, mapa e entidades presentes
 public class Ambiente {
     private int largura;
     private int altura;
