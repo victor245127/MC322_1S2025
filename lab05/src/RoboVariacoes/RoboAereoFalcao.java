@@ -3,11 +3,11 @@ package RoboVariacoes;
 // Varre o ambiente na direção atual até um certo alcance visual, detectando obstáculos à frente.
 
 import Ambiente.Ambiente;
+import Comunicacao.CentralComunicacao;
 import Exceptions.ColisaoException;
 import Exceptions.ForaDosLimitesException;
 import Exceptions.RoboDesligadoException;
 import InterfacesRobos.Direcionavel_vertical;
-import Missao.MissaoExplorar;
 import RobosBase.EstadoRobo;
 import RobosBase.RoboAereo;
 
@@ -74,11 +74,9 @@ public class RoboAereoFalcao extends RoboAereo implements Direcionavel_vertical 
         }
     }
 
-    public void executarMissao(Ambiente ambiente) throws RoboDesligadoException, ColisaoException, ForaDosLimitesException {
-        if (tem_missao()){
-            if (missao instanceof MissaoExplorar){
-                missao.executar(this, ambiente);
-            }
+    public void executarMissao(Ambiente ambiente, CentralComunicacao central) throws RoboDesligadoException, ColisaoException, ForaDosLimitesException {
+        if (tem_missao()){    
+            missao.executar(this, ambiente, central);
         }
         else {
             System.out.println("Sem missoes atribuidas.");

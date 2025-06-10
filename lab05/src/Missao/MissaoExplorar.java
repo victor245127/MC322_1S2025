@@ -3,6 +3,7 @@ package Missao;
 import java.util.Random;
 
 import Ambiente.Ambiente;
+import Comunicacao.CentralComunicacao;
 import Exceptions.ColisaoException;
 import Exceptions.ForaDosLimitesException;
 import Exceptions.RoboDesligadoException;
@@ -10,11 +11,12 @@ import RoboVariacoes.RoboAereoFalcao;
 import RoboVariacoes.RoboTerrestreExplorador;
 import RobosBase.EstadoRobo;
 import RobosBase.Robo;
+import Sensor.Sensoreavel;
 
 public class MissaoExplorar implements Missao {
     public MissaoExplorar(){}
 
-    public void executar(Robo r, Ambiente ambiente) throws RoboDesligadoException, ColisaoException, ForaDosLimitesException {
+    public void executar(Robo r, Ambiente ambiente, CentralComunicacao central) throws RoboDesligadoException, ColisaoException, ForaDosLimitesException {
         System.out.printf("Robo %s iniciando exploracao...\n", r.getId());
         String dir = "";
         int x = r.getX()[0];
@@ -71,9 +73,16 @@ public class MissaoExplorar implements Missao {
                     break;
                 }
 
+                // Caso a próxima posição seja inacessível, para na atual, executa sua tarefa e finaliza a exploração
                 if (!ambiente.dentroDosLimites(novoX, novoY, z) || ambiente.estaOcupado(novoX, novoY, z)) {
                     System.out.printf("Exploração interrompida em (%d, %d)\n", novoX, novoY);
+                    r.executarTarefa(ambiente);                
                     break;
+                }
+                
+
+                if (r instanceof Sensoreavel){
+                    ((Sensoreavel)r).acionarSensores(ambiente);
                 }
 
                 ambiente.moverEntidade(r, novoX, novoY, z, novoY);
@@ -81,9 +90,9 @@ public class MissaoExplorar implements Missao {
                 x = novoX;
                 y = novoY;
             }
+            System.out.printf("Exploracao finalizada. Passos dados na direcao %s: %d\n", dir, passosDados);
         } catch (RoboDesligadoException e){
             System.out.println("ERRO: " + e.getMessage());
         }
-        System.out.printf("Exploracao finalizada. Passos dados na direcao %s: %d\n", dir, passosDados);
     }
 }

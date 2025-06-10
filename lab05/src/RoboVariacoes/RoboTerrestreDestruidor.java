@@ -3,21 +3,22 @@ package RoboVariacoes;
 // Robo que consegue destruir um obstáculo ao redor dele 
 
 import Ambiente.Ambiente;
+import Comunicacao.CentralComunicacao;
 import Exceptions.ColisaoException;
 import Exceptions.ForaDosLimitesException;
 import Exceptions.RoboDesligadoException;
-import RobosBase.AgenteInteligente;
 import RobosBase.EstadoRobo;
+import RobosBase.RoboTerrestre;
 import Sensor.Sensor;
 import Sensor.Sensoreavel;
 import SubsistemasRobo.GerenciadorSensores;
 
-public class RoboTerrestreDestruidor extends AgenteInteligente implements Sensoreavel{
+public class RoboTerrestreDestruidor extends RoboTerrestre implements Sensoreavel{
     private int forcaDestruicao; // Atributos do robô
     private GerenciadorSensores gerenciadorSensor;
     
-    public RoboTerrestreDestruidor(String id, int x, int y, int z, int forcaDestruicao) {
-        super(id, x, y, z);
+    public RoboTerrestreDestruidor(String id, int x, int y, int z, int velMax, int forcaDestruicao) {
+        super(id, x, y, z, velMax);
         this.forcaDestruicao = forcaDestruicao;
         this.gerenciadorSensor = new GerenciadorSensores();
     } // Construtor 
@@ -119,9 +120,9 @@ public class RoboTerrestreDestruidor extends AgenteInteligente implements Sensor
         }
     }
 
-    public void executarMissao(Ambiente ambiente) throws RoboDesligadoException, ColisaoException, ForaDosLimitesException{
+    public void executarMissao(Ambiente ambiente, CentralComunicacao central) throws RoboDesligadoException, ColisaoException, ForaDosLimitesException{
         if (tem_missao()){
-            missao.executar(this, ambiente);
+            missao.executar(this, ambiente, central);
         }
         else {
             System.out.println("Sem missoes atribuidas.");

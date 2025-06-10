@@ -15,6 +15,9 @@ import Exceptions.EscolhaInvalidaException;
 import Exceptions.ForaDosLimitesException;
 import Exceptions.RoboDesligadoException;
 import InterfacesRobos.Autonomo;
+import Missao.MissaoExplorar;
+import Missao.MissaoLigarRobos;
+import RobosBase.AgenteInteligente;
 import RobosBase.EstadoRobo;
 import RobosBase.Robo;
 import RoboVariacoes.RoboAereoFalcao;
@@ -72,8 +75,9 @@ public class Main {
             System.out.println("5. Acionar sensores");
             System.out.println("6. Verificar colisoes");
             System.out.println("7. Ativar habilidades");
-            System.out.println("8. Enviar mensagem");
-            System.out.println("9. Exibir mensagens");
+            System.out.println("8. Executar missao");
+            System.out.println("9. Enviar mensagem");
+            System.out.println("10. Exibir mensagens");
             System.out.println("0. Sair");
             System.out.print("Escolha uma opcao: ");
 
@@ -233,8 +237,40 @@ public class Main {
                         System.out.println("ERRO: " + ei.getMessage());
                     }
                     break;
+                
+                case 8:
+                    try {
+                        System.out.println("Escolha o robo para executar a missao:");
+                        ambiente.exibirRobos();
+                        int esc_robo = scanner.nextInt();
+                        scanner.nextLine();
+                        if (esc_robo < 1 || esc_robo > ambiente.getRobos().size()) {
+                            throw new EscolhaInvalidaException();
+                        }
+                        esc_robo -=1;
 
-                case 8: 
+                        System.out.println("Escolha a missao: \n1. Explorar\n2. Ligar robos");
+                        int esc_missao = scanner.nextInt();
+                        scanner.nextLine();
+                        if (esc_missao > 2 || esc_missao < 1){
+                            throw new EscolhaInvalidaException();
+                        }
+
+                        if (esc_missao == 1){
+                            ((AgenteInteligente) ambiente.getRobos().get(esc_robo)).definir_missao(new MissaoExplorar());
+                        }
+                        else if (esc_missao == 2){
+                            ((AgenteInteligente) ambiente.getRobos().get(esc_robo)).definir_missao(new MissaoLigarRobos());
+                        }
+
+                        ((AgenteInteligente) ambiente.getRobos().get(esc_robo)).executarMissao(ambiente, central);
+
+                    } catch (EscolhaInvalidaException e){
+                        System.out.println("ERRO: " + e.getMessage());
+                    }
+                    break;
+
+                case 9: 
                     // Envia mensagem de um robô para outro
                     try {
                         ambiente.exibirRobos();
@@ -269,7 +305,7 @@ public class Main {
                     }
                     break;
 
-                case 9: // Exibe as mensagens enviadas até o momento
+                case 10: // Exibe as mensagens enviadas até o momento
                     central.exibirMensagens();
                     break;
                 

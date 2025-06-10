@@ -1,6 +1,7 @@
 package RobosBase;
 
 import Ambiente.Ambiente;
+import Comunicacao.CentralComunicacao;
 import Exceptions.ColisaoException;
 import Exceptions.ForaDosLimitesException;
 import Exceptions.RoboDesligadoException;
@@ -22,5 +23,5 @@ public abstract class AgenteInteligente extends Robo {
         return missao != null;
     }
 
-    public abstract void executarMissao(Ambiente ambiente) throws RoboDesligadoException, ColisaoException, ForaDosLimitesException;
+    public abstract void executarMissao(Ambiente ambiente, CentralComunicacao central) throws RoboDesligadoException, ColisaoException, ForaDosLimitesException;
 }

@@ -1,22 +1,22 @@
 package RoboVariacoes;
 
 import Ambiente.Ambiente;
+import Comunicacao.CentralComunicacao;
 import Exceptions.ColisaoException;
 import Exceptions.ForaDosLimitesException;
 import Exceptions.RoboDesligadoException;
 import InterfacesRobos.Direcionavel_horizontal;
-import Missao.MissaoExplorar;
-import RobosBase.AgenteInteligente;
 import RobosBase.EstadoRobo;
+import RobosBase.RoboTerrestre;
 
 // Robô terrestre que avança em linha reta até encontrar um obstáculo ou chegar ao fim do ambiente.
  // Conta quantos passos conseguiu dar durante a exploração.
  
- public class RoboTerrestreExplorador extends AgenteInteligente implements Direcionavel_horizontal {
+ public class RoboTerrestreExplorador extends RoboTerrestre implements Direcionavel_horizontal {
     private int passosDados; // Atributos
 
-    public RoboTerrestreExplorador(String id, int x, int y, int z) {
-        super(id, x, y, z);
+    public RoboTerrestreExplorador(String id, int x, int y, int z, int velMax) {
+        super(id, x, y, z, velMax);
         this.passosDados = 0;
     } // Construtor
 
@@ -85,11 +85,9 @@ import RobosBase.EstadoRobo;
         return "Robo do tipo terrestre que explora o mapa em uma certa direcao, ate esbarrar em algo ou chegar no limite do mapa. Tambem possui uma autonomia, que aciona uma acao aleatoria.";
     }
 
-    public void executarMissao(Ambiente ambiente) throws RoboDesligadoException, ColisaoException, ForaDosLimitesException {
+    public void executarMissao(Ambiente ambiente, CentralComunicacao central) throws RoboDesligadoException, ColisaoException, ForaDosLimitesException {
         if (tem_missao()){
-            if (missao instanceof MissaoExplorar){
-                missao.executar(this, ambiente);
-            }
+            missao.executar(this, ambiente, central);
         }
         else {
             System.out.println("Sem missoes atribuidas.");

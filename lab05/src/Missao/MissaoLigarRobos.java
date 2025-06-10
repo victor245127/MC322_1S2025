@@ -3,6 +3,8 @@ package Missao;
 import java.util.ArrayList;
 
 import Ambiente.Ambiente;
+import Comunicacao.CentralComunicacao;
+import Comunicacao.Comunicavel;
 import Entidade.Entidade;
 import Exceptions.ColisaoException;
 import Exceptions.ForaDosLimitesException;
@@ -17,7 +19,7 @@ import Sensor.Sensoreavel;
 public class MissaoLigarRobos implements Missao {
     public MissaoLigarRobos(){}
 
-    public void executar(Robo r, Ambiente ambiente) throws ColisaoException, ForaDosLimitesException{
+    public void executar(Robo r, Ambiente ambiente, CentralComunicacao central) throws ColisaoException, ForaDosLimitesException{
         try {
             System.out.println("Comecando missao de ligar todos os robos desligados...");
             int i, x, y, z;
@@ -53,11 +55,18 @@ public class MissaoLigarRobos implements Missao {
                 // tem alguma colisão eminente
                 ambiente.moverEntidade(((Entidade) r), x, y, z, 5);
                 // Ao mudar ou não de posição, o robô aciona seus sensores
-                ((Sensoreavel) r).acionarSensores(ambiente);
+                if (r instanceof Sensoreavel){
+                    ((Sensoreavel) r).acionarSensores(ambiente);
+                }
                 
                 // Caso robô do momento esteja desligado, liga ele
                 if (((Robo) ambiente.getRobos().get(i)).getEstado() == EstadoRobo.desligado){
                     ((Robo) ambiente.getRobos().get(i)).ligar();
+                    if (r instanceof Comunicavel && ambiente.getRobos().get(i) instanceof Comunicavel){
+                        // Caso ambos robôs sejam comunicáveis, o robô da missão envia uma mensagem ao
+                        // robô que foi ligado
+                        ((Comunicavel) r).enviarMensagem(((Comunicavel) ambiente.getRobos().get(i)), "Te liguei, agora voce esta livre para explorar o ambiente.", central);
+                    }
                 }
             }
         } catch (RoboDesligadoException d){

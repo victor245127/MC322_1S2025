@@ -3,11 +3,11 @@ package RoboVariacoes;
 import java.util.Random;
 
 import Ambiente.Ambiente;
+import Comunicacao.CentralComunicacao;
 import Exceptions.ColisaoException;
 import Exceptions.ForaDosLimitesException;
 import Exceptions.RoboDesligadoException;
 import InterfacesRobos.Autonomo;
-import Missao.MissaoExplorar;
 import RobosBase.EstadoRobo;
 import RobosBase.RoboAereo;
 
@@ -81,11 +81,9 @@ public class RoboAereoObservador extends RoboAereo implements Autonomo{
         }
     }
 
-    public void executarMissao(Ambiente ambiente) throws RoboDesligadoException, ColisaoException, ForaDosLimitesException {
+    public void executarMissao(Ambiente ambiente, CentralComunicacao central) throws RoboDesligadoException, ColisaoException, ForaDosLimitesException {
         if (tem_missao()){
-            if (missao instanceof MissaoExplorar){
-                missao.executar(this, ambiente);
-            }
+            missao.executar(this, ambiente, central);
         }
         else {
             System.out.println("Sem missoes atribuidas.");
