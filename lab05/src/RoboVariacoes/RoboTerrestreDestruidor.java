@@ -11,16 +11,13 @@ import RobosBase.EstadoRobo;
 import RobosBase.RoboTerrestre;
 import Sensor.Sensor;
 import Sensor.Sensoreavel;
-import SubsistemasRobo.GerenciadorSensores;
 
 public class RoboTerrestreDestruidor extends RoboTerrestre implements Sensoreavel{
-    private int forcaDestruicao; // Atributos do robô
-    private GerenciadorSensores gerenciadorSensor;
+    private int forcaDestruicao; 
     
     public RoboTerrestreDestruidor(String id, int x, int y, int z, int velMax, int forcaDestruicao) {
         super(id, x, y, z, velMax);
         this.forcaDestruicao = forcaDestruicao;
-        this.gerenciadorSensor = new GerenciadorSensores();
     } // Construtor 
 
     public void executarTarefa(Ambiente ambiente) {
@@ -101,10 +98,12 @@ public class RoboTerrestreDestruidor extends RoboTerrestre implements Sensoreave
         }
     }
 
+    // Utiliza seu módulo de gerenciar sensores para adicionar novos sensores    
     public void add_sensores(double raio){
         gerenciadorSensor.adicionarSensores(raio);
     }
 
+    // Utiliza seu módulo de gerenciar sensores para os acionar
     public void acionarSensores(Ambiente ambiente) throws ColisaoException, RoboDesligadoException{
         // Aciona os sensores
         try {
@@ -120,6 +119,7 @@ public class RoboTerrestreDestruidor extends RoboTerrestre implements Sensoreave
         }
     }
 
+    // Verifica se tem missões atribuídas e, caso tenha, a executa
     public void executarMissao(Ambiente ambiente, CentralComunicacao central) throws RoboDesligadoException, ColisaoException, ForaDosLimitesException{
         if (tem_missao()){
             missao.executar(this, ambiente, central);
@@ -129,6 +129,7 @@ public class RoboTerrestreDestruidor extends RoboTerrestre implements Sensoreave
         }
     }
 
+    // Descrição do robô
     public String getDescricao(){
         return "Robo do tipo terrestre que possui sensores e pode destruir um obstaculo proximo a ele.";
     }

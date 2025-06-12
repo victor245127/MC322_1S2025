@@ -6,6 +6,7 @@ import Sensor.Sensor;
 import Sensor.SensorIdentificacao;
 import Sensor.SensorProximidade;
 
+// Módulo que gerencia os sensores de um robô
 public class GerenciadorSensores {
     private ArrayList<Sensor> sensores;
 

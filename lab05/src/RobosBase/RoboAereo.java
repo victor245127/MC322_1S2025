@@ -16,6 +16,10 @@ public abstract class RoboAereo extends AgenteInteligente implements Comunicavel
 
     // Método override de robô
     public void moverPara(int x, int y, int z) throws RoboDesligadoException {
+        // Caso o controle de movimento esteja desligado, o liga
+        if (!controle_mov.getControle()){
+            controle_mov.ligar();
+        }
         if (z > altitudeMaxima){
             System.out.println("Altitude nao permitida!");
             this.x = x;
@@ -27,31 +31,27 @@ public abstract class RoboAereo extends AgenteInteligente implements Comunicavel
             this.y = y;
             this.z = z;
         }
+        // Após se movimentar, desliga o controle
+        controle_mov.desligar();
         if (getEstado() == EstadoRobo.desligado){
             throw new RoboDesligadoException();
         }
     }
 
-    // Método que envia mensagem para um destinatário
-    public void enviarMensagem(Comunicavel destinatario, String mensagem, CentralComunicacao central) throws RoboDesligadoException{
+    // Utiliza seu módulo de comunicação para enviar mensagem a um destinatário
+    public void enviarMensagem(Comunicavel destinatario, Comunicavel remetente, String mensagem, CentralComunicacao central){
         try {
-            if (((Robo)destinatario).estado == EstadoRobo.desligado || getEstado() == EstadoRobo.desligado){
+            if (((Robo) destinatario).getEstado() == EstadoRobo.desligado || ((Robo) remetente).getEstado() == EstadoRobo.desligado){
                 throw new RoboDesligadoException();
-            } // Erro caso um dos robôs esteja desligado
-            receberMensagem(destinatario, mensagem, central);
+            }
+            modulo_comm.enviarMensagem(destinatario, remetente, mensagem, central);
         } catch (RoboDesligadoException e){
             System.out.println("ERRO: " + e.getMessage());
         }
-        
     }
 
-    // Método que determina se o destinatário recebe ou não a mensagem
-    public void receberMensagem(Comunicavel destinatario, String mensagem, CentralComunicacao central){
-        if (((Robo)destinatario).getX()[0] >= (x - central.getRaio()) && ((Robo)destinatario).getX()[0] <= (x + central.getRaio()) && ((Robo)destinatario).getY()[0] >= (y - central.getRaio()) && ((Robo)destinatario).getY()[0] <= (y + central.getRaio())){
-            central.registrarMensagem(((Robo) destinatario).getId(), getId(), mensagem);
-        } // Caso o destinatário esteja dentro do raio de comunicação, recebe a mensagem e a registra
-        else {
-            System.out.println("Robo a uma distancia maior que o alcance do raio, nao foi possivel receber a mensagem.");
-        }
+    // Recebe a mensagem
+    public void receberMensagem(Comunicavel destinatario, Comunicavel remetente, String mensagem, CentralComunicacao central){
+        modulo_comm.receberMensagem(destinatario, remetente, mensagem, central);
     }
 }

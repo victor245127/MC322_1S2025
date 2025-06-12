@@ -6,14 +6,12 @@ import Entidade.TipoEntidade;
 import Exceptions.ColisaoException;
 import Exceptions.ForaDosLimitesException;
 import Exceptions.RoboDesligadoException;
-import SubsistemasRobo.ControleMovimento;
 
 // Superclasse abstrata robô, a qual os demais robôs herdam, implementa a interface entidade
 public abstract class Robo implements Entidade {
     protected String id;
     protected EstadoRobo estado;
     protected TipoEntidade tipoEntidade;
-    protected ControleMovimento controleMovimento;
     protected int x;
     protected int y;
     protected int z;
@@ -26,13 +24,9 @@ public abstract class Robo implements Entidade {
         this.x = x;
         this.y = y;
         this.z = z;
-        this.controleMovimento = new ControleMovimento();
     }
     
     public void moverPara(int x, int y, int z) throws RoboDesligadoException { // Move o robô para uma certa posição
-        if (!controleMovimento.getControle()){
-            controleMovimento.ligar();
-        }
         this.x = x;
         this.y = y;
         this.z = z;
@@ -52,7 +46,6 @@ public abstract class Robo implements Entidade {
 
     public void desligar(){ // Desliga o robô
         this.estado = EstadoRobo.desligado;
-        controleMovimento.desligar();
     }
 
     // Método abstrato que é implementado por suas subclasses

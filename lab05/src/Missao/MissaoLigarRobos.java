@@ -65,7 +65,7 @@ public class MissaoLigarRobos implements Missao {
                     if (r instanceof Comunicavel && ambiente.getRobos().get(i) instanceof Comunicavel){
                         // Caso ambos robôs sejam comunicáveis, o robô da missão envia uma mensagem ao
                         // robô que foi ligado
-                        ((Comunicavel) r).enviarMensagem(((Comunicavel) ambiente.getRobos().get(i)), "Te liguei, agora voce esta livre para explorar o ambiente.", central);
+                        ((Comunicavel) r).enviarMensagem(((Comunicavel) ambiente.getRobos().get(i)), ((Comunicavel) r), "Te liguei, agora voce esta livre para explorar o ambiente.", central);
                     }
                 }
             }

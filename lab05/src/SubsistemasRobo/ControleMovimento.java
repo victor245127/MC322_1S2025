@@ -1,5 +1,6 @@
 package SubsistemasRobo;
 
+// Módulo de controle de movimento 
 public class ControleMovimento {
     private boolean ligado;
 

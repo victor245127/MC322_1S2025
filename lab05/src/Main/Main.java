@@ -290,7 +290,7 @@ public class Main {
                         String msg = scanner.nextLine();
                         // Verifica se ambos os robôs implementam a interface comunicável
                         if (ambiente.getRobos().get(r1-1) instanceof Comunicavel && ambiente.getRobos().get(r2-1) instanceof Comunicavel){
-                            ((Comunicavel) ambiente.getRobos().get(r1-1)).enviarMensagem(((Comunicavel) ambiente.getRobos().get(r2-1)), msg, central);
+                            ((Comunicavel) ambiente.getRobos().get(r1-1)).enviarMensagem(((Comunicavel) ambiente.getRobos().get(r2-1)), (Comunicavel) ambiente.getRobos().get(r1-1), msg, central);
                         }
                         else {
                             throw new ErroComunicacaoException();

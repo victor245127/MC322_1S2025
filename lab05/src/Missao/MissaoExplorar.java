@@ -13,6 +13,7 @@ import RobosBase.EstadoRobo;
 import RobosBase.Robo;
 import Sensor.Sensoreavel;
 
+// Missão de exploração do ambiente
 public class MissaoExplorar implements Missao {
     public MissaoExplorar(){}
 
@@ -22,6 +23,7 @@ public class MissaoExplorar implements Missao {
         int x = r.getX()[0];
         int y = r.getY()[0];
         int z = r.getZ()[0];
+        // Caso o robô seja um dos direcionáveis, já pré define sua direção
         if (r instanceof RoboTerrestreExplorador){
             dir = ((RoboTerrestreExplorador) r).direcionar_h(ambiente);
         }
@@ -51,7 +53,6 @@ public class MissaoExplorar implements Missao {
             }
         }
         int passosDados = 0;
-        // Utiliza o método de sua interface
 
         // Verifica se o robô está ligado
         try {
@@ -80,17 +81,19 @@ public class MissaoExplorar implements Missao {
                     break;
                 }
                 
-
+                // Caso o robô tenha implementação de sensores, os ativa
                 if (r instanceof Sensoreavel){
                     ((Sensoreavel)r).acionarSensores(ambiente);
                 }
 
-                ambiente.moverEntidade(r, novoX, novoY, z, novoY);
+                // Robôs terrestres movem-se a uma velocidade pré-definida de 5 m/s
+                ambiente.moverEntidade(r, novoX, novoY, z, 5);
                 passosDados++;
                 x = novoX;
                 y = novoY;
             }
-            System.out.printf("Exploracao finalizada. Passos dados na direcao %s: %d\n", dir, passosDados);
+            // Exibe a quantidade de passos dados durante a exploração
+           System.out.printf("Exploracao finalizada. Passos dados na direcao %s: %d\n", dir, passosDados);
         } catch (RoboDesligadoException e){
             System.out.println("ERRO: " + e.getMessage());
         }
