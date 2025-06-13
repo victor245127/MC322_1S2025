@@ -56,6 +56,7 @@ public class MissaoLigarRobos implements Missao {
                 ambiente.moverEntidade(((Entidade) r), x, y, z, 5);
                 // Ao mudar ou não de posição, o robô aciona seus sensores
                 if (r instanceof Sensoreavel){
+                    System.out.println("Acionando sensores...");
                     ((Sensoreavel) r).acionarSensores(ambiente);
                 }
                 

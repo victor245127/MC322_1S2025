@@ -76,13 +76,13 @@ public class MissaoExplorar implements Missao {
 
                 // Caso a próxima posição seja inacessível, para na atual, executa sua tarefa e finaliza a exploração
                 if (!ambiente.dentroDosLimites(novoX, novoY, z) || ambiente.estaOcupado(novoX, novoY, z)) {
-                    System.out.printf("Exploração interrompida em (%d, %d)\n", novoX, novoY);
-                    r.executarTarefa(ambiente);                
+                    System.out.printf("Exploracao interrompida em (%d, %d)\n", novoX, novoY);
                     break;
                 }
                 
-                // Caso o robô tenha implementação de sensores, os ativa
+                // Caso o robô tenha implementação de sensores, os ativa a cada passo
                 if (r instanceof Sensoreavel){
+                    System.out.println("Acionando sensores...");
                     ((Sensoreavel)r).acionarSensores(ambiente);
                 }
 
