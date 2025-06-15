@@ -2,10 +2,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
-
 import Ambiente.Ambiente;
 import Ambiente.Obstaculos;
 import Ambiente.TiposObstaculo;
@@ -33,30 +30,31 @@ import RoboVariacoes.RoboTerrestreExplorador;
 
 public class Main {
 
-    private static final String LOGFILE = "log_missoes.txt";
-    private static final DateTimeFormatter TS = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-    private static final PrintStream ORIGINAL_OUT = System.out;
-    private static FileOutputStream LOG_FOS;
+private static final String LOGFILE = "log_missoes.txt";                       
+private static final PrintStream ORIGINAL_OUT = System.out;                    
+private static FileOutputStream LOG_FOS;                                       
 
-    private static class Tee extends OutputStream {
-        private final OutputStream a, b;
-        Tee(OutputStream a, OutputStream b) { this.a = a; this.b = b; }
-        public void write(int i) throws IOException { a.write(i); b.write(i); }
-        public void flush() throws IOException { a.flush(); b.flush(); }
-    }
+// Duplica a saída: console + arquivo 
+private static class Tee extends OutputStream {
+    private final OutputStream a, b;
+    Tee(OutputStream a, OutputStream b) { this.a = a; this.b = b; }
+    public void write(int i) throws IOException { a.write(i); b.write(i); }
+    public void flush() throws IOException { a.flush(); b.flush(); }
+}
 
-    private static void iniciarLog(String robo, String missao) throws IOException {
-        if (LOG_FOS == null) LOG_FOS = new FileOutputStream(LOGFILE, true);
-        PrintStream tee = new PrintStream(new Tee(ORIGINAL_OUT, LOG_FOS), true);
-        System.setOut(tee);
-        System.out.println("[" + TS.format(LocalDateTime.now()) + "] INICIO | " + robo + " | " + missao);
-    }
+// Começa a missão: redireciona System.out 
+private static void iniciarLog(String robo, String missao) throws IOException {
+    if (LOG_FOS == null) LOG_FOS = new FileOutputStream(LOGFILE, true);        // append
+    System.setOut(new PrintStream(new Tee(ORIGINAL_OUT, LOG_FOS), true));      // duplica
+    System.out.println(" INICIO | " + robo + " | " + missao);
+}
 
-    private static void encerrarLog(String robo, String missao) throws IOException {
-        System.out.println("[" + TS.format(LocalDateTime.now()) + "] FIM    | " + robo + " | " + missao);
-        System.out.flush();
-        System.setOut(ORIGINAL_OUT);
-    }
+// Termina a missão: volta ao console normal 
+private static void encerrarLog(String robo, String missao) throws IOException {
+    System.out.println(" FIM | " + robo + " | " + missao);
+    System.out.flush();                                                        // garante gravação
+    System.setOut(ORIGINAL_OUT);                                               // restaura console
+}
 
     public static void main(String[] args) throws EscolhaInvalidaException, EntidadeImovelException, RoboDesligadoException, ColisaoException, ForaDosLimitesException, ErroComunicacaoException, ErroDestinatarioException, IOException {
 

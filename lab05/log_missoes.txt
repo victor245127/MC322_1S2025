@@ -1,0 +1,125 @@
+ INICIO | T1 | Explorar
+Robo T1 iniciando exploracao...
+Acionando sensores...
+PAREDE de resistencia 5 identificado entre (3, 2, 3) e (3, 2, 3).
+Sensor de proximidade: escaneando area em torno de (2, 2, 0)
+Obstaculo detectado em (3, 2, 0)
+Controle de movimento ligado.
+Controle de movimento desligado.
+Posicao: (2, 3, 0)
+Acionando sensores...
+PAREDE de resistencia 5 identificado entre (3, 2, 3) e (3, 2, 3).
+Sensor de proximidade: escaneando area em torno de (2, 3, 0)
+Obstaculo detectado em (3, 2, 0)
+Controle de movimento ligado.
+Controle de movimento desligado.
+Posicao: (2, 4, 0)
+Acionando sensores...
+PAREDE de resistencia 5 identificado entre (3, 2, 3) e (3, 2, 3).
+Sensor de proximidade: escaneando area em torno de (2, 4, 0)
+Obstaculo detectado em (3, 2, 0)
+Controle de movimento ligado.
+Controle de movimento desligado.
+Posicao: (2, 5, 0)
+Acionando sensores...
+Obstaculo nao encontrado dentro do raio.
+Sensor de proximidade: escaneando area em torno de (2, 5, 0)
+Nenhum obstaculo nas proximidades.
+Controle de movimento ligado.
+Controle de movimento desligado.
+Posicao: (2, 6, 0)
+Acionando sensores...
+Obstaculo nao encontrado dentro do raio.
+Sensor de proximidade: escaneando area em torno de (2, 6, 0)
+Nenhum obstaculo nas proximidades.
+Controle de movimento ligado.
+Controle de movimento desligado.
+Posicao: (2, 7, 0)
+Acionando sensores...
+Obstaculo nao encontrado dentro do raio.
+Sensor de proximidade: escaneando area em torno de (2, 7, 0)
+Nenhum obstaculo nas proximidades.
+Controle de movimento ligado.
+Controle de movimento desligado.
+Posicao: (2, 8, 0)
+Acionando sensores...
+Obstaculo nao encontrado dentro do raio.
+Sensor de proximidade: escaneando area em torno de (2, 8, 0)
+Nenhum obstaculo nas proximidades.
+Controle de movimento ligado.
+Controle de movimento desligado.
+Posicao: (2, 9, 0)
+Acionando sensores...
+Obstaculo nao encontrado dentro do raio.
+Sensor de proximidade: escaneando area em torno de (2, 9, 0)
+Nenhum obstaculo nas proximidades.
+Controle de movimento ligado.
+Controle de movimento desligado.
+Posicao: (2, 10, 0)
+Acionando sensores...
+Obstaculo nao encontrado dentro do raio.
+Sensor de proximidade: escaneando area em torno de (2, 10, 0)
+Nenhum obstaculo nas proximidades.
+Controle de movimento ligado.
+Controle de movimento desligado.
+Posicao: (2, 11, 0)
+Acionando sensores...
+Obstaculo nao encontrado dentro do raio.
+Sensor de proximidade: escaneando area em torno de (2, 11, 0)
+Nenhum obstaculo nas proximidades.
+Controle de movimento ligado.
+Controle de movimento desligado.
+Posicao: (2, 12, 0)
+Acionando sensores...
+Obstaculo nao encontrado dentro do raio.
+Sensor de proximidade: escaneando area em torno de (2, 12, 0)
+Nenhum obstaculo nas proximidades.
+Controle de movimento ligado.
+Controle de movimento desligado.
+Posicao: (2, 13, 0)
+Acionando sensores...
+Obstaculo nao encontrado dentro do raio.
+Sensor de proximidade: escaneando area em torno de (2, 13, 0)
+Nenhum obstaculo nas proximidades.
+Controle de movimento ligado.
+Controle de movimento desligado.
+Posicao: (2, 14, 0)
+Acionando sensores...
+Obstaculo nao encontrado dentro do raio.
+Sensor de proximidade: escaneando area em torno de (2, 14, 0)
+Nenhum obstaculo nas proximidades.
+Controle de movimento ligado.
+Controle de movimento desligado.
+Posicao: (2, 15, 0)
+Acionando sensores...
+Obstaculo nao encontrado dentro do raio.
+Sensor de proximidade: escaneando area em torno de (2, 15, 0)
+Nenhum obstaculo nas proximidades.
+Controle de movimento ligado.
+Controle de movimento desligado.
+Posicao: (2, 16, 0)
+Acionando sensores...
+Obstaculo nao encontrado dentro do raio.
+Sensor de proximidade: escaneando area em torno de (2, 16, 0)
+Nenhum obstaculo nas proximidades.
+Controle de movimento ligado.
+Controle de movimento desligado.
+Posicao: (2, 17, 0)
+Acionando sensores...
+Obstaculo nao encontrado dentro do raio.
+Sensor de proximidade: escaneando area em torno de (2, 17, 0)
+Nenhum obstaculo nas proximidades.
+Controle de movimento ligado.
+Controle de movimento desligado.
+Posicao: (2, 18, 0)
+Acionando sensores...
+Obstaculo nao encontrado dentro do raio.
+Sensor de proximidade: escaneando area em torno de (2, 18, 0)
+Nenhum obstaculo nas proximidades.
+Controle de movimento ligado.
+Controle de movimento desligado.
+Posicao: (2, 19, 0)
+ERRO: Posicao fora dos limites, inalcancavel.
+Exploracao interrompida em (2, 20)
+Exploracao finalizada. Passos dados na direcao norte: 17
+ FIM | T1 | Explorar
