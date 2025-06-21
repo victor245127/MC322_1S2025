@@ -25,7 +25,6 @@ Possui um ambiente virtual de dimensão X (largura), Y (profundidade), Z (altura
 Para executar o código, quando estiver dentro da pasta "lab04", deve-se digitar no terminal linux "java -cp out Main", e o código é executado, depois basta apenas seguir as instruções do menu interativo para usar o código da maneira que queira, dentro de seus requisitos.
 
 Laboratório 5:
-FAZER DIAGRAMA UML
-FAZER README
-FAZER ARQUIVOS
+Possui um ambiente virtual de dimensão X (largura), Y (profundidade), Z (altura), com os mesmos robôs de anteriormente, porém atualizados com uma nova classe abstrata AgenteInteligente, que possui missões pré-definidas para os robôs executarem. Além disso, essa classe possui subsistemas com funções próprias. Também foi adicionada a manipulação de arquivos, que cria um arquivo .txt do "log" da missão, mostrando todos os prints e ações que ocorreram durante as missões, até o fim do programa.
+Para executar o código, abra o terminal e digite "cd MC322_1S2025/lab05", e depois digite "java -cp out Main", e o código é executado, depois basta apenas seguir as instruções do menu interativo para usar o código da maneira que queira, dentro de seus requisitos.
 
